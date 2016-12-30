@@ -19,39 +19,8 @@ namespace WebApplication1.Controllers
         [HttpGet]
         public ActionResult Index(string id)
         {
-            string user = null;
+            ViewBag.name = id;
             var db = new ApplicationDbContext();
-            //if (id == null)
-            //{
-            //    id = User.Identity.GetUserId();
-            //    UserStats model = db.UserStat.SingleOrDefault(x => x.ApplicationUserId == id);
-            //    user = model.DisplayName;
-            //   // string profileURL = "/../Assets/UserProfilePics/" + user + "-Profile.png";
-            //    string profileURL = (from hurr in db.UserStat
-            //                         where hurr.ApplicationUserId.Equals(id)
-            //                         select hurr.ProfilePicture).FirstOrDefault();
-            //    ViewBag.Profile = profileURL;
-            //    string bannerURL = (from hurr in db.UserStat
-            //                        where hurr.ApplicationUserId.Equals(id)
-            //                        select hurr.ProfileBanner).SingleOrDefault();
-            //    ViewBag.Banner = bannerURL;
-            //    List<string> friendList =
-            //        (from hurr in db.Friend
-            //         where hurr.userId.Equals(id)
-            //         select hurr.friendId).ToList();
-            //    List<UserStats> userFriends = new List<UserStats>();
-
-            //    foreach(string name in friendList)
-            //    {
-            //        UserStats friend =
-            //                (from hurr in db.UserStat
-            //                 where hurr.ApplicationUserId.Equals(name)
-            //                 select hurr).SingleOrDefault();
-            //        userFriends.Add(friend);
-            //    }
-            //    ViewBag.Friends = userFriends;
-            //    return View(model);
-            // } else
             {
                 UserStats model = db.UserStat.SingleOrDefault(x => x.DisplayName == id);
                 //string profileURL = "/../Assets/UserProfilePics/" + id + "-Profile.png";
@@ -86,27 +55,20 @@ namespace WebApplication1.Controllers
                 {
                     return PartialView("~/Views/Dashboard/Partials/Index.cshtml");
                 }
+                if (!model.DisplayName.Equals(id))
+                {
+                    if (friendList.Contains(id))
+                    {
+                        ViewBag.isFriend = true;
+                    }
                 return View(model);
+                } else
+                {
+                    ViewBag.isFriend = false;
+                    return View(model);
+                }
+                
             }
-            //string profileURL =
-            //    (from hurr in db.UserStat
-            //     where hurr.DisplayName.Equals(uuser)
-            //     select hurr.ProfilePicture).FirstOrDefault();
-
-            //string bannerURL =
-            //   (from hurr in db.UserStat
-            //    where hurr.DisplayName.Equals(user)
-            //    select hurr.ProfileBanner).FirstOrDefault();
-
-
-            //string quote =
-            //    (from hurr in db.UserStat
-            //     where hurr.DisplayName.Equals(user)
-            //     select hurr.Quote).FirstOrDefault();
-
-            //ViewBag.Banner = bannerURL;
-            //ViewBag.Quote = quote;
-
         }
 
         [HttpPost]
@@ -123,8 +85,8 @@ namespace WebApplication1.Controllers
                  select hurr).SingleOrDefault();
             string filename;
             string path = "";
-            float scaleX = (900F / model.width);
-            float scaleY = (175F / model.height);
+            int srcWidth = 0;
+            int srcHeight= 0;
             switch (model.Type)
             {
                 case "banner":
@@ -132,14 +94,19 @@ namespace WebApplication1.Controllers
                     filename = user.DisplayName + "-Banner.png";
                     path = "~/Assets/UserBannerPics/" + filename;
                     user.ProfileBanner = "/../Assets/UserBannerPics/" + filename;
+                    srcWidth = 900;
+                    srcHeight = 175;
                     break;
                 case "profile":
                     ;
                     filename = user.DisplayName + "-Profile.png";
                     path = "~/Assets/UserProfilePics/" + filename;
-                    user.ProfileBanner = "/../Assets/UserProfilePics/" + filename;
+                    user.ProfilePicture = "/../Assets/UserProfilePics/" + filename;
+                    srcWidth = srcHeight = 175;
                     break;
             }
+            float scaleX = ((float)srcWidth / model.width);
+            float scaleY = ((float)srcHeight / model.height);
             //Create the path for the file
             var fullpath = Request.MapPath(path);
             //Call a method to crop the base image using parameters from form
@@ -151,7 +118,7 @@ namespace WebApplication1.Controllers
                 Rectangle cropArea = new Rectangle(model.offSetX, model.offSetY, model.width, model.height);
                 Rectangle final = new Rectangle(0, 0, model.width, model.height);
                 //Bitmap sourceImage = new Bitmap(model.width, model.height);
-                using (var sourceImage = new Bitmap(900, 175))
+                using (var sourceImage = new Bitmap(srcWidth, srcHeight))
                 {
                     using (Graphics g = Graphics.FromImage(sourceImage))
                     {
@@ -299,11 +266,23 @@ namespace WebApplication1.Controllers
                 return null;
             }
         }
-
-
-        public void ImageUpload(string image)
+        public bool areFriends(string id)
         {
-
+            var db = new ApplicationDbContext();
+            ApplicationUser currentUser = System.Web.HttpContext.Current.GetOwinContext().GetUserManager<ApplicationUserManager>().FindById(System.Web.HttpContext.Current.User.Identity.GetUserId());
+            UserStats user =
+                    (from hurr in db.UserStat
+                     where hurr.DisplayName.Equals(id)
+                     select hurr).SingleOrDefault();
+            List<string> friends = db.Friend.Where(x => x.userId == currentUser.Id).Select(x => x.friendId).ToList();
+            if (friends.Contains(id))
+            {
+                return true;
+            }
+            else
+            {
+                return false;
+            }
         }
     }
 }

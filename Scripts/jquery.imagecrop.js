@@ -1,32 +1,32 @@
 // Always wrap a plug-in in '(function($) { // Plug-in goes here }) (jQuery);'
-(function($) {
-    $.imageCrop = function(object, customOptions) {
+(function ($) {
+    $.imageCrop = function (object, customOptions) {
         // Rather than requiring a lengthy amount of arguments, pass the
         // plug-in options in an object literal that can be extended over
         // the plug-in's defaults
         var defaultOptions = {
-            allowMove : true,
-            allowResize : true,
-            allowSelect : true,
-            aspectRatio : 0,
-            displayPreview : true,
-            displaySizeHint : true,
-            minSelect : [0, 0],
-            minSize : [0, 0],
-            maxSize : [0, 0],
-            outlineOpacity : 0.5,
-            overlayOpacity : 0.5,
-            previewBoundary : 90,
-            previewFadeOnBlur : 1,
-            previewFadeOnFocus : 0.35,
-            selectionPosition : [0, 0],
-            selectionWidth : 0,
+            allowMove: true,
+            allowResize: true,
+            allowSelect: true,
+            aspectRatio: 0,
+            displayPreview: true,
+            displaySizeHint: true,
+            minSelect: [0, 0],
+            minSize: [0, 0],
+            maxSize: [0, 0],
+            outlineOpacity: 0.5,
+            overlayOpacity: 0.5,
+            previewBoundary: 90,
+            previewFadeOnBlur: 1,
+            previewFadeOnFocus: 0.35,
+            selectionPosition: [0, 0],
+            selectionWidth: 0,
             selectionHeight: 0,
             Type: null,
 
             // Plug-in's event handlers
-            onChange : function() {},
-            onSelect : function() {}
+            onChange: function () { },
+            onSelect: function () { }
         };
 
         // Set options to default
@@ -50,14 +50,14 @@
         // Wrap the holder around the image
         $image.wrap($holder)
             .css({
-                position : 'absolute'
+                position: 'absolute'
             });
 
         // Initialize an overlay layer and place it above the image
         var $overlay = $('<div id="image-crop-overlay" />')
                 .css({
-                    opacity : options.overlayOpacity,
-                    position : 'absolute'
+                    opacity: options.overlayOpacity,
+                    position: 'absolute'
                 })
                 .width($image.width())
                 .height($image.height())
@@ -66,9 +66,9 @@
         // Initialize a trigger layer and place it above the overlay layer
         var $trigger = $('<div />')
                 .css({
-                    backgroundColor : '#000000',
-                    opacity : 0,
-                    position : 'absolute'
+                    backgroundColor: '#000000',
+                    opacity: 0,
+                    position: 'absolute'
                 })
                 .width($image.width())
                 .height($image.height())
@@ -77,16 +77,16 @@
         // Initialize an outline layer and place it above the trigger layer
         var $outline = $('<div id="image-crop-outline" />')
                 .css({
-                    opacity : options.outlineOpacity,
-                    position : 'absolute'
+                    opacity: options.outlineOpacity,
+                    position: 'absolute'
                 })
                 .insertAfter($trigger);
 
         // Initialize a selection layer and place it above the outline layer
         var $selection = $('<div />')
                 .css({
-                    background : 'url(' + $image.attr('src') + ') no-repeat',
-                    position : 'absolute'
+                    background: 'url(' + $image.attr('src') + ') no-repeat',
+                    position: 'absolute'
                 })
                 .insertAfter($outline);
 
@@ -94,8 +94,8 @@
         // selection layer
         var $sizeHintBackground = $('<div id="image-crop-size-hint-background" />')
                 .css({
-                    opacity : 0.35,
-                    position : 'absolute'
+                    opacity: 0.35,
+                    position: 'absolute'
                 })
                 .insertAfter($selection);
 
@@ -103,7 +103,7 @@
         // background layer
         var $sizeHintForeground = $('<span id="image-crop-size-hint-foreground" />')
                 .css({
-                    position : 'absolute'
+                    position: 'absolute'
                 })
                 .insertAfter($sizeHintBackground);
 
@@ -111,8 +111,8 @@
         // selection layer
         var $nwResizeHandler = $('<div class="image-crop-resize-handler" id="image-crop-nw-resize-handler" />')
                 .css({
-                    opacity : 0.5,
-                    position : 'absolute'
+                    opacity: 0.5,
+                    position: 'absolute'
                 })
                 .insertAfter($selection);
 
@@ -120,8 +120,8 @@
         // layer
         var $nResizeHandler = $('<div class="image-crop-resize-handler" id="image-crop-n-resize-handler" />')
                 .css({
-                    opacity : 0.5,
-                    position : 'absolute'
+                    opacity: 0.5,
+                    position: 'absolute'
                 })
                 .insertAfter($selection);
 
@@ -129,8 +129,8 @@
         // selection layer
         var $neResizeHandler = $('<div class="image-crop-resize-handler" id="image-crop-ne-resize-handler" />')
                 .css({
-                    opacity : 0.5,
-                    position : 'absolute'
+                    opacity: 0.5,
+                    position: 'absolute'
                 })
                 .insertAfter($selection);
 
@@ -138,8 +138,8 @@
         // layer
         var $wResizeHandler = $('<div class="image-crop-resize-handler" id="image-crop-w-resize-handler" />')
                 .css({
-                    opacity : 0.5,
-                    position : 'absolute'
+                    opacity: 0.5,
+                    position: 'absolute'
                 })
                 .insertAfter($selection);
 
@@ -147,8 +147,8 @@
         // layer
         var $eResizeHandler = $('<div class="image-crop-resize-handler" id="image-crop-e-resize-handler" />')
                 .css({
-                    opacity : 0.5,
-                    position : 'absolute'
+                    opacity: 0.5,
+                    position: 'absolute'
                 })
                 .insertAfter($selection);
 
@@ -156,8 +156,8 @@
         // selection layer
         var $swResizeHandler = $('<div class="image-crop-resize-handler" id="image-crop-sw-resize-handler" />')
                 .css({
-                    opacity : 0.5,
-                    position : 'absolute'
+                    opacity: 0.5,
+                    position: 'absolute'
                 })
                 .insertAfter($selection);
 
@@ -165,8 +165,8 @@
         // layer
         var $sResizeHandler = $('<div class="image-crop-resize-handler" id="image-crop-s-resize-handler" />')
                 .css({
-                    opacity : 0.5,
-                    position : 'absolute'
+                    opacity: 0.5,
+                    position: 'absolute'
                 })
                 .insertAfter($selection);
 
@@ -174,24 +174,24 @@
         // selection layer
         var $seResizeHandler = $('<div class="image-crop-resize-handler" id="image-crop-se-resize-handler" />')
                 .css({
-                    opacity : 0.5,
-                    position : 'absolute'
+                    opacity: 0.5,
+                    position: 'absolute'
                 })
                 .insertAfter($selection);
 
         // Initialize a preview holder and place it after the outline layer
         var $previewHolder = $('<div id="image-crop-preview-holder" />')
                 .css({
-                    opacity : options.previewFadeOnBlur,
-                    overflow : 'hidden',
-                    position : 'absolute'
+                    opacity: options.previewFadeOnBlur,
+                    overflow: 'hidden',
+                    position: 'absolute'
                 })
                 .insertAfter($outline);
 
         // Initialize a preview image and append it to the preview holder
         var $preview = $('<img alt="Crop preview" id="image-crop-preview" />')
                 .css({
-                    position : 'absolute'
+                    position: 'absolute'
                 })
                 .attr('src', $image.attr('src'))
                 .appendTo($previewHolder);
@@ -217,19 +217,19 @@
 
         //Set the offset for the image editing container, if the image width is less than
         //the min-width of the div, use the div width instead
-        if ($("imagebody").width() > $image.width()) {
-            var width = ($("#image").width());
-        var leftOffset = Math.round((($(window).width() - width) / 2));
-        $("#imagebody").css("left", leftOffset + "px");
-        $("#imageseperator").css("height", $(document).height() + "px");
+        if ($("#imagebody").width() > $image.width()) {
+            var width = ($("#imagebody").outerWidth());
+            var leftOffset = Math.round((($(window).width() - width) / 2));
+            $("#imagebody").css("left", leftOffset + "px");
+            $("#imageseperator").css("height", $(document).height() + "px");
         }
         else {
-        var width = ($("#image").width());
-        var leftOffset = Math.round((($(window).width() - width) / 2));
-        $("#imagebody").css("left", leftOffset + "px");
-        $("#imageseperator").css("height", $(document).height() + "px");
+            var width = ($("#image").width());
+            var leftOffset = Math.round((($(window).width() - width) / 2));
+            $("#imagebody").css("left", leftOffset + "px");
+            $("#imageseperator").css("height", $(document).height() + "px");
         }
-        
+
         if (options.allowSelect)
             // Bind an event handler to the 'mousedown' event of the trigger layer
             $trigger.mousedown(setSelection);
@@ -270,13 +270,13 @@
         // Return an object containing information about the plug-in state
         function getCropData() {
             return {
-                selectionX : options.selectionPosition[0],
-                selectionY : options.selectionPosition[1],
-                selectionWidth : options.selectionWidth,
+                selectionX: options.selectionPosition[0],
+                selectionY: options.selectionPosition[1],
+                selectionWidth: options.selectionWidth,
                 selectionHeight: options.selectionHeight,
                 imageType: options.Type,
 
-                selectionExists : function() {
+                selectionExists: function () {
                     return selectionExists;
                 }
             };
@@ -285,37 +285,37 @@
         // Update the overlay layer
         function updateOverlayLayer() {
             $overlay.css({
-                    display : selectionExists ? 'block' : 'none'
-                });
+                display: selectionExists ? 'block' : 'none'
+            });
         };
 
         // Update the trigger layer
         function updateTriggerLayer() {
             $trigger.css({
-                    cursor : options.allowSelect ? 'crosshair' : 'default'
-                });
+                cursor: options.allowSelect ? 'crosshair' : 'default'
+            });
         };
 
         // Update the selection
         function updateSelection() {
             // Update the outline layer
             $outline.css({
-                    cursor : 'default',
-                    display : selectionExists ? 'block' : 'none',
-                    left : options.selectionPosition[0],
-                    top : options.selectionPosition[1]
-                })
+                cursor: 'default',
+                display: selectionExists ? 'block' : 'none',
+                left: options.selectionPosition[0],
+                top: options.selectionPosition[1]
+            })
                 .width(options.selectionWidth)
                 .height(options.selectionHeight);
 
             // Update the selection layer
             $selection.css({
-                    backgroundPosition : ( - options.selectionPosition[0] - 1) + 'px ' + ( - options.selectionPosition[1] - 1) + 'px',
-                    cursor : options.allowMove ? 'move' : 'default',
-                    display : selectionExists ? 'block' : 'none',
-                    left : options.selectionPosition[0] + 1,
-                    top : options.selectionPosition[1] + 1
-                })
+                backgroundPosition: (-options.selectionPosition[0] - 1) + 'px ' + (-options.selectionPosition[1] - 1) + 'px',
+                cursor: options.allowMove ? 'move' : 'default',
+                display: selectionExists ? 'block' : 'none',
+                left: options.selectionPosition[0] + 1,
+                top: options.selectionPosition[1] + 1
+            })
                 .width((options.selectionWidth - 2 > 0) ? (options.selectionWidth - 2) : 0)
                 .height((options.selectionHeight - 2 > 0) ? (options.selectionHeight - 2) : 0);
         };
@@ -323,31 +323,31 @@
         // Update the size hint
         function updateSizeHint(action) {
             switch (action) {
-                case 'fade-out' :
+                case 'fade-out':
                     // Fade out the size hint
                     $sizeHintBackground.fadeOut('slow');
                     $sizeHintForeground.fadeOut('slow');
 
                     break;
-                default :
+                default:
                     var display = (selectionExists && options.displaySizeHint) ? 'block' : 'none';
 
                     // Update the foreground layer
                     $sizeHintForeground.css({
-                            cursor : 'default',
-                            display : display,
-                            left : options.selectionPosition[0] + 4,
-                            top : options.selectionPosition[1] + 4
-                        })
+                        cursor: 'default',
+                        display: display,
+                        left: options.selectionPosition[0] + 4,
+                        top: options.selectionPosition[1] + 4
+                    })
                         .html(options.selectionWidth + 'x' + options.selectionHeight);
 
                     // Update the background layer
                     $sizeHintBackground.css({
-                            cursor : 'default',
-                            display : display,
-                            left : options.selectionPosition[0] + 1,
-                            top : options.selectionPosition[1] + 1
-                        })
+                        cursor: 'default',
+                        display: display,
+                        left: options.selectionPosition[0] + 1,
+                        top: options.selectionPosition[1] + 1
+                    })
                         .width($sizeHintForeground.width() + 6)
                         .height($sizeHintForeground.height() + 6);
             }
@@ -356,110 +356,110 @@
         // Update the resize handlers
         function updateResizeHandlers(action) {
             switch (action) {
-                case 'hide-all' :
-                    $('.image-crop-resize-handler').each(function() {
+                case 'hide-all':
+                    $('.image-crop-resize-handler').each(function () {
                         $(this).css({
-                                display : 'none'
-                            });
+                            display: 'none'
+                        });
                     });
 
                     break;
-                default :
+                default:
                     var display = (selectionExists && options.allowResize) ? 'block' : 'none';
 
                     $nwResizeHandler.css({
-                            cursor : 'nw-resize',
-                            display : display,
-                            left : options.selectionPosition[0] - Math.round($nwResizeHandler.width() / 2),
-                            top : options.selectionPosition[1] - Math.round($nwResizeHandler.height() / 2)
-                        });
+                        cursor: 'nw-resize',
+                        display: display,
+                        left: options.selectionPosition[0] - Math.round($nwResizeHandler.width() / 2),
+                        top: options.selectionPosition[1] - Math.round($nwResizeHandler.height() / 2)
+                    });
 
                     $nResizeHandler.css({
-                            cursor : 'n-resize',
-                            display : display,
-                            left : options.selectionPosition[0] + Math.round(options.selectionWidth / 2 - $neResizeHandler.width() / 2) - 1,
-                            top : options.selectionPosition[1] - Math.round($neResizeHandler.height() / 2)
-                        });
+                        cursor: 'n-resize',
+                        display: display,
+                        left: options.selectionPosition[0] + Math.round(options.selectionWidth / 2 - $neResizeHandler.width() / 2) - 1,
+                        top: options.selectionPosition[1] - Math.round($neResizeHandler.height() / 2)
+                    });
 
                     $neResizeHandler.css({
-                            cursor : 'ne-resize',
-                            display : display,
-                            left : options.selectionPosition[0] + options.selectionWidth - Math.round($neResizeHandler.width() / 2) - 1,
-                            top : options.selectionPosition[1] - Math.round($neResizeHandler.height() / 2)
-                        });
+                        cursor: 'ne-resize',
+                        display: display,
+                        left: options.selectionPosition[0] + options.selectionWidth - Math.round($neResizeHandler.width() / 2) - 1,
+                        top: options.selectionPosition[1] - Math.round($neResizeHandler.height() / 2)
+                    });
 
                     $wResizeHandler.css({
-                            cursor : 'w-resize',
-                            display : display,
-                            left : options.selectionPosition[0] - Math.round($neResizeHandler.width() / 2),
-                            top : options.selectionPosition[1] + Math.round(options.selectionHeight / 2 - $neResizeHandler.height() / 2) - 1
-                        });
+                        cursor: 'w-resize',
+                        display: display,
+                        left: options.selectionPosition[0] - Math.round($neResizeHandler.width() / 2),
+                        top: options.selectionPosition[1] + Math.round(options.selectionHeight / 2 - $neResizeHandler.height() / 2) - 1
+                    });
 
                     $eResizeHandler.css({
-                            cursor : 'e-resize',
-                            display : display,
-                            left : options.selectionPosition[0] + options.selectionWidth - Math.round($neResizeHandler.width() / 2) - 1,
-                            top : options.selectionPosition[1] + Math.round(options.selectionHeight / 2 - $neResizeHandler.height() / 2) - 1
-                        });
+                        cursor: 'e-resize',
+                        display: display,
+                        left: options.selectionPosition[0] + options.selectionWidth - Math.round($neResizeHandler.width() / 2) - 1,
+                        top: options.selectionPosition[1] + Math.round(options.selectionHeight / 2 - $neResizeHandler.height() / 2) - 1
+                    });
 
                     $swResizeHandler.css({
-                            cursor : 'sw-resize',
-                            display : display,
-                            left : options.selectionPosition[0] - Math.round($swResizeHandler.width() / 2),
-                            top : options.selectionPosition[1] + options.selectionHeight - Math.round($swResizeHandler.height() / 2) - 1
-                        });
+                        cursor: 'sw-resize',
+                        display: display,
+                        left: options.selectionPosition[0] - Math.round($swResizeHandler.width() / 2),
+                        top: options.selectionPosition[1] + options.selectionHeight - Math.round($swResizeHandler.height() / 2) - 1
+                    });
 
                     $sResizeHandler.css({
-                            cursor : 's-resize',
-                            display : display,
-                            left : options.selectionPosition[0] + Math.round(options.selectionWidth / 2 - $seResizeHandler.width() / 2) - 1,
-                            top : options.selectionPosition[1] + options.selectionHeight - Math.round($seResizeHandler.height() / 2) - 1
-                        });
+                        cursor: 's-resize',
+                        display: display,
+                        left: options.selectionPosition[0] + Math.round(options.selectionWidth / 2 - $seResizeHandler.width() / 2) - 1,
+                        top: options.selectionPosition[1] + options.selectionHeight - Math.round($seResizeHandler.height() / 2) - 1
+                    });
 
                     $seResizeHandler.css({
-                            cursor : 'se-resize',
-                            display : display,
-                            left : options.selectionPosition[0] + options.selectionWidth - Math.round($seResizeHandler.width() / 2) - 1,
-                            top : options.selectionPosition[1] + options.selectionHeight - Math.round($seResizeHandler.height() / 2) - 1
-                        });
+                        cursor: 'se-resize',
+                        display: display,
+                        left: options.selectionPosition[0] + options.selectionWidth - Math.round($seResizeHandler.width() / 2) - 1,
+                        top: options.selectionPosition[1] + options.selectionHeight - Math.round($seResizeHandler.height() / 2) - 1
+                    });
             }
         };
 
         // Update the preview
         function updatePreview(action) {
             switch (action) {
-                case 'focus' :
+                case 'focus':
                     // Fade in the preview holder layer
                     $previewHolder.stop()
                         .animate({
-                            opacity : options.previewFadeOnFocus
+                            opacity: options.previewFadeOnFocus
                         });
 
                     break;
-                case 'blur' :
+                case 'blur':
                     // Fade out the preview holder layer
                     $previewHolder.stop()
                         .animate({
-                            opacity : options.previewFadeOnBlur
+                            opacity: options.previewFadeOnBlur
                         });
 
                     break;
-                case 'hide' :
+                case 'hide':
                     // Hide the preview holder layer
                     $previewHolder.css({
-                        display : 'none'
+                        display: 'none'
                     });
 
                     break;
-                default :
+                default:
                     var display = (selectionExists && options.displayPreview) ? 'block' : 'none';
 
                     // Update the preview holder layer
                     $previewHolder.css({
-                            display : display,
-                            left : options.selectionPosition[0],
-                            top : options.selectionPosition[1] + options.selectionHeight + 10
-                        });
+                        display: display,
+                        left: options.selectionPosition[0],
+                        top: options.selectionPosition[1] + options.selectionHeight + 10
+                    });
 
                     // Update the preview size
                     if (options.selectionWidth > options.selectionHeight) {
@@ -486,8 +486,8 @@
 
                     // Update the preview image position
                     $preview.css({
-                        left : - Math.round(options.selectionPosition[0] * $preview.width() / $image.width()),
-                        top : - Math.round(options.selectionPosition[1] * $preview.height() / $image.height())
+                        left: -Math.round(options.selectionPosition[0] * $preview.width() / $image.width()),
+                        top: -Math.round(options.selectionPosition[1] * $preview.height() / $image.height())
                     });
             }
         };
@@ -495,46 +495,46 @@
         // Update the cursor type
         function updateCursor(cursorType) {
             $trigger.css({
-                    cursor : cursorType
-                });
+                cursor: cursorType
+            });
 
             $outline.css({
-                    cursor : cursorType
-                });
+                cursor: cursorType
+            });
 
             $selection.css({
-                    cursor : cursorType
-                });
+                cursor: cursorType
+            });
 
             $sizeHintBackground.css({
-                    cursor : cursorType
-                });
+                cursor: cursorType
+            });
 
             $sizeHintForeground.css({
-                    cursor : cursorType
-                });
+                cursor: cursorType
+            });
         };
 
         // Update the plug-in interface
         function updateInterface(sender) {
             switch (sender) {
-                case 'setSelection' :
+                case 'setSelection':
                     updateOverlayLayer();
                     updateSelection();
                     updateResizeHandlers('hide-all');
                     updatePreview('hide');
 
                     break;
-                case 'pickSelection' :
+                case 'pickSelection':
                     updateResizeHandlers('hide-all');
 
                     break;
-                case 'pickResizeHandler' :
+                case 'pickResizeHandler':
                     updateSizeHint();
                     updateResizeHandlers('hide-all');
 
                     break;
-                case 'resizeSelection' :
+                case 'resizeSelection':
                     updateSelection();
                     updateSizeHint();
                     updateResizeHandlers('hide-all');
@@ -542,14 +542,14 @@
                     updateCursor('crosshair');
 
                     break;
-                case 'moveSelection' :
+                case 'moveSelection':
                     updateSelection();
                     updateResizeHandlers('hide-all');
                     updatePreview();
                     updateCursor('move');
                     updateSizeHint();
                     break;
-                case 'releaseSelection' :
+                case 'releaseSelection':
                     updateTriggerLayer();
                     updateOverlayLayer();
                     updateSelection();
@@ -558,7 +558,7 @@
                     updatePreview();
 
                     break;
-                default :
+                default:
                     updateTriggerLayer();
                     updateOverlayLayer();
                     updateSelection();
@@ -585,15 +585,15 @@
             if (options.displayPreview) {
                 // Bind an event handler to the 'mouseenter' event of the preview
                 // holder
-                $previewHolder.mouseenter(function() {
-                        updatePreview('focus');
-                    });
+                $previewHolder.mouseenter(function () {
+                    updatePreview('focus');
+                });
 
                 // Bind an event handler to the 'mouseleave' event of the preview
                 // holder
-                $previewHolder.mouseleave(function() {
-                        updatePreview('blur');
-                    });
+                $previewHolder.mouseleave(function () {
+                    updatePreview('blur');
+                });
             }
 
             // Notify that a selection exists
@@ -649,42 +649,42 @@
             event.stopPropagation();
 
             switch (event.target.id) {
-                case 'image-crop-nw-resize-handler' :
+                case 'image-crop-nw-resize-handler':
                     selectionOrigin[0] += options.selectionWidth;
                     selectionOrigin[1] += options.selectionHeight;
                     options.selectionPosition[0] = selectionOrigin[0] - options.selectionWidth;
                     options.selectionPosition[1] = selectionOrigin[1] - options.selectionHeight;
 
                     break;
-                case 'image-crop-n-resize-handler' :
+                case 'image-crop-n-resize-handler':
                     selectionOrigin[1] += options.selectionHeight;
                     options.selectionPosition[1] = selectionOrigin[1] - options.selectionHeight;
 
                     resizeHorizontally = false;
 
                     break;
-                case 'image-crop-ne-resize-handler' :
+                case 'image-crop-ne-resize-handler':
                     selectionOrigin[1] += options.selectionHeight;
                     options.selectionPosition[1] = selectionOrigin[1] - options.selectionHeight;
 
                     break;
-                case 'image-crop-w-resize-handler' :
+                case 'image-crop-w-resize-handler':
                     selectionOrigin[0] += options.selectionWidth;
                     options.selectionPosition[0] = selectionOrigin[0] - options.selectionWidth;
 
                     resizeVertically = false;
 
                     break;
-                case 'image-crop-e-resize-handler' :
+                case 'image-crop-e-resize-handler':
                     resizeVertically = false;
 
                     break;
-                case 'image-crop-sw-resize-handler' :
+                case 'image-crop-sw-resize-handler':
                     selectionOrigin[0] += options.selectionWidth;
                     options.selectionPosition[0] = selectionOrigin[0] - options.selectionWidth;
 
                     break;
-                case 'image-crop-s-resize-handler' :
+                case 'image-crop-s-resize-handler':
                     resizeHorizontally = false;
 
                     break;
@@ -718,26 +718,26 @@
             // If the selection size is smaller than the minimum size set it
             // accordingly
             if (Math.abs(width) < options.minSize[0])
-                width = (width >= 0) ? options.minSize[0] : - options.minSize[0];
+                width = (width >= 0) ? options.minSize[0] : -options.minSize[0];
 
             if (Math.abs(height) < options.minSize[1])
-                height = (height >= 0) ? options.minSize[1] : - options.minSize[1];
+                height = (height >= 0) ? options.minSize[1] : -options.minSize[1];
 
             // Test if the selection size exceeds the image bounds
             if (selectionOrigin[0] + width < 0 || selectionOrigin[0] + width > $image.width())
-                width = - width;
+                width = -width;
 
             if (selectionOrigin[1] + height < 0 || selectionOrigin[1] + height > $image.height())
-                height = - height;
+                height = -height;
 
             if (options.maxSize[0] > options.minSize[0] &&
                 options.maxSize[1] > options.minSize[1]) {
                 // Test if the selection size is bigger than the maximum size
                 if (Math.abs(width) > options.maxSize[0])
-                    width = (width >= 0) ? options.maxSize[0] : - options.maxSize[0];
+                    width = (width >= 0) ? options.maxSize[0] : -options.maxSize[0];
 
                 if (Math.abs(height) > options.maxSize[1])
-                    height = (height >= 0) ? options.maxSize[1] : - options.maxSize[1];
+                    height = (height >= 0) ? options.maxSize[1] : -options.maxSize[1];
             }
 
             // Set the selection size
@@ -757,24 +757,24 @@
                         width = Math.round(height * options.aspectRatio);
                 else
                     if (resizeHorizontally)
-                        height = - Math.round(width / options.aspectRatio);
+                        height = -Math.round(width / options.aspectRatio);
                     else
-                        width = - Math.round(height * options.aspectRatio);
+                        width = -Math.round(height * options.aspectRatio);
 
                 // Test if the new size exceeds the image bounds
                 if (selectionOrigin[0] + width > $image.width()) {
                     width = $image.width() - selectionOrigin[0];
-                    height = (height > 0) ? Math.round(width / options.aspectRatio) : - Math.round(width / options.aspectRatio);
+                    height = (height > 0) ? Math.round(width / options.aspectRatio) : -Math.round(width / options.aspectRatio);
                 }
 
                 if (selectionOrigin[1] + height < 0) {
-                    height = - selectionOrigin[1];
-                    width = (width > 0) ? - Math.round(height * options.aspectRatio) : Math.round(height * options.aspectRatio);
+                    height = -selectionOrigin[1];
+                    width = (width > 0) ? -Math.round(height * options.aspectRatio) : Math.round(height * options.aspectRatio);
                 }
 
                 if (selectionOrigin[1] + height > $image.height()) {
                     height = $image.height() - selectionOrigin[1];
-                    width = (width > 0) ? Math.round(height * options.aspectRatio) : - Math.round(height * options.aspectRatio);
+                    width = (width > 0) ? Math.round(height * options.aspectRatio) : -Math.round(height * options.aspectRatio);
                 }
 
                 // Set the selection size
@@ -890,14 +890,14 @@
         };
     };
 
-    $.fn.imageCrop = function(customOptions) {
+    $.fn.imageCrop = function (customOptions) {
         //Iterate over each object
-        this.each(function() {
+        this.each(function () {
             var currentObject = this,
                 image = new Image();
 
             // And attach imageCrop when the object is loaded
-            image.onload = function() {
+            image.onload = function () {
                 $.imageCrop(currentObject, customOptions);
             };
 
@@ -909,4 +909,4 @@
         // function return the 'this' keyword to maintain chainability
         return this;
     };
-}) (jQuery);
+})(jQuery);
