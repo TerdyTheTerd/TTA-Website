@@ -1,0 +1,9 @@
+﻿@{
+    Layout = null;
+}
+
+@foreach (var item in ViewBag.Recent)
+{
+    <span style="display: inline;">@item.Title</span>
+    <span style="display: inline;">@item.Author</span>
+}

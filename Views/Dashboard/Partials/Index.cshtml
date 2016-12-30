@@ -1,0 +1,28 @@
+﻿<div class="activityMain">
+
+</div>
+<div class="sideMain">
+    <div class="friendSide">
+        @foreach (var user in ViewBag.Friends)
+        {
+            <div class="friend">
+                <a href="/dashboard/index/@user.DisplayName">
+                    <div class="userProfile">
+                        <img src="@user.ProfilePicture" width="50" height="50" />
+                    </div>
+                </a>
+                <span class="friendName">@user.DisplayName</span>
+            </div>
+
+        }
+    </div>
+    <div class="stats">
+
+    </div>
+    <div class="tags">
+
+    </div>
+    <div class="recentPost">
+
+    </div>
+</div>

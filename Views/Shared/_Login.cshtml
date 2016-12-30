@@ -1,0 +1,50 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>@ViewBag.Title</title>
+    @Styles.Render("~/Content/css")
+    <link href="~/Content/Login.css" rel="stylesheet" />
+    <link href="~/Content/animate.css" rel="stylesheet" />
+    @Scripts.Render("~/bundles/modernizr")
+
+</head>
+<body>
+    <div class="navbar navbar-inverse navbar-fixed-top">
+        <div class="container">
+
+            <ul class="nav navbar-nav">
+                <li>@Html.ActionLink("Affinity Wars", "Index", "Home")</li>
+                <li class="drop">
+                    @Html.ActionLink("Forums", "Index", "Forums")
+                    <div class="dropdown-content">
+                        <a href="#">Official Post</a>
+                        <a href="#">Community Post</a>
+                        <a href="#">My Hurr</a>
+                    </div>
+                </li>
+                <li>@Html.ActionLink("Shop", "Contact", "Home")</li>
+                <li>@Html.ActionLink("Server", "Minecraft", "Home")</li>
+            </ul>
+
+        </div>
+
+    </div>
+
+    <div class="container body-content">
+        @RenderBody()
+        <hr />
+        <footer>
+            <p>&copy; @DateTime.Now.Year - TerdyTheTerd</p>
+        </footer>
+    </div>
+
+    @Scripts.Render("~/bundles/jquery")
+    @Scripts.Render("~/bundles/bootstrap")
+    @Html.ActionLink("Shop", "Contact", "Home")
+    @RenderSection("scripts", required: false)
+    <script src="~/Scripts/tabs.js"></script>
+    <script src="~/Scripts/jquery.magnific-popup.js"></script>
+</body>
+</html>

@@ -1,0 +1,160 @@
+﻿@{
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+@using Microsoft.AspNet.Identity.Owin;
+@using Microsoft.AspNet.Identity
+@model WebApplication1.Models.UserStats
+                                    @{
+                                        var name = Model.DisplayName;
+                                    }
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title></title>
+</head>
+<body>
+    <div id="imageseperator"></div>
+    <div class="col-md-8 col-md-offset-2 dashcontent">
+        <div class="dashmain">
+
+            <div class="header-content">
+                <table class="profileheader">
+                    <tr>
+                        <td>
+                            <div class="profile" style="background-image: url(@ViewBag.Profile)">
+                                <div class="profilefooter">
+
+                                    @if (Model.ApplicationUserId == User.Identity.GetUserId())
+                                    {
+                                        <div class="profileoption">
+                                            
+                                            <span class="option">@Ajax.ActionLink("Change Cover", "ImageEdit", "Dashboard", new { id = name, type = "profile" }, new AjaxOptions { HttpMethod = "GET", InsertionMode = InsertionMode.Replace, UpdateTargetId = "imageuploader" }) </span>
+                                        </div>
+                                    }
+
+
+
+                                </div>
+                            </div>
+                        </td>
+                        <td>
+                            <div class="banner" style="background-image: url(@ViewBag.Banner)">
+                                <div class="banneroverlay">
+                                    <div class="banneroverlayleft">
+                                        <div class="banneroverlayname">
+
+                                            <span class="namespan">@Model.DisplayName</span>
+                                        </div>
+                                        <div class="banneroverlayquote">
+                                            <span class="quotespan">@Model.Quote</span>
+                                        </div>
+                                    </div>
+                                    <div class="banneroverlayright">
+                                        <div class="banneroverlaystatus">
+                                            <span class="statusspan">Online</span>
+                                        </div>
+                                        <div class="banneroverlaylocation">
+                                            <span class="locationspan">United States</span>
+                                        </div>
+                                    </div>
+
+                                </div>
+                                <div class="bannerfooter">
+                                     
+                                    @if (Model.ApplicationUserId == User.Identity.GetUserId())
+                                    {
+                                        <div class="banneroption">
+                                            <span class="option">@Ajax.ActionLink("Change Cover", "ImageEdit", "Dashboard", new { id = name, type = "banner"}, new AjaxOptions { HttpMethod = "GET", InsertionMode = InsertionMode.Replace, UpdateTargetId = "imageuploader" }) </span>
+                                        </div>
+                                    }
+                                                        else
+                                                        {
+
+                                        <div class="addFriend">
+                                            <span class="option">@Ajax.ActionLink("Add Friend", "AddFriend", "User", new { @id = name }, new AjaxOptions { HttpMethod = "GET" })</span>
+                                        </div>
+                                        <div class="bannerMessage">
+                                            <span class="option">Message</span>
+                                        </div>
+                                    }
+                                </div>
+
+                            </div>
+
+                        </td>
+                        <td>
+
+                            <!--<div class="userOptions">
+                                @Ajax.ActionLink("Add Friend", "AddFriend", "User", new AjaxOptions { HttpMethod = "GET"}))
+                                    <span class="fa fa-plus fa-2x"></span>
+                                </div>
+                                <div class="Message">
+                                    <span class="fa fa-envelope fa-2x"></span>
+                                </div>-->
+
+                        </td>
+                    </tr>
+                </table>
+
+            </div>
+            <div class="content-body">
+                <div class="sideContent">
+                    @{ 
+                        var current = ViewBag.current;
+                    }
+                    <div class="sideMenu">
+                        <a class="menuItem" data-ajax="true" data-ajax-method="GET" data-ajax-mode="replace" data-ajax-update="#partialBody" href="/Dashboard/Index/@Model.DisplayName"><div class="glyphicon glyphicon-bullhorn b" style="display: block"></div>Activity</a>
+                        @*<div class="glyphicon glyphicon-bullhorn b" style="display: block"></div>
+                        @Ajax.ActionLink("Activity", "Activity", "Dashboard", new AjaxOptions { HttpMethod = "GET", InsertionMode = InsertionMode.Replace, UpdateTargetId = "partialBody" }, new { @class = "menuTextb" })*@
+                    </div>
+                    <div class="sideMenu">
+                        <a class="menuItem" data-ajax="true" data-ajax-method="GET" data-ajax-mode="replace" data-ajax-update="#partialBody" href="/Dashboard/Info/@Model.DisplayName"><div class="glyphicon glyphicon-user b" style="display: block"></div>About Me</a>
+                        @*<div class="glyphicon glyphicon-user u" style="display: block"></div>
+                        @Ajax.ActionLink("About Me", "Info", "Dashboard", new AjaxOptions { HttpMethod = "GET", InsertionMode = InsertionMode.Replace, UpdateTargetId = "partialBody" }, new { @class = "menuTextb" })*@
+                    </div>
+                    <div class="sideMenu">
+                        <a class="menuItem" data-ajax="true" data-ajax-method="GET" data-ajax-mode="replace" data-ajax-update="#partialBody" href="/Dashboard/Pictures/@Model.DisplayName"><div class="glyphicon glyphicon-picture b" style="display: block"></div>Pictures</a>
+                        @*<div class="glyphicon glyphicon-picture p" style="display: block"></div>
+                        @Ajax.ActionLink("Pictures", "Pictures", "Dashboard", new AjaxOptions { HttpMethod = "GET", InsertionMode = InsertionMode.Replace, UpdateTargetId = "partialBody" }, new { @class = "menuTextb" })*@
+                    </div>
+                    <div class="sideMenu">
+                        <a class="menuItem" data-ajax="true" data-ajax-method="GET" data-ajax-mode="replace" data-ajax-update="#partialBody" href="/Dashboard/Post/@Model.DisplayName"><div class="fa fa-comments fa-3x b" style="display: block"></div>Post</a>
+                        @*<div class="fa fa-comments fa-3x a" style="display: block"></div>
+                        @Ajax.ActionLink("Post", "Post", "Dashboard", new AjaxOptions { HttpMethod = "GET", InsertionMode = InsertionMode.Replace, UpdateTargetId = "partialBody" }, new { @class = "menuTextb" })*@
+                    </div>
+                    @*<a href="/Dashboard/Activity/@Model.DisplayName" class="sideMenu">
+                        <div class="glyphicon glyphicon-bullhorn b" style="display: block"></div>
+                        <span class="menuTextb">Activity</span>
+                    </a>
+                    <a href="/Dashboard/Info/@Model.DisplayName" class="sideMenu">
+
+                        <span class="menuTextu">About Me</span>
+                    </a>
+                    <a href="/Dashboard/Pictures/@Model.DisplayName" class="sideMenu">
+
+                        <span class="menuTextp">Pictures</span>
+                    </a>
+                    <a href="/Dashboard/Post/@Model.DisplayName" class="sideMenu">
+
+                        <span class="menuTexta">Post</span>
+                    </a>*@
+
+                </div>
+                <div id="partialBody">
+                    @RenderBody()
+                </div>
+
+
+
+            </div>
+        </div>
+    </div>
+    <div id="imageuploader">
+
+    </div>
+</body>
+
+</html>

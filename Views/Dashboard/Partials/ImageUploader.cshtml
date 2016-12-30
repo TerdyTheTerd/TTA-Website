@@ -1,0 +1,87 @@
+﻿@model WebApplication1.Models.ImageViewModel
+<div id="imagebody">
+    <div class="imageheader">
+        <div class="imageheadertitle">
+            <span>Set Profile Banner</span>
+        </div>
+        <span class="imageclose glyphicon glyphicon-remove-circle"></span>
+    </div>
+    <div class="imagecenter">
+        <div class="imagetabs">
+            <ul class="imagetab">
+                <li>
+                    <span>Upload Cover</span>
+                </li>
+                <li>
+                    <span>Sponsered Covers</span>
+                </li>
+            </ul>
+        </div>
+        <div class="imagecenteroutline">
+            <div id="imagecontent">
+                <div id="imagestart">
+                    <span class="glyphicon glyphicon-download-alt dl"></span>
+                    <div class="imagestart-text">
+                        <span>Drag/Drop Here</span>
+                        <span>- or -</span>
+                    </div>
+                    <div class="imageupload">
+                        @using (Html.BeginForm("Index", "Dashboard",new { @id = ViewBag.userName },  FormMethod.Post, new {  @id = "imageform", enctype = "multipart/form-data" } ))
+                        {
+                            @Html.HiddenFor(x => x.offSetX)
+                            @Html.HiddenFor(x => x.offSetY)
+                            @Html.HiddenFor(x => x.width)
+                            @Html.HiddenFor(x => x.height)
+                            @Html.HiddenFor(x => x.Type)
+                            <label id="upload"><input type="file" name="file" id="img" accept=".jpg,.png" style="display: none" /><span>Upload Image</span></label>
+
+                            <input type="submit" style="display: none" />
+                        }
+                        @*<form id="imageform" method="POST" enctype="multipart/form-data">
+                            <input id="x" name="offSetX" type="hidden" />
+                            <input id="y" name="offSetY" type="hidden" />
+                            <input id="width" name="width" type="hidden" />
+                            <input id="height" name="height" type="hidden" />
+                            <label id="upload"><input type="file" name="file" id="img" accept=".jpg,.png" style="display: none" /><span>Upload Image</span></label>
+                            <input type="submit" style="display: none" />
+                        </form>*@
+
+
+                    </div>
+                </div>
+                <div class="imageediting">
+                    <div class="imageselection">
+
+                    </div>
+                </div>
+                <div class="imageoverlay">
+                    <span class="imagedelete">Remove Selected Image</span>
+                </div>
+                <div id="imagemain">
+
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="imagefooter">
+        <span class="imagefootertext">Uploading obscene or otherwise unwanted content will result in a ban!</span>
+        <div class="imagefooterbtn">
+            <div class="imagebtncancel">
+
+                <span id="cancel">Cancel</span>
+            </div>
+            <div class="imagebtnconfirm">
+                <span id="savebanner">Set Banner</span>
+            </div>
+        </div>
+    </div>
+</div>
+<script>
+    $(document).ready(function () {
+        var Type = '@ViewBag.Type';
+        imagewrapper(Type);
+        $("#imageseperator").show();
+    });
+
+
+</script>

@@ -1,0 +1,308 @@
+﻿@{
+    ViewBag.Title = "Forums";
+}
+
+<div class="row">
+
+    <div class="col-md-9 col-sm-6 col-md-offset-1 main">
+        <h2>Affinity Wars Officials Forums</h2>
+        <hr />
+        <div class="col-md-12 col-sm-6 forum">
+            <ul class="ul-noDisplay">
+                <li class="nodeDrop">
+                    <div class="nodeHeader">
+                        <h3 style="display: inline">Affinity Wars Official</h3>
+                        <div class="categoryMeta">
+                            <div class="threadCount">
+                                <span style="display: block">Total Threads</span>
+                                <span>69</span>
+                            </div>
+                            <div class="postCount">
+                                <span style="display: block">Total Post</span>
+                                <span>9000</span>
+                            </div>
+                            <a class="togglelink"><strong class="caret nodeCaret"></strong></a>
+                        </div>
+                        </div>
+                        
+                    <div class="toggle" style="display: block;">
+                    <ul class="nodeDropwDown">
+                        <li class="nodeItem">
+                            <div class="nodeSection1">
+                                <span class="glyphicon glyphicon-user icon"></span>
+                                <div class="categoryTitle">
+                                    @Html.ActionLink("Affinity Wars Server", "ViewForums", "Forums", new { category = "Affinity-Wars-Server" }, new { @class = "ThreadHeading" })
+                                </div>
+                                <div class="nodeMeta">
+                                    <span class="nodeMetaTop">
+                                        <span>Latest</span>
+                                        <a href="https://hypixel.net/forums/" title="Hurr">Testing long string lenght for text-overflow</a>
+                                    </span>
+                                    <span>
+                                        <span>@DateTime.Now</span>
+                                    </span>
+                                </div>
+                            </div>
+                        </li>
+                        <li class="nodeItem">
+                            <div class="nodeSection2">
+                                <span class="glyphicon glyphicon-user icon"></span>
+                                <div class="categoryTitle">
+                                    @Html.ActionLink("News and Announcements", "ViewForums", "Forums", new { category = "News-and-Announcements" }, new { @class = "ThreadHeading" })
+                                </div>
+                                <div class="nodeMeta">
+                                    <span class="nodeMetaTop">
+                                        <span>Latest</span>
+                                        <a href="https://hypixel.net/forums/" title="Hurr">Testing long string lenght for text-overflow</a>
+                                    </span>
+                                    <span>
+                                        <span>@DateTime.Now</span>
+                                    </span>
+                                </div>
+                            </div>
+                        </li>
+                        <li class="nodeItem">
+                            <div class="nodeSection3">
+                                <span class="glyphicon glyphicon-user icon"></span>
+                                <div class="categoryTitle">
+                                    @Html.ActionLink("Ideas for Improvements", "ViewForums", "Forums", new { category = "Ideas-for-Improvement" }, new { @class = "ThreadHeading" })
+                                </div>
+                                <div class="nodeMeta">
+                                    <span class="nodeMetaTop">
+                                        <span>Latest</span>
+                                        <a href="https://hypixel.net/forums/" title="Hurr">Testing long string lenght for text-overflow</a>
+                                    </span>
+                                    <span>
+                                        <span>@DateTime.Now</span>
+                                    </span>
+                                </div>
+                            </div>
+                        </li>
+                        <li class="nodeItem">
+                            <div class="nodeSection4">
+                                <span class="glyphicon glyphicon-new-window icon"></span>
+                                <div>
+                                    <a href="https://github.com/TerdyTheTerd/AffinityWars/issues" title="Bug Reports" class="ThreadHeading">Bug Reports</a>
+                                </div>
+                            </div>
+                        </li>
+                        <li>
+
+                        </li>
+                    </ul>
+        </div>
+
+        </li>
+                <li class="nodeDrop">
+                    <div class="nodeHeader">
+                        <h3 style="display: inline">Community Post</h3>
+                        <div class="categoryMeta">
+                            <div class="threadCount">
+                                <span style="display: block">Total Threads</span>
+                                <span>69</span>
+                            </div>
+                            <div class="postCount">
+                                <span style="display: block">Total Post</span>
+                                <span>9000</span>
+                            </div>
+                            <a class="togglelink1"><strong class="caret nodeCaret"></strong></a>
+                        </div>
+                    </div>
+                    <div class="toggle1" style="display: block;">
+                        <ul class="nodeDropwDown">
+                            <li class="nodeItem">
+                                <div class="nodeSection1">
+                                    <span class="glyphicon glyphicon-user icon"></span>
+                                    <div class="categoryTitle">
+                                        @Html.ActionLink("General Discussions", "ViewForums", "Forums", new { category = "General-Discussions" }, new { @class = "ThreadHeading" })
+                                    </div>
+                                    <div class="nodeMeta">
+                                        <span class="nodeMetaTop">
+                                            <span>Latest</span>
+                                            <a href="https://hypixel.net/forums/" title="Hurr">Testing long string lenght for text-overflow</a>
+                                        </span>
+                                        <span>
+                                            <span>@DateTime.Now</span>
+                                        </span>
+                                    </div>
+                                </div>
+                            </li>
+                            <li class="nodeItem">
+                                <div class="nodeSection2">
+                                    <span class="glyphicon glyphicon-user icon"></span>
+                                    <div class="categoryTitle">
+                                        @Html.ActionLink("Faction Recruitments", "ViewForums", "Forums", new { category = "Faction-Recruitments" }, new { @class = "ThreadHeading" })
+                                    </div>
+                                    <div class="nodeMeta">
+                                        <span class="nodeMetaTop">
+                                            <span>Latest</span>
+                                            <a href="https://hypixel.net/forums/" title="Hurr">Testing long string lenght for text-overflow</a>
+                                        </span>
+                                        <span>
+                                            <span>@DateTime.Now</span>
+                                        </span>
+                                    </div>
+                                </div>
+                            </li>
+                            <li class="nodeItem">
+                                <div class="nodeSection3">
+                                    <span class="glyphicon glyphicon-user icon"></span>
+                                    <div class="categoryTitle">
+                                        @Html.ActionLink("Player Suggestions", "ViewForums", "Forums", new { category = "Player-Suggestions" }, new { @class = "ThreadHeading" })
+                                    </div>
+                                    <div class="nodeMeta">
+                                        <span class="nodeMetaTop">
+                                            <span>Latest</span>
+                                            <a href="https://hypixel.net/forums/" title="Hurr">Testing long string lenght for text-overflow</a>
+                                        </span>
+                                        <span>
+                                            <span>@DateTime.Now</span>
+                                        </span>
+                                    </div>
+                                </div>
+                            </li>
+                            <li class="nodeItem">
+                                <div class="nodeSection3">
+                                    <span class="glyphicon glyphicon-user icon"></span>
+                                    <div class="categoryTitle">
+                                        @Html.ActionLink("Bans and Appeals", "ViewForums", "Forums", new { category = "Bans-and-Appeals" }, new { @class = "ThreadHeading" })
+                                    </div>
+                                    <div class="nodeMeta">
+                                        <span class="nodeMetaTop">
+                                            <span>Latest</span>
+                                            <a href="https://hypixel.net/forums/" title="Hurr">Testing long string lenght for text-overflow</a>
+                                        </span>
+                                        <span>
+                                            <span>@DateTime.Now</span>
+                                        </span>
+                                    </div>
+                                </div>
+                            </li>
+                            <li class="nodeItem">
+                                <div class="nodeSection3">
+                                    <span class="glyphicon glyphicon-user icon"></span>
+                                    <div class="categoryTitle">
+                                        @Html.ActionLink("Base Showcases", "ViewForums", "Forums", new { category = "Base-Showcases" }, new { @class = "ThreadHeading" })
+                                    </div>
+                                    <div class="nodeMeta">
+                                        <span class="nodeMetaTop">
+                                            <span>Latest</span>
+                                            <a href="https://hypixel.net/forums/" title="Hurr">Testing long string lenght for text-overflow</a>
+                                        </span>
+                                        <span>
+                                            <span>@DateTime.Now</span>
+                                        </span>
+                                    </div>
+                                </div>
+                            </li>
+                        </ul>
+                    </div>
+
+                </li>
+                <li class="nodeDrop">
+                    <div class="nodeHeader">
+                        <h3 style="display: inline">Contact and Support</h3>
+                        <div class="categoryMeta">
+                            <div class="threadCount">
+                                <span style="display: block">Total Threads</span>
+                                <span>69</span>
+                            </div>
+                            <div class="postCount">
+                                <span style="display: block">Total Post</span>
+                                <span>9000</span>
+                            </div>
+                            <a class="togglelink2"><strong class="caret nodeCaret"></strong></a>
+                        </div>
+                    </div>
+                    <div class="toggle2" style="display: block;">
+                        <ul class="nodeDropwDown">
+                            <li class="nodeItem">
+                                <div class="nodeSection1">
+                                    <span class="glyphicon glyphicon-user icon"></span>
+                                    <div class="categoryTitle">
+                                        @Html.ActionLink("Contact an Admin", "ViewForums", "Forums", new { category = "Contact-an-Admin" }, new { @class = "ThreadHeading" })
+                                    </div>
+                                    <div class="nodeMeta">
+                                        <span class="nodeMetaTop">
+                                            <span>Latest</span>
+                                            <a href="https://hypixel.net/forums/" title="Hurr">Testing long string lenght for text-overflow</a>
+                                        </span>
+                                        <span>
+                                            <span>@DateTime.Now</span>
+                                        </span>
+                                    </div>
+                                </div>
+                            </li>
+                            <li class="nodeItem">
+                                <div class="nodeSection1">
+                                    <span class="glyphicon glyphicon-user icon"></span>
+                                    <div class="categoryTitle">
+                                        @Html.ActionLink("Modpack Supprot", "ViewForums", "Forums", new { category = "Modpac-Support" }, new { @class = "ThreadHeading" })
+                                    </div>
+                                    <div class="nodeMeta">
+                                        <span class="nodeMetaTop">
+                                            <span>Latest</span>
+                                            <a href="https://hypixel.net/forums/" title="Hurr">Testing long string lenght for text-overflow</a>
+                                        </span>
+                                        <span>
+                                            <span>@DateTime.Now</span>
+                                        </span>
+                                    </div>
+                                </div>
+                            </li>
+                            <li class="nodeItem">
+                                <div class="nodeSection2">
+                                    <span class="glyphicon glyphicon-user icon"></span>
+                                    <div class="categoryTitle">
+                                        @Html.ActionLink("Server Suport", "ViewForums", "Forums", new { category = "Server-Support" }, new { @class = "ThreadHeading" })
+                                    </div>
+                                    <div class="nodeMeta">
+                                        <span class="nodeMetaTop">
+                                            <span>Latest</span>
+                                            <a href="https://hypixel.net/forums/" title="Hurr">Testing long string lenght for text-overflow</a>
+                                        </span>
+                                        <span>
+                                            <span>@DateTime.Now</span>
+                                        </span>
+                                    </div>
+                                </div>
+                            </li>
+                            <li class="nodeItem">
+                                <div class="nodeSection3">
+                                    <span class="glyphicon glyphicon-user icon"></span>
+                                    <div class="categoryTitle">
+                                        @Html.ActionLink("General Tech Support", "ViewForums", "Forums", new { category = "General-Tech-Support" }, new { @class = "ThreadHeading" })
+                                    </div>
+                                    <div class="nodeMeta">
+                                        <span class="nodeMetaTop">
+                                            <span>Latest</span>
+                                            <a href="https://hypixel.net/forums/" title="Hurr">Testing long string lenght for text-overflow</a>
+                                        </span>
+                                        <span>
+                                            <span>@DateTime.Now</span>
+                                        </span>
+                                    </div>
+                                </div>
+                            </li>
+                        </ul>
+                    </div>
+
+                </li>
+
+        </ul>
+    </div>
+   
+        <div>
+
+
+
+
+        </div>
+    </div>
+    <div class="col-md-1 col-sm-1  rn">
+        <h3>Recent News</h3>
+    </div>
+    <div class="col-md-1 col-sm-1  tp">
+        <h3>Top Posters</h3>
+    </div>
+</div>

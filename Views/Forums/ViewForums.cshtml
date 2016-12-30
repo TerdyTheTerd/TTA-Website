@@ -1,0 +1,40 @@
+﻿@{
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+@using CodeKicker.BBCode;
+
+               <!DOCTYPE html>
+<link href="~/Content/Site.css" rel="stylesheet" />
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title></title>
+</head>
+<body>
+    <div class="col-md-10 col-md-offset-1 ViewForumsMain">
+        <div class="ForumsBody">
+            <div class="row">
+                <div class="col-md-1">
+                    <div class="ForumCreate">
+                        @Html.ActionLink("Create Thread", "Create", "Forums", new { category = @ViewBag.Cat }, null)
+                    </div>
+                </div>
+            </div>
+
+    @ViewBag.Test
+        <h2>ViewPost</h2>
+        @foreach ( var item in ViewBag.MyList)
+        {
+            <div class="ForumThread">
+                <span class="glyphicon-cloud" style="display: inline;"></span>
+                <span style="display: inline;">@item.Title</span>
+                <span style="display: inline;">@item.Author</span>
+
+            </div>
+           
+        }
+        </div>
+    </div>
+</body>
+</html>

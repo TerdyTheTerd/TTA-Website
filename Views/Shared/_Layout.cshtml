@@ -1,0 +1,77 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>@ViewBag.Title</title>
+    @Styles.Render("~/Content/css")
+
+    <link href="~/Content/animate.css" rel="stylesheet" />
+    <link href="~/Content/countrySelect.css" rel="stylesheet" />
+    <link rel="stylesheet" href="https://ajax.googleapis.com/ajax/libs/jqueryui/1.12.1/themes/smoothness/jquery-ui.css">
+    <link href="~/Content/jquery.imagecrop.css" rel="stylesheet" />
+    @Scripts.Render("~/bundles/modernizr")
+    @Scripts.Render("~/bundles/bootstrap")
+    <script src="https://code.jquery.com/jquery-2.2.4.js"
+            integrity="sha256-iT6Q9iMJYuQiMWNd9lDyBUStIq/8PuOW33aOqmvFpqI="
+            crossorigin="anonymous"></script>
+    <script src="~/Scripts/jquery.wysibb.js"></script>
+</head>
+<body>
+    <div class="navbar navbar-inverse navbar-fixed-top">
+        <div class="container">
+
+            <ul class="nav navbar-nav">
+                <li>@Html.ActionLink("Affinity Wars", "Index", "Home")</li>
+                <li class="drop">
+                     @Html.ActionLink("Forums", "Index", "Forums")
+                    <div class="dropdown-content">
+                        @Html.ActionLink("Official Post", "Official-Post", "Forums")
+                        @Html.ActionLink("Community Post", "Community-Post", "Forums")
+                        @Html.ActionLink("My Post", "My-Post", "Forums")
+                    </div>
+                <li>@Html.ActionLink("Shop", "Contact", "Home")</li>
+                <li>@Html.ActionLink("Server", "Minecraft", "Home")</li>
+                <li>@Html.ActionLink("Community", "Users", "Home")</li>
+            </ul>
+            @Html.Partial("_LoginPartial")
+            
+
+        </div>
+
+    </div>
+
+    <div class="container body-content">
+        @RenderBody()
+        <div class="row">
+            <div class="col-md-12">
+                @if(User.Identity.IsAuthenticated)
+                {
+                    @Html.Partial("_NotificationBarPartial");
+                }
+                
+            </div>
+        </div>
+        <hr />
+        <div class="row">
+            <div class="col-sm-1 col-md-2  col-md-offset-5 ft">
+                <footer class="copy">
+                    <p>&copy; @DateTime.Now.Year - TerdyTheTerd</p>
+
+                </footer>
+            </div>
+        </div>
+    </div>
+
+   <!-- @Scripts.Render("~/bundles/jquery")-->
+    @Scripts.Render("~/bundles/bootstrap")
+    <script src="~/Scripts/jquery.unobtrusive-ajax.js"></script>
+    @RenderSection("scripts", required: false)
+    <script src="~/Scripts/tabs.js"></script>
+    <script src="~/Scripts/jquery.magnific-popup.js"></script>
+    <script src="~/Scripts/countrySelect.js"></script>
+    <script src="https://use.fontawesome.com/8d28f25c9f.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.12.1/jquery-ui.min.js"></script>
+    <script src="~/Scripts/jquery.imagecrop.js"></script>
+</body>
+</html>

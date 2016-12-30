@@ -1,0 +1,24 @@
+﻿
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title></title>
+</head>
+<body>
+    <div>
+    @foreach(var item in ViewBag.Users)
+    {
+        <a href="/dashboard/index/@item.DisplayName">
+            <div class="userProfile">
+                <img src="@item.ProfilePicture" width="25" height="25" />
+            </div>
+            <span>@item.DisplayName</span>
+        </a>
+
+    }
+    </div>
+</body>
+</html>

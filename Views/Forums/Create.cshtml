@@ -1,0 +1,33 @@
+﻿@model WebApplication1.Models.Post
+<head>
+    <link href="~/Content/wbbtheme.css" rel="stylesheet" />
+</head>
+<body>
+    <div class="createPost">
+        @using (Html.BeginForm())
+        {
+            @Html.ValidationSummary()
+          <div class="form-group">
+              @Html.LabelFor(x => x.Title)
+              @Html.EditorFor(x => x.Title)
+          </div>
+   
+    
+          <div class="form-group">
+             @Html.LabelFor(x => x.Body)
+                @Html.TextAreaFor(x => x.Body, new { @id = "editor" })
+         </div>
+
+          <button class="btn btn-default" type="submit">Submit Post</button>
+        }
+        <script>
+
+        $(document).ready(function() {
+        var wbbOpt = {
+        buttons: "bold,italic,underline,,strike,sup,sub,fontcolor,fontsize,|,table,img,link,video,|,code,quote,spoiler,bullist,numlist,|,justifyleft,justifycenter,justifyright,removeFormat"
+        }
+        $("#editor").wysibb(wbbOpt);
+        });
+        </script>
+    </div>
+</body>
