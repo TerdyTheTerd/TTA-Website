@@ -1,0 +1,19 @@
+﻿@{
+    Layout = null;
+}
+<div class="recentPostBody">
+    <div class="recentTitle">
+        <span>Recent Post</span>
+    </div>
+    <div class="recentBody">
+        @foreach (var item in ViewBag.Recent)
+        {
+            <div class="recentPost">
+                <a class="forumTitle" href="/Forums/ViewPost/@item.Id">@item.Title</a>
+                <a class="forumAuthor" href="/Dashboard/Index/@item.Author">@item.Author</a>
+            </div>
+
+        }
+    </div>
+
+</div>
