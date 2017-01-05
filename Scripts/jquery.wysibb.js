@@ -103,12 +103,12 @@ wbbdebug=true;
 			hotkeys:			true,
 			showHotkeys:		true,
 			autoresize:			true,
-			resize_maxheight:	800,
+			resize_maxheight:	3000,
 			loadPageStyles:		true,
 			traceTextarea:		true,
 //			direction:			"ltr",
 			smileConversion:	true,
-
+            minheight: 300,
 			//END img upload config 
 			buttons: 			"bold,italic,underline,strike,sup,sub,|,img,video,link,|,bullist,numlist,|,fontcolor,fontsize,fontfamily,|,justifyleft,justifycenter,justifyright,|,quote,code,table,removeFormat",
 			allButtons: {

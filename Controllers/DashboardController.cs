@@ -23,6 +23,7 @@ namespace WebApplication1.Controllers
             var db = new ApplicationDbContext();
             {
                 UserStats model = db.UserStat.SingleOrDefault(x => x.DisplayName == id);
+                ApplicationUser user = System.Web.HttpContext.Current.GetOwinContext().GetUserManager<ApplicationUserManager>().FindById(System.Web.HttpContext.Current.User.Identity.GetUserId());
                 //string profileURL = "/../Assets/UserProfilePics/" + id + "-Profile.png";
                 string profileURL = (from hurr in db.UserStat
                                      where hurr.DisplayName.Equals(id)
@@ -55,11 +56,14 @@ namespace WebApplication1.Controllers
                 {
                     return PartialView("~/Views/Dashboard/Partials/Index.cshtml");
                 }
-                if (!model.DisplayName.Equals(id))
+                if (!model.DisplayName.Equals(user.DisplayName))
                 {
-                    if (friendList.Contains(id))
+                    if (friendList.Contains(user.Id))
                     {
                         ViewBag.isFriend = true;
+                    } else
+                    {
+                        ViewBag.isFriend = false;
                     }
                 return View(model);
                 } else
@@ -74,6 +78,7 @@ namespace WebApplication1.Controllers
         [HttpPost]
         public ActionResult Index(ImageViewModel model, string id)
         {
+            var errors = ModelState.Values.SelectMany(v => v.Errors);
             if (!ModelState.IsValid)
             {
                 return View();
@@ -203,7 +208,7 @@ namespace WebApplication1.Controllers
         }
 
         [HttpPost]
-        public ActionResult Account(UserStats model)
+        public ActionResult Account(AccountBasicViewModel model)
         {
             // Add Code to save changes made
             if (!ModelState.IsValid)
@@ -219,7 +224,6 @@ namespace WebApplication1.Controllers
                 user.Bio = model.Bio;
                 user.Quote = model.Quote;
                 user.Location = model.Location;
-                model.DisplayName = user.DisplayName;
                 db.SaveChanges();
             }
 
@@ -266,23 +270,33 @@ namespace WebApplication1.Controllers
                 return null;
             }
         }
-        public bool areFriends(string id)
+        [HttpPost]
+        public ActionResult AddFriend(string id)
         {
-            var db = new ApplicationDbContext();
-            ApplicationUser currentUser = System.Web.HttpContext.Current.GetOwinContext().GetUserManager<ApplicationUserManager>().FindById(System.Web.HttpContext.Current.User.Identity.GetUserId());
-            UserStats user =
+            //if (Request.IsAjaxRequest())
+            //{
+                var db = new ApplicationDbContext();
+                ApplicationUser currentUser = System.Web.HttpContext.Current.GetOwinContext().GetUserManager<ApplicationUserManager>().FindById(System.Web.HttpContext.Current.User.Identity.GetUserId());
+                UserStats friendUser =
                     (from hurr in db.UserStat
                      where hurr.DisplayName.Equals(id)
                      select hurr).SingleOrDefault();
-            List<string> friends = db.Friend.Where(x => x.userId == currentUser.Id).Select(x => x.friendId).ToList();
-            if (friends.Contains(id))
-            {
-                return true;
-            }
-            else
-            {
-                return false;
-            }
+                var friend = new Friends();
+                friend.userId = currentUser.Id;
+                friend.friendId = friendUser.ApplicationUserId;
+                db.Friend.Add(friend);
+                db.SaveChanges();
+                friend.userId = friendUser.ApplicationUserId;
+                friend.friendId = currentUser.Id;
+                db.Friend.Add(friend);
+                db.SaveChanges();
+                return RedirectToAction("Index", new { id = id});
+            //}
+            //else
+            //{
+            //    return null;
+            //}
+
         }
     }
 }

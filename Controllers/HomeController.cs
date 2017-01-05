@@ -11,13 +11,17 @@ namespace WebApplication1.Controllers
     {
         public ActionResult Index()
         {
-            var db = new ForumsDbContext();
-            List<Post> query =
-                (from hurr in db.Posts
-                 where hurr.Category.Equals("News-and-Announcements")
-                 orderby hurr.PostedDate descending
-                 select hurr).ToList();
-            ViewBag.News = query;
+            using (var db = new ApplicationDbContext())
+            {
+                List<Post> query =
+                    (from hurr in db.Post
+                    where hurr.Category.Equals("News-and-Announcements")
+                    orderby hurr.PostedDate descending
+                    select hurr).ToList();
+                ViewBag.News = query;
+            }
+
+            ViewBag.IsAdmin = User.IsInRole("Admin");
             return View();
         }
         public ActionResult Contact()
@@ -37,6 +41,7 @@ namespace WebApplication1.Controllers
             return View();
         }
 
+        [Authorize(Roles = "Admin")]
         public ActionResult Users()
         {
             var db = new ApplicationDbContext();

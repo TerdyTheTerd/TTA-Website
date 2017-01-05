@@ -1,10 +1,8 @@
-﻿using CodeKicker.BBCode;
-using Microsoft.AspNet.Identity;
+﻿using Microsoft.AspNet.Identity;
 using Microsoft.AspNet.Identity.Owin;
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Threading.Tasks;
 using System.Web;
 using System.Web.Mvc;
 using WebApplication1.Models;
@@ -38,8 +36,8 @@ namespace WebApplication1.Controllers
 
                 post.PostedDate = DateTime.Now;
                 post.Author = user.DisplayName;
-                var db = new ForumsDbContext();
-                db.Posts.Add(post);
+                var db = new ApplicationDbContext();
+                db.Post.Add(post);
                  db.SaveChanges();
             }
             return RedirectToAction("ViewPost", new { id = post.Id });
@@ -48,20 +46,27 @@ namespace WebApplication1.Controllers
         }
 
         [HttpGet]
+        public ActionResult PreviewPost(Post model)
+        {
+            return null;
+        }
+
+        [ViewCount]
+        [HttpGet]
         public ActionResult ViewPost(long id)
         {
-            var db = new ForumsDbContext();
-            var post = db.Posts.SingleOrDefault(x => x.Id == id);
+            var db = new ApplicationDbContext();
+            var post = db.Post.SingleOrDefault(x => x.Id == id);
             return View(post);
         }
         [HttpGet]
         public ActionResult ViewForums(string category)
         {
             ViewBag.Cat = category;
-            var db = new ForumsDbContext();
+            var db = new ApplicationDbContext();
             List<Post> query =
-                (from hurr in db.Posts
-                where hurr.Category.Equals(category)
+                (from hurr in db.Post
+                 where hurr.Category.Equals(category)
                 select hurr).ToList();
             ViewBag.MyList = query;
             return View();
@@ -70,13 +75,13 @@ namespace WebApplication1.Controllers
         [ChildActionOnly]
         public ActionResult RecentPost()
         {
-            var db = new ForumsDbContext();
+            var db = new ApplicationDbContext();
             List<Post> recent =
-                (from hurr in db.Posts
+                (from hurr in db.Post
                  orderby hurr.PostedDate descending
                  select hurr).Take(5).ToList();
             ViewBag.Recent = recent;
-            return PartialView();
+            return PartialView("~/Views/Shared/Partials/_RecentPost.cshtml");
         }
     }
 }

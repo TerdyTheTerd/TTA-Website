@@ -11,12 +11,15 @@
     <div>
     @foreach(var item in ViewBag.Users)
     {
-        <a href="/dashboard/index/@item.DisplayName">
-            <div class="userProfile">
-                <img src="@item.ProfilePicture" width="25" height="25" />
-            </div>
-            <span>@item.DisplayName</span>
-        </a>
+        <div class="userBlock">
+            <a  class="userA" href="/Dashboard/Index/@item.DisplayName">
+                <div class="userProfile">
+                    <img src="@item.ProfilePicture" width="75" height="75" />
+                </div>
+                <span class="usernameText">@item.DisplayName</span>
+            </a>
+        </div>
+        
 
     }
     </div>

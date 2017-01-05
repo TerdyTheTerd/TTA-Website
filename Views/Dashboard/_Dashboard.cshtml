@@ -3,9 +3,9 @@
 }
 @using Microsoft.AspNet.Identity;
 @model WebApplication1.Models.UserStats
-                                    @{
-                                        var name = Model.DisplayName;
-                                    }
+@{
+    var name = Model.DisplayName;
+}
 
 <!DOCTYPE html>
 
@@ -29,7 +29,7 @@
                                     @if (Model.ApplicationUserId == User.Identity.GetUserId())
                                     {
                                         <div class="profileoption">
-                                            
+
                                             <span class="option">@Ajax.ActionLink("Edit", "ImageEdit", "Dashboard", new { id = name, type = "profile" }, new AjaxOptions { HttpMethod = "GET", InsertionMode = InsertionMode.Replace, UpdateTargetId = "imageuploader" }) </span>
                                         </div>
                                     }
@@ -53,7 +53,8 @@
                                     </div>
                                     <div class="banneroverlayright">
                                         <div class="banneroverlaystatus">
-                                            <span class="statusspan">Online</span>
+                                           
+                                                <span class="statusOn">Online</span>
                                         </div>
                                         <div class="banneroverlaylocation">
                                             <span class="locationspan">United States</span>
@@ -62,21 +63,26 @@
 
                                 </div>
                                 <div class="bannerfooter">
-                                     
+
                                     @if (Model.ApplicationUserId == User.Identity.GetUserId())
                                     {
                                         <div class="banneroption">
-                                            <span class="option">@Ajax.ActionLink("Change Cover", "ImageEdit", "Dashboard", new { id = name, type = "banner"}, new AjaxOptions { HttpMethod = "GET", InsertionMode = InsertionMode.Replace, UpdateTargetId = "imageuploader", OnComplete = "Testing" }) </span>
+                                            <span class="option">@Ajax.ActionLink("Change Cover", "ImageEdit", "Dashboard", new { id = name, type = "banner" }, new AjaxOptions { HttpMethod = "GET", InsertionMode = InsertionMode.Replace, UpdateTargetId = "imageuploader", OnComplete = "Testing" }) </span>
                                         </div>
                                     }
-                                                        else
-                                                        {
-                                    if (ViewBag.isFriend)
+                                    else
                                     {
-                                        <div class="addFriend">
-                                            <span class="option">@Ajax.ActionLink("Add Friend", "AddFriend", "User", new { @id = name }, new AjaxOptions { HttpMethod = "GET" })</span>
-                                        </div>
-                                    }
+                                        if (!ViewBag.isFriend)
+                                        {
+                                            using (Html.BeginForm("AddFriend", "Dashboard", new { @id = ViewBag.userName }, FormMethod.Post, new { @id = "addFriend", enctype = "multipart/form-data" }))
+                                            {
+                                               @Html.HiddenFor(x => x.Id)
+                                                <input type="submit" style="display: none" />
+                                            }
+                                            <div class="addFriend">
+                                                <span id="option">Add Friend</span>
+                                            </div>
+                                        }
 
                                         <div class="bannerMessage">
                                             <span class="option">Message</span>
@@ -87,62 +93,52 @@
                             </div>
 
                         </td>
-                        <td>
-
-                            <!--<div class="userOptions">
-                                @Ajax.ActionLink("Add Friend", "AddFriend", "User", new AjaxOptions { HttpMethod = "GET", OnComplete = "Testing"}))
-                                    <span class="fa fa-plus fa-2x"></span>
-                                </div>
-                                <div class="Message">
-                                    <span class="fa fa-envelope fa-2x"></span>
-                                </div>-->
-
-                        </td>
                     </tr>
                 </table>
 
             </div>
             <div class="content-body">
                 <div class="sideContent">
-                    @{ 
+                    @{
                         var current = ViewBag.current;
                     }
                     <div class="sideMenu">
                         <a id="activity" class="menuItem" data-ajax="true" data-ajax-method="GET" data-ajax-mode="replace" data-ajax-update="#partialBody" href="/Dashboard/Index/@Model.DisplayName"><div class="glyphicon glyphicon-bullhorn b" style="display: block"></div>Activity</a>
+
                         @*<div class="glyphicon glyphicon-bullhorn b" style="display: block"></div>
-                        @Ajax.ActionLink("Activity", "Activity", "Dashboard", new AjaxOptions { HttpMethod = "GET", InsertionMode = InsertionMode.Replace, UpdateTargetId = "partialBody" }, new { @class = "menuTextb" })*@
+                            @Ajax.ActionLink("Activity", "Activity", "Dashboard", new AjaxOptions { HttpMethod = "GET", InsertionMode = InsertionMode.Replace, UpdateTargetId = "partialBody" }, new { @class = "menuTextb" })*@
                     </div>
                     <div class="sideMenu">
-                        <a class="menuItem" data-ajax="true" data-ajax-method="GET" data-ajax-mode="replace" data-ajax-update="#partialBody" href="/Dashboard/Info/@Model.DisplayName"><div id="info" class="glyphicon glyphicon-user b" style="display: block"></div>About Me</a>
-                        <div class="glyphicon glyphicon-user u" style="display: block"></div>
-                        @Ajax.ActionLink("About Me", "Info", "Dashboard", new AjaxOptions { HttpMethod = "GET", OnComplete = "Testing", InsertionMode = InsertionMode.Replace, UpdateTargetId = "partialBody" }, new { @class = "menuTextb" })
+                        <a id="info" class="menuItem" data-ajax="true" data-ajax-method="GET" data-ajax-mode="replace" data-ajax-update="#partialBody" href="/Dashboard/Info/@Model.DisplayName"><div id="info" class="glyphicon glyphicon-user b" style="display: block"></div>About Me</a>
+                        @*<div class="glyphicon glyphicon-user u" style="display: block"></div>
+                            @Ajax.ActionLink("About Me", "Info", "Dashboard", new AjaxOptions { HttpMethod = "GET", OnComplete = "Testing", InsertionMode = InsertionMode.Replace, UpdateTargetId = "partialBody" }, new { @class = "menuTextb" })*@
                     </div>
                     <div class="sideMenu">
-                        <a class="menuItem" data-ajax="true" data-ajax-method="GET" data-ajax-mode="replace" data-ajax-update="#partialBody" href="/Dashboard/Pictures/@Model.DisplayName"><div id="pics" class="glyphicon glyphicon-picture b" style="display: block"></div>Pictures</a>
+                        <a id="pics" class="menuItem" data-ajax="true" data-ajax-method="GET" data-ajax-mode="replace" data-ajax-update="#partialBody" href="/Dashboard/Pictures/@Model.DisplayName"><div id="pics" class="glyphicon glyphicon-picture b" style="display: block"></div>Pictures</a>
                         @*<div class="glyphicon glyphicon-picture p" style="display: block"></div>
-                        @Ajax.ActionLink("Pictures", "Pictures", "Dashboard", new AjaxOptions { HttpMethod = "GET", InsertionMode = InsertionMode.Replace, UpdateTargetId = "partialBody" }, new { @class = "menuTextb" })*@
+                            @Ajax.ActionLink("Pictures", "Pictures", "Dashboard", new AjaxOptions { HttpMethod = "GET", InsertionMode = InsertionMode.Replace, UpdateTargetId = "partialBody" }, new { @class = "menuTextb" })*@
                     </div>
                     <div class="sideMenu">
-                        <a class="menuItem" data-ajax="true" data-ajax-method="GET" data-ajax-mode="replace" data-ajax-update="#partialBody" href="/Dashboard/Post/@Model.DisplayName"><div id="post" class="fa fa-comments fa-3x b" style="display: block"></div>Post</a>
+                        <a id="post" class="menuItem" data-ajax="true" data-ajax-method="GET" data-ajax-mode="replace" data-ajax-update="#partialBody" href="/Dashboard/Post/@Model.DisplayName"><div id="post" class="fa fa-comments fa-3x b" style="display: block"></div>Post</a>
                         @*<div class="fa fa-comments fa-3x a" style="display: block"></div>
-                        @Ajax.ActionLink("Post", "Post", "Dashboard", new AjaxOptions { HttpMethod = "GET", InsertionMode = InsertionMode.Replace, UpdateTargetId = "partialBody" }, new { @class = "menuTextb" })*@
+                            @Ajax.ActionLink("Post", "Post", "Dashboard", new AjaxOptions { HttpMethod = "GET", InsertionMode = InsertionMode.Replace, UpdateTargetId = "partialBody" }, new { @class = "menuTextb" })*@
                     </div>
                     @*<a href="/Dashboard/Activity/@Model.DisplayName" class="sideMenu">
-                        <div class="glyphicon glyphicon-bullhorn b" style="display: block"></div>
-                        <span class="menuTextb">Activity</span>
-                    </a>
-                    <a href="/Dashboard/Info/@Model.DisplayName" class="sideMenu">
+                            <div class="glyphicon glyphicon-bullhorn b" style="display: block"></div>
+                            <span class="menuTextb">Activity</span>
+                        </a>
+                        <a href="/Dashboard/Info/@Model.DisplayName" class="sideMenu">
 
-                        <span class="menuTextu">About Me</span>
-                    </a>
-                    <a href="/Dashboard/Pictures/@Model.DisplayName" class="sideMenu">
+                            <span class="menuTextu">About Me</span>
+                        </a>
+                        <a href="/Dashboard/Pictures/@Model.DisplayName" class="sideMenu">
 
-                        <span class="menuTextp">Pictures</span>
-                    </a>
-                    <a href="/Dashboard/Post/@Model.DisplayName" class="sideMenu">
+                            <span class="menuTextp">Pictures</span>
+                        </a>
+                        <a href="/Dashboard/Post/@Model.DisplayName" class="sideMenu">
 
-                        <span class="menuTexta">Post</span>
-                    </a>*@
+                            <span class="menuTexta">Post</span>
+                        </a>*@
 
                 </div>
                 <div id="partialBody">

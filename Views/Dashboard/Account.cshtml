@@ -1,0 +1,53 @@
+﻿
+@model WebApplication1.Models.UserStats
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title></title>
+</head>
+<body>
+    <div class="accountMain">
+        <div class="basic">
+            <div class="AccountDetails">
+                @using (Html.BeginForm(FormMethod.Post))
+                {
+                    @Html.ValidationSummary()
+                    <div class="form-group">
+                        @Html.LabelFor(x => x.NickName, new { @id = "nickHint"} )
+                        <div class="nicknameHint">
+                            <span class="hintText">Nickname will only be displayed for you and your friends</span>
+                        </div>
+                        @Html.EditorFor(x => x.NickName, new { @Value = (Model.NickName) })
+                    </div>
+                    <div class="form-group">
+                        @Html.LabelFor(x => x.Quote)
+                        @Html.EditorFor(x => x.Quote, new { @Value = (Model.Quote) })
+                    </div>
+                    <div class="form-group">
+                        @Html.LabelFor(x => x.Bio, new { @id = "bioLabel"})
+                        @Html.TextAreaFor(x => x.Bio, new { @id = "bioEdit"})
+                    </div>
+                    <div class="form-group">
+                        @Html.LabelFor(x => x.Location)
+                        <input type="text" id="country" />
+                    </div>
+
+                    <div class="form-group">
+                        <div class="submit">
+                            <input type="submit" value="Apply Changes" class="btn btn-default" />
+                        </div>
+                    </div>
+                }
+
+            </div>
+        </div>
+        <div class="accountInfo">
+
+        </div>
+    </div>
+    
+</body>
+</html>

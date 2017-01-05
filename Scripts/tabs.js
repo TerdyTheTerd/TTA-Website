@@ -96,8 +96,13 @@ function imagewrapper(Type) {
         $("#imageseperator").hide();
         resizeToDefault();
     });
+    $("#imagedelete").on("click", function () {
+        $("#imagemain").empty();
+        $("#imagestart").show();
+    });
     $("#upload").change(function (event) {
         $("#imagestart").hide();
+        $("#imagedelete").show();
         //Create the image
         var img = document.createElement("img");
         img.src = URL.createObjectURL(event.target.files[0]);
@@ -150,3 +155,38 @@ function updateForm(cropData) {
     $('#height').val(cropData.selectionHeight);
     $('#type').val(cropData.imageType);
 }
+function initDash(view) {
+    var currentView = view;
+    $("#" + currentView).css("color", "grey");
+    $("#activity").on("click", function () {
+        $("#" + currentView).css("color", "#333");
+        $("#activity").css("color", "grey");
+        currentView = 'activity';
+    });
+    $("#info").on("click", function () {
+        $("#" + currentView).css("color", "#333");
+        $("#info").css("color", "grey");
+        currentView = 'info';
+    });
+    $("#pics").on("click", function () {
+        $("#" + currentView).css("color", "#333");
+        $("#pics").css("color", "grey");
+        currentView = 'pics';
+    });
+    $("#post").on("click", function () {
+        $("#" + currentView).css("color", "#333");
+        $("#post").css("color", "grey");
+        currentView = 'post';
+    });
+if (view === currentView) {
+    $("#" + currentView).css("color", "grey");
+}
+$("#option").on("click", function () {
+    var hurr = document.getElementById('addFriend');
+    $("#id").val('@model.Id')
+    hurr.submit();
+})
+    
+}
+
+

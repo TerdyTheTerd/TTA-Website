@@ -6,9 +6,9 @@
         @foreach (var user in ViewBag.Friends)
         {
             <div class="friend">
-                <a href="/dashboard/index/@user.DisplayName">
+                <a href="/Dashboard/Index/@user.DisplayName">
                     <div class="userProfile">
-                        <img src="@user.ProfilePicture" width="50" height="50" />
+                        <img src="@user.ProfilePicture" width="75" height="75" />
                     </div>
                 </a>
                 <span class="friendName">@user.DisplayName</span>

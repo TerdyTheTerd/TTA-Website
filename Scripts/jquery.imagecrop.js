@@ -17,6 +17,7 @@
             outlineOpacity: 0.5,
             overlayOpacity: 0.5,
             previewBoundary: 90,
+            widePreviewBoundary: 50,
             previewFadeOnBlur: 1,
             previewFadeOnFocus: 0.35,
             selectionPosition: [0, 0],
@@ -28,7 +29,7 @@
             onChange: function () { },
             onSelect: function () { }
         };
-
+        
         // Set options to default
         var options = defaultOptions;
 
@@ -37,7 +38,7 @@
 
         // Initialize the image layer
         var $image = $(object);
-
+options.widePreviewBoundary = $image.width() / 4;
         // Initialize an image holder
         var $holder = $('<div id="testing"/>')
                 .css({
@@ -270,10 +271,10 @@
         // Return an object containing information about the plug-in state
         function getCropData() {
             return {
-                selectionX: options.selectionPosition[0],
-                selectionY: options.selectionPosition[1],
-                selectionWidth: options.selectionWidth,
-                selectionHeight: options.selectionHeight,
+                selectionX: Math.round(options.selectionPosition[0]),
+                selectionY: Math.round(options.selectionPosition[1]),
+                    selectionWidth: Math.round(options.selectionWidth),
+                selectionHeight: Math.round(options.selectionHeight),
                 imageType: options.Type,
 
                 selectionExists: function () {
@@ -465,15 +466,15 @@
                     if (options.selectionWidth > options.selectionHeight) {
                         if (options.selectionWidth && options.selectionHeight) {
                             // Update the preview image size
-                            $preview.width(Math.round($image.width() * options.previewBoundary / options.selectionWidth));
+                            $preview.width(Math.round($image.width() * options.widePreviewBoundary / options.selectionWidth));
                             $preview.height(Math.round($image.height() * $preview.width() / $image.width()));
 
                             // Update the preview holder layer size
-                            $previewHolder.width(options.previewBoundary)
+                            $previewHolder.width(options.widePreviewBoundary)
                                 .height(Math.round(options.selectionHeight * $preview.height() / $image.height()));
                         }
                     } else {
-                        if (options.selectionWidth && options.selectionHeight) {
+                        if (options.selectionWidth == options.selectionHeight) {
                             // Update the preview image size
                             $preview.height(Math.round($image.height() * options.previewBoundary / options.selectionHeight));
                             $preview.width(Math.round($image.width() * $preview.height() / $image.height()));
@@ -742,10 +743,10 @@
 
             // Set the selection size
             if (resizeHorizontally)
-                options.selectionWidth = width;
+                options.selectionWidth = Math.round(width);
 
             if (resizeVertically)
-                options.selectionHeight = height;
+                options.selectionHeight = Math.round(height);
 
             // If any aspect ratio is specified
             if (options.aspectRatio) {
@@ -778,8 +779,8 @@
                 }
 
                 // Set the selection size
-                options.selectionWidth = width;
-                options.selectionHeight = height;
+                options.selectionWidth = Math.round(width);
+                options.selectionHeight = Math.round(height);
             }
 
             if (options.selectionWidth < 0) {

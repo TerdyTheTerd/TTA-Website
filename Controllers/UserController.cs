@@ -37,7 +37,7 @@ namespace WebApplication1.Controllers
                 friend.friendId = currentUser.Id;
                 db.Friend.Add(friend);
                 db.SaveChanges();
-                return PartialView("~/Views/Shared/UserPartial.cshtml");
+                return RedirectToAction("Index", "Dashboard");
             }
             else
             {

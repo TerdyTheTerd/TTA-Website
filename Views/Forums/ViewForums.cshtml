@@ -28,9 +28,9 @@
         {
             <div class="ForumThread">
                 <span class="glyphicon-cloud" style="display: inline;"></span>
-                <span style="display: inline;">@item.Title</span>
-                <span style="display: inline;">@item.Author</span>
-
+                <a class="forumTitle" href="/Forums/ViewPost/@item.Id">@item.Title</a>
+                <a class="forumAuthor" href="/Dashboard/Index/@item.Author">@item.Author</a>
+                <span class="postViews">@item.Views</span>
             </div>
            
         }

@@ -24,7 +24,6 @@ html{height:100% !important;}
 	position:relative;
 	background:#fff;
 	font-size:12px;
-	width: 50%;
 }
 
 .wysibb button:focus,.wysibb button:active,#wbbmodal button:focus, #wbbmodal button:active{

@@ -157,7 +157,7 @@ namespace WebApplication1.Controllers
                 {
                     UserManager.AddClaim(user.Id, new Claim(ClaimTypes.GivenName, model.Name));
                    var db = new ApplicationDbContext();
-                    var userStat = new UserStats { PointsEarned = 0, PointsGiven = 0, TotalPost = 0, IsPremium = false, ApplicationUserId = user.Id, ProfilePicture = "/../Assets/UserProfilePics/defualtuserprofile.png", ProfileBanner = "/../Assets/UserBannerPics/defualtuserbanner.png", DisplayName = user.DisplayName };
+                    var userStat = new UserStats { PointsEarned = 0, PointsGiven = 0, TotalPost = 0, IsPremium = false, ApplicationUserId = user.Id, ProfilePicture = "/../Assets/UserProfilePics/defualtuserprofile.png", ProfileBanner = "/../Assets/UserBannerPics/defualtuserbanner.png", DisplayName = user.DisplayName, Quote = "A is for AffinityWars!", Bio = "This is my bio, please update me!" };
                     db.UserStat.Add(userStat);
                     db.SaveChanges();
                     await SignInManager.SignInAsync(user, isPersistent:false, rememberBrowser:false);
