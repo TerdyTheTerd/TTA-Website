@@ -20,7 +20,7 @@ Website Functionality
 - [x] User account customization
 - [ ] User leveling system
 - [x] In-depth Forums system
-- [ ] Post point sytem
+- [x] Post point sytem
 - [x] Friends Functionality
 - [ ] Privacy Filters
 - [ ] Intergrated Discord Server
