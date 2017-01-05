@@ -24,3 +24,4 @@ Website Functionality
 - [x] Friends Functionality
 - [ ] Privacy Filters
 - [ ] Intergrated Discord Server
+- [x] Admin Panel

@@ -33,8 +33,14 @@
                 <li>@Html.ActionLink("Shop", "Contact", "Home")</li>
                 <li>@Html.ActionLink("Server", "Minecraft", "Home")</li>
                 <li>@Html.ActionLink("Community", "Users", "Home")</li>
+                @if (ViewBag.IsAdmin)
+                {
+                    <li class="adminLink">@Html.ActionLink("Admin", "Index", "Admin")</li>
+                }
+                @*@Html.Partial("~/Views/Shared/AdminTestPartial.cshtml")*@
+                @*<li>@Html.ActionLink("Community", "Users", "Home")</li>*@
             </ul>
-            @Html.Partial("_LoginPartial")
+            @Html.Partial("~/Views/Shared/Partials/_LoginPartial.cshtml")
             
 
         </div>
@@ -47,7 +53,7 @@
             <div class="col-md-12">
                 @if(User.Identity.IsAuthenticated)
                 {
-                    @Html.Partial("_NotificationBarPartial");
+                    @Html.Partial("~/Views/Shared/Partials/_NotificationBarPartial.cshtml")
                 }
                 
             </div>

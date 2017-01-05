@@ -37,7 +37,7 @@ namespace WebApplication1.Models
             return new ApplicationDbContext();
         }
         public DbSet<UserStats> UserStat { get; set; }
-        public DbSet<Post> PostDate { get; set; }
+        public DbSet<Post> Post { get; set; }
         public DbSet<WallPost> WallPost { get; set; }
         public DbSet<Friends> Friend { get; set; }
         public DbSet<PostComment> WallPostReply { get; set; }

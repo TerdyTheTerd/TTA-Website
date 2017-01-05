@@ -1,0 +1,35 @@
+﻿
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>Admin Paenl</title>
+    @Styles.Render("~/Content/css")
+    @Scripts.Render("~/bundles/modernizr")
+    @Scripts.Render("~/bundles/bootstrap")
+    <link href="~/Content/animate.css" rel="stylesheet" />
+    <link href="~/Content/countrySelect.css" rel="stylesheet" />
+</head>
+<body>
+    <div class="navbar navbar-inverse navbar-fixed-top">
+        <div class="container adminNav">
+            <ul class="nav navbar-nav">
+                <li>@Html.ActionLink("Affinity Wars", "Index", "Home")</li>
+                <li>@Html.ActionLink("Users", "Index", "Home")</li>
+                <li>@Html.ActionLink("Affinity Wars", "Index", "Home")</li>
+                <li>@Html.ActionLink("Affinity Wars", "Index", "Home")</li>
+            </ul>
+        </div>
+    </div>
+        <div>
+            @RenderBody()
+        </div>
+
+        @Scripts.Render("~/bundles/bootstrap")
+        <script src="~/Scripts/jquery.unobtrusive-ajax.js"></script>
+        @RenderSection("scripts", required: false)
+        <script src="~/Scripts/countrySelect.js"></script>
+        <script src="https://use.fontawesome.com/8d28f25c9f.js"></script>
+</body>
+</html>
