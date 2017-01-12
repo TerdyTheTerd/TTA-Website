@@ -25,21 +25,11 @@ namespace WebApplication1.Models
         public string DisplayName { get; set; }
     }
 
-    public class ApplicationDbContext : IdentityDbContext<ApplicationUser>
+    public class EmailUser
     {
-        public ApplicationDbContext()
-            : base("DefaultConnection", throwIfV1Schema: false)
-        {
-        }
+        public string url { get; set; }
+        public string name { get; set; }
 
-        public static ApplicationDbContext Create()
-        {
-            return new ApplicationDbContext();
-        }
-        public DbSet<UserStats> UserStat { get; set; }
-        public DbSet<Post> Post { get; set; }
-        public DbSet<WallPost> WallPost { get; set; }
-        public DbSet<Friends> Friend { get; set; }
-        public DbSet<PostComment> WallPostReply { get; set; }
     }
+    
 }

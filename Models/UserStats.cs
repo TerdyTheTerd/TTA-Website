@@ -31,11 +31,14 @@ namespace WebApplication1.Models
         public int Gender { get; set; }
         public int Age { get; set; }
         public string NameEffect { get; set; }
+        public int StorageAvailable { get; set; }
+        public int StorageUsed { get; set; }
        
 
         public virtual ApplicationUser User { get; set; }
         [ForeignKey("User")]
         public string DisplayName { get; set; }
+
         public string ApplicationUserId { get; set; }
 
     }

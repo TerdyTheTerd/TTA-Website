@@ -1,0 +1,64 @@
+﻿@{
+    ViewBag.Title = "Contact";
+}
+<div class="supportMain">
+
+    <aside class="ticketStats">
+        @*Placeholder for future Ticket Stats tracking for total tickets, total closed and current still open*@
+    </aside>
+    <div class="supportInfo">
+        <p>Welcome to Through The Ages support page. Here you will find usefull links for common issues, our support ticket system for more seriouis or private matters and a few methods of contacting the Support team.</p>
+        <p>Please be aware that this community site is in developement, updates will be frequent and may cause sublte bugs. We will work our hardest to adressing these and any other issues that may be present.</p>
+    </div>
+    <div class="supportLinks">
+        <h3>Additional Resources</h3>
+        <ul class="supportList">
+            <li><a href="https://github.com/TerdyTheTerd/TTA-Website">Github</a></li>
+            <li><a href="http://www.technicpack.net/modpack/affinity-wars.314400">Technic Pack</a></li>
+            <li><a href="http://forums.technicpack.net/topic/124830-1710-aw-official-pvp69-slotsopenaffinitywars/">Technic Forums</a></li>
+        </ul>
+
+        <h3>Community Forums Links</h3>
+        <ul class="supportList">
+            <li><a href="/Forums/ViewForums?category=Modpac-Support">Modpack Support</a></li>
+            <li><a href="/Forums/ViewForums?category=Server-Support">Server Support</a></li>
+            <li><a href="/Forums/ViewForums?category=General-Tech-Support">Tech Support</a></li>
+        </ul>
+        
+        
+        
+    </div>
+    <div class="supportForms">
+
+    <div class="supportContact">
+        <span>@ViewBag.Title.</span>
+        <span>@ViewBag.TheMessage</span>
+        <form method="post" class="supportForm">
+            <textarea name="message" class="supportMessage" maxlength="1500"></textarea>
+            <textarea name="email" class="returnEmail" maxlength="100"></textarea>
+            <input type="submit" value="Send" class="supportSend"/>
+        </form>
+    </div>
+    <div class="feedbackContact">
+        <span>Leave a comment.</span>
+        <form method="post" class="supportForm">
+            <textarea name="message" class="supportMessage" maxlength="300" data-bind="value:message,valueUpdate:'input'"></textarea>
+            <input type="submit" value="Send" class="supportSend" />
+            <span data-bind="text:charactersRemaining"></span>
+        </form>
+    </div>
+    </div>
+</div>
+<script src="~/Scripts/knockout-3.4.0.js"></script>
+<script>
+    function ContactViewModel() {
+        var self = this;
+        self.message = ko.observable('');
+        self.charactersRemaining = ko.computed(function () {
+            return 300 - self.message().length;
+        });
+    }
+    ko.applyBindings(new ContactViewModel());
+</script>
+
+

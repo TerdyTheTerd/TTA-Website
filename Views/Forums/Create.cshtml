@@ -42,7 +42,7 @@
                         </div>
 
                         <button class="btn btn-default" type="submit">Submit Post</button>
-                        
+                       //Create an Ajax form for preview of post, then use a javascript function to actually post the post to the controller
                         <div id="postPreview"><span>Preview</span></div>
                     }
                 </div>
@@ -67,13 +67,18 @@
             $("#editor").wysibb(wbbOpt);
 
             $("#postPreview").on("click", function () {
-                var previewBody = document.getElementById('editor').innerHTML;
-                $ajax({
-                    url: "/Forums/Preview",
-                    type: "GET",
-                    data: { body: previewBody }
-                }).success(function (data) {
-                    $("#previewHolder").html(data);
+                var previewBody = document.getElementById('hurr').innerHTML;
+                $.ajax({
+                    url: "/Forums/PreviewPost",
+                    type: 'POST',
+                    dataType: 'html',
+                    data: { test: $('#hurr').html() },
+                    success: function (data) {
+                        $("#previewHolder").html(data);
+                    },
+                    error: function (xhr, status) {
+                        alert("Sorry, there was a problem!");
+                    }
                 });
             });
         });

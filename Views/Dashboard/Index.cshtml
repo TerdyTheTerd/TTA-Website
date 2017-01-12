@@ -6,18 +6,26 @@
 </div>
 <div class="sideMain">
     <div class="friendSide">
-        @foreach (var user in ViewBag.Friends)
+        @if (ViewBag.Friends.Count == 0)
         {
-            <div class="friend">
-                <a href="/Dashboard/Index/@user.DisplayName">
-                    <div class="userProfile">
-                        <img src="@user.ProfilePicture" width="75" height="75" />
-                    </div>
-                </a>
-                <span class="friendName">@user.DisplayName</span>
-            </div>
 
         }
+        else
+        {
+            foreach (var user in ViewBag.Friends)
+            {
+                <div class="friend">
+                    <a href="/Dashboard/Index/@user.DisplayName">
+                        <div class="userProfile">
+                            <img src="@user.ProfilePicture" width="75" height="75" />
+                        </div>
+                    </a>
+                    <span class="friendName">@user.DisplayName</span>
+                </div>
+
+            }
+        }
+
     </div>
     <div class="stats">
 

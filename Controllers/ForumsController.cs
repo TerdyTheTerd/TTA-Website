@@ -45,10 +45,11 @@ namespace WebApplication1.Controllers
 
         }
 
-        [HttpGet]
-        public ActionResult PreviewPost(Post model)
+        [HttpPost]
+        [ValidateInput(false)]
+        public string PreviewPost(string test)
         {
-            return null;
+            return  Server.HtmlDecode(CodeParser.getParser().ToHtml(test));
         }
 
         [ViewCount]
@@ -67,9 +68,10 @@ namespace WebApplication1.Controllers
             List<Post> query =
                 (from hurr in db.Post
                  where hurr.Category.Equals(category)
+                 orderby hurr.PostedDate descending
                 select hurr).ToList();
-            ViewBag.MyList = query;
-            return View();
+            //ViewBag.MyList = query;
+            return View(query);
         }
 
         [ChildActionOnly]
@@ -82,6 +84,16 @@ namespace WebApplication1.Controllers
                  select hurr).Take(5).ToList();
             ViewBag.Recent = recent;
             return PartialView("~/Views/Shared/Partials/_RecentPost.cshtml");
+        }
+
+        [HttpPost]
+        [ChildActionOnly]
+        public ActionResult PostComment()
+        {
+            //Get the ViewModel data and update db
+            //Increment Post data for number of replies
+            //Increment UserStats data for number of post 
+            return null;
         }
     }
 }

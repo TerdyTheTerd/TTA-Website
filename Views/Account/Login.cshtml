@@ -45,11 +45,15 @@
                     <p>
                         @Html.ActionLink("Don't have an acount yet? Sign up now!", "Register")
                     </p>
+                    
                     @* Enable this once you have account confirmation enabled for password reset functionality
                         <p>
                             @Html.ActionLink("Forgot your password?", "ForgotPassword")
                         </p>*@
                 }
+                <section id="socialLoginForm">
+                    @Html.Partial("_ExternalLoginsListPartial", new ExternalLoginListViewModel { ReturnUrl = ViewBag.ReturnUrl })
+                </section>
             </section>
         </div>
 

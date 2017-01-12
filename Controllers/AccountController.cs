@@ -9,6 +9,10 @@ using Microsoft.AspNet.Identity;
 using Microsoft.AspNet.Identity.Owin;
 using Microsoft.Owin.Security;
 using WebApplication1.Models;
+using RazorEngine.Templating;
+using System.IO;
+using RazorEngine;
+using System.Text;
 
 namespace WebApplication1.Controllers
 {
@@ -73,6 +77,16 @@ namespace WebApplication1.Controllers
                 return View(model);
             }
 
+            // Require the user to have a confirmed email before they can log on.
+            var user = await UserManager.FindByNameAsync(model.Email);
+            if (user != null)
+            {
+                if (!await UserManager.IsEmailConfirmedAsync(user.Id))
+                {
+                    ViewBag.errorMessage = "You must have a confirmed email to log on.";
+                    return View("Error");
+                }
+            }
             // This doesn't count login failures towards account lockout
             // To enable password failures to trigger account lockout, change to shouldLockout: true
             var result = await SignInManager.PasswordSignInAsync(model.Email, model.Password, model.RememberMe, shouldLockout: false);
@@ -160,15 +174,27 @@ namespace WebApplication1.Controllers
                     var userStat = new UserStats { PointsEarned = 0, PointsGiven = 0, TotalPost = 0, IsPremium = false, ApplicationUserId = user.Id, ProfilePicture = "/../Assets/UserProfilePics/defualtuserprofile.png", ProfileBanner = "/../Assets/UserBannerPics/defualtuserbanner.png", DisplayName = user.DisplayName, Quote = "A is for AffinityWars!", Bio = "This is my bio, please update me!" };
                     db.UserStat.Add(userStat);
                     db.SaveChanges();
-                    await SignInManager.SignInAsync(user, isPersistent:false, rememberBrowser:false);
-                    
+                    //await SignInManager.SignInAsync(user, isPersistent:false, rememberBrowser:false);
+
                     // For more information on how to enable account confirmation and password reset please visit http://go.microsoft.com/fwlink/?LinkID=320771
                     // Send an email with this link
-                    // string code = await UserManager.GenerateEmailConfirmationTokenAsync(user.Id);
-                    // var callbackUrl = Url.Action("ConfirmEmail", "Account", new { userId = user.Id, code = code }, protocol: Request.Url.Scheme);
-                    // await UserManager.SendEmailAsync(user.Id, "Confirm your account", "Please confirm your account by clicking <a href=\"" + callbackUrl + "\">here</a>");
+                    string code = await UserManager.GenerateEmailConfirmationTokenAsync(user.Id);
+                    var callbackUrl = Url.Action("ConfirmEmail", "Account", new { userId = user.Id, code = code }, protocol: Request.Url.Scheme);
+                    //Create new IdentiyMessage and pass it to SendAsync
+                    EmailUser modelEmail = new EmailUser { url = Url.Action("ConfirmEmail", "Account", new { userId = user.Id, code = code }, protocol: Request.Url.Scheme), name = model.Name };
+                    var emailTemplate = "C:\\Users\\Terdy\\Documents\\Visual Studio 2015\\Projects\\WebApplication1\\WebApplication1\\EmailTemplates\\EmailConfirmation.cshtml";
+                    string readText = System.IO.File.ReadAllText(emailTemplate);
+                    string emailhtml = Engine.Razor.RunCompile(readText, "email", null, modelEmail);
+                    await UserManager.SendEmailAsync(user.Id, "Confirm your account", emailhtml);
 
-                    return RedirectToAction("Index", "Home");
+                    // TempData["ViewBagLink"] = callbackUrl;
+
+                    ViewBag.Message = "Check your email and confirm your account, you must be confirmed "
+                                    + "before you can log in.";
+
+                    return View("Info");
+
+                    //return RedirectToAction("Index", "Home");
                 }
                 AddErrors(result);
             }

@@ -16,11 +16,11 @@
 </head>
 <body>
     <div id="imageseperator"></div>
-    <div class="col-md-8 col-md-offset-2 dashcontent">
+    <div class="dashcontent">
         <div class="dashmain">
 
             <div class="header-content">
-                <table class="profileheader">
+                <table class="profileheader" id="banner">
                     <tr>
                         <td>
                             <div class="profile" style="background-image: url(@ViewBag.Profile)">
@@ -85,7 +85,7 @@
                                         }
 
                                         <div class="bannerMessage">
-                                            <span class="option">Message</span>
+                                            @Html.ActionLink("Message", "Index", "Message", null, new { @class = "option"})
                                         </div>
                                     }
                                 </div>
@@ -153,6 +153,20 @@
     <div id="imageuploader">
 
     </div>
+    <script>
+        $(document).ready(function () {
+            function check() {
+                if ($(window).width() < 1365) {
+                    $('tr').last().css('display', "block");
+                    $('td').first().css('display', "block");
+                } else {
+                    $('tr').css('display', 'table-row')
+                }
+            }
+            
+            $(window).resize(check)
+        });
+    </script>
 </body>
 
 </html>

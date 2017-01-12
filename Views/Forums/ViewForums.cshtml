@@ -1,9 +1,11 @@
 ﻿@{
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
+@using Newtonsoft.Json
 @using CodeKicker.BBCode;
+@model IEnumerable<WebApplication1.Models.Post>
 
-               <!DOCTYPE html>
+<!DOCTYPE html>
 <link href="~/Content/Site.css" rel="stylesheet" />
 
 <html>
@@ -21,10 +23,40 @@
                     </div>
                 </div>
             </div>
-
     @ViewBag.Test
         <h2>ViewPost</h2>
-        @foreach ( var item in ViewBag.MyList)
+        <table class="table table-striped table-bordered">
+            <thead>
+                <tr>
+                    <td class="tableTitle">Title</td>
+                    <td class="tableAuthor tableCenter">Author</td>
+                    <td class="tableViews tableCenter">Views</td>
+                    <td class="tablePoint tableCenter" >Points</td>
+                    <td class="tableReplies tableCenter">Replies</td>
+                    <td class="tableDate tableCenter">Date Created</td>
+                </tr>
+            </thead>   
+            <tbody data-bind="foreach:currentPosts">
+                <tr >
+                    <td  data-bind="text:Title"></td>
+                    <td class="tableCenter" ><a data-bind="text:Author, attr: {href: '/Dashboard/Index/' + Author}"></a></td>
+                    <td class="tableCenter" data-bind="text:Views"></td>
+                    <td class="tableCenter" data-bind="text:Points"></td>
+                    <td class="tableCenter" data-bind="text:Replies"></td>
+                    <td class="tableCenter" data-bind="text: moment(PostedDate).format('D, MMM, YYYY') ".Date.ToString("dd MMM yyyy") ></td>
+                </tr>
+            </tbody>
+            <tfoot>
+                <tr >
+                    <td colspan="6">
+                        <span data-bind="click:previousPage" class="glyphicon glyphicon-arrow-left" style="cursor: pointer"></span>
+                        <span data-bind="text:currentPage"></span>
+                        <span data-bind="click:nextPage" class="glyphicon glyphicon-arrow-right" style="cursor: pointer"></span>
+                    </td>
+                </tr>
+            </tfoot>
+        </table>
+        @*@foreach ( var item in ViewBag.MyList)
         {
             <div class="ForumThread">
                 <span class="glyphicon-cloud" style="display: inline;"></span>
@@ -33,8 +65,32 @@
                 <span class="postViews">@item.Views</span>
             </div>
            
-        }
+        }*@
         </div>
     </div>
 </body>
 </html>
+<script src="~/Scripts/knockout-3.4.0.js"></script>
+<script src="~/Scripts/moment.js"></script>
+<script>
+    function ForumsViewModel() {
+        var self = this;
+
+        self.posts = @Html.Raw(JsonConvert.SerializeObject(Model, new JsonSerializerSettings { ReferenceLoopHandling =  ReferenceLoopHandling.Ignore} ));
+        self.pageSize = 10;
+        self.currentPage = ko.observable(1);
+        self.currentPosts = ko.computed(function () {
+            var startIndex = (self.currentPage() - 1) * self.pageSize;
+            var endIndex = startIndex + self.pageSize;
+            return self.posts.slice(startIndex, endIndex);
+        });
+        self.nextPage = function () {
+            self.currentPage(self.currentPage() + 1);
+        };
+        self.previousPage = function () {
+            self.currentPage(self.currentPage() - 1);
+        };
+        
+    };
+    ko.applyBindings(new ForumsViewModel());
+</script>

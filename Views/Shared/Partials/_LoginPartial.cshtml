@@ -25,7 +25,7 @@
                     }
                     @Html.ActionLink("Account Settings", "Account", "Dashboard", new { id = name }, null)
 
-
+                    @Html.ActionLink("Inbox", "Index", "Message", new { id = name }, null)
                     @Html.ActionLink("View Profile", "Index", "Dashboard", new { id = name }, null)
                     <a href="javascript:document.getElementById('logoutForm').submit()">Log off</a>
                 </div>

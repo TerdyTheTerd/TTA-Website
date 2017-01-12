@@ -13,14 +13,14 @@ using WebApplication1.Models;
 namespace WebApplication1.Controllers
 {
     [Authorize]
-    public class DashboardController : Controller
+    public class DashboardController : BaseController
     {
 
         [HttpGet]
         public ActionResult Index(string id)
         {
             ViewBag.name = id;
-            var db = new ApplicationDbContext();
+            //var db = new ApplicationDbContext();
             {
                 UserStats model = db.UserStat.SingleOrDefault(x => x.DisplayName == id);
                 ApplicationUser user = System.Web.HttpContext.Current.GetOwinContext().GetUserManager<ApplicationUserManager>().FindById(System.Web.HttpContext.Current.User.Identity.GetUserId());
@@ -49,7 +49,11 @@ namespace WebApplication1.Controllers
                             (from hurr in db.UserStat
                              where hurr.ApplicationUserId.Equals(name)
                              select hurr).SingleOrDefault();
-                    userFriends.Add(friend);
+                    if (!(friend == null))
+                    {
+                        userFriends.Add(friend);
+                    }
+
                 }
                 ViewBag.Friends = userFriends;
                 if (Request.IsAjaxRequest())
@@ -61,17 +65,19 @@ namespace WebApplication1.Controllers
                     if (friendList.Contains(user.Id))
                     {
                         ViewBag.isFriend = true;
-                    } else
+                    }
+                    else
                     {
                         ViewBag.isFriend = false;
                     }
-                return View(model);
-                } else
+                    return View(model);
+                }
+                else
                 {
                     ViewBag.isFriend = false;
                     return View(model);
                 }
-                
+
             }
         }
 
@@ -83,7 +89,7 @@ namespace WebApplication1.Controllers
             {
                 return View();
             }
-            ApplicationDbContext db = new ApplicationDbContext();
+            //ApplicationDbContext db = new ApplicationDbContext();
             UserStats user =
                 (from hurr in db.UserStat
                  where hurr.DisplayName.Equals(id)
@@ -91,7 +97,7 @@ namespace WebApplication1.Controllers
             string filename;
             string path = "";
             int srcWidth = 0;
-            int srcHeight= 0;
+            int srcHeight = 0;
             switch (model.Type)
             {
                 case "banner":
@@ -138,7 +144,7 @@ namespace WebApplication1.Controllers
             }
             catch (FileNotFoundException e)
             {
-
+                e.GetBaseException();
             }
             return RedirectToAction("Index");
 
@@ -275,28 +281,33 @@ namespace WebApplication1.Controllers
         {
             //if (Request.IsAjaxRequest())
             //{
-                var db = new ApplicationDbContext();
-                ApplicationUser currentUser = System.Web.HttpContext.Current.GetOwinContext().GetUserManager<ApplicationUserManager>().FindById(System.Web.HttpContext.Current.User.Identity.GetUserId());
-                UserStats friendUser =
-                    (from hurr in db.UserStat
-                     where hurr.DisplayName.Equals(id)
-                     select hurr).SingleOrDefault();
-                var friend = new Friends();
-                friend.userId = currentUser.Id;
-                friend.friendId = friendUser.ApplicationUserId;
-                db.Friend.Add(friend);
-                db.SaveChanges();
-                friend.userId = friendUser.ApplicationUserId;
-                friend.friendId = currentUser.Id;
-                db.Friend.Add(friend);
-                db.SaveChanges();
-                return RedirectToAction("Index", new { id = id});
+            var db = new ApplicationDbContext();
+            ApplicationUser currentUser = System.Web.HttpContext.Current.GetOwinContext().GetUserManager<ApplicationUserManager>().FindById(System.Web.HttpContext.Current.User.Identity.GetUserId());
+            UserStats friendUser =
+                (from hurr in db.UserStat
+                 where hurr.DisplayName.Equals(id)
+                 select hurr).SingleOrDefault();
+            var friend = new Friends();
+            friend.userId = currentUser.Id;
+            friend.friendId = friendUser.ApplicationUserId;
+            db.Friend.Add(friend);
+            db.SaveChanges();
+            friend.userId = friendUser.ApplicationUserId;
+            friend.friendId = currentUser.Id;
+            db.Friend.Add(friend);
+            db.SaveChanges();
+            return RedirectToAction("Index", new { id = id });
             //}
             //else
             //{
             //    return null;
             //}
 
+        }
+        public ActionResult UploadFile(PictureViewModel model)
+        {
+            //To Do- Handle picture uplaods from users, validate them, check user storage, store image in root with a path stored in db table
+            return null;
         }
     }
 }

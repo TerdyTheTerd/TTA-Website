@@ -7,6 +7,7 @@ using WebApplication1.Models;
 
 namespace WebApplication1.Controllers
 {
+    [RequireHttps]
     public class HomeController : Controller
     {
         public ActionResult Index()
@@ -15,13 +16,12 @@ namespace WebApplication1.Controllers
             {
                 List<Post> query =
                     (from hurr in db.Post
-                    where hurr.Category.Equals("News-and-Announcements")
-                    orderby hurr.PostedDate descending
-                    select hurr).ToList();
+                     where hurr.Category.Equals("News-and-Announcements")
+                     orderby hurr.PostedDate descending
+                     select hurr).ToList();
                 ViewBag.News = query;
             }
-
-            ViewBag.IsAdmin = User.IsInRole("Admin");
+            User.IsInRole("Admin");
             return View();
         }
         public ActionResult Contact()
@@ -41,7 +41,6 @@ namespace WebApplication1.Controllers
             return View();
         }
 
-        [Authorize(Roles = "Admin")]
         public ActionResult Users()
         {
             var db = new ApplicationDbContext();
@@ -53,6 +52,16 @@ namespace WebApplication1.Controllers
             return View();
         }
 
+        public ActionResult Support(string message)
+        {
+            if(!(message == null))
+            {
+                ViewBag.TheMessage = "Got your message";
+                return View();
+            }
+            ViewBag.TheMessage = "There was an error, please try again";
+            return View();
+        }
         [ChildActionOnly]
         public ActionResult RecentPost()
         {

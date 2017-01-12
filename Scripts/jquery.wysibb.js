@@ -807,7 +807,7 @@ wbbdebug=true;
 				
 				$.log("WysiBB loaded");
 				
-				this.$body.addClass("wysibb-body").addClass(this.options.bodyClass);
+				this.$body.addClass("wysibb-body").addClass(this.options.bodyClass).attr('id', 'hurr');
 				
 				//set direction if defined
 				if (this.options.direction) {this.$body.css("direction",this.options.direction)}

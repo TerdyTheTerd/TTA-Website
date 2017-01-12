@@ -6,6 +6,273 @@
     background-repeat: no-repeat;
     background-attachment: fixed;
 }
+.tableCenter {
+    text-align: center;
+}
+.tableTitle {
+
+} 
+.tableAuthor {
+    width: 10%;
+}
+.tableViews  {
+    width: 5%;
+}
+.tablePoint {
+    width: 2%;
+}
+.tableReplies {
+    width: 5%;
+}
+.tableDate {
+    width: 10%;
+}
+.feedbackContact {
+    width: 25%;
+    display: inline-block;
+    vertical-align:top;
+}
+.supportContact {
+    width: 50%;
+    display: inline-block;
+    margin-right: 20%;
+    vertical-align: top;
+}
+.supportForm {
+}
+.supportSend {
+    margin-top: 10px;
+}
+.supportMessage {
+    width: 100%;
+    max-width: 1200px;
+    display: block;
+    min-height: 100px;
+}
+.supportList {
+    list-style: none;
+}
+.supportList > li > a {
+    color: darkblue;
+}
+.supportMain {
+    background-color: white;
+    border: 2px solid black;
+    border-radius: 5px;
+    padding: 25px;
+    width: 70%;
+    margin: 0 auto;
+}
+.confirmButton {
+    padding: 15px 45px;
+    background-color: #fdfdfd;
+    border: 2px solid #999;
+    border-radius: 3px;
+        text-decoration: none;
+        font-size: 18px;
+        color: #333;
+}
+.confirmButton:hover, .confirmButton:focus, .confirmButton:active, .confirmButton:visited {
+    text-decoration: none;
+    background-color: #f0f0f0;
+    color: black;
+    position: relative;
+    top: 2px;
+}
+.confirmSpan {
+    display: block;
+    text-align: center;
+margin-bottom: 25px;
+}
+.confirmBody {
+    width: 70%;
+    margin: 0 auto;
+}
+.confirmTitle {
+    text-align: center;
+}
+.bodyContent {
+    background-color: white;
+    border: 2px solid black;
+    border-radius: 5px;
+    box-shadow: 0px 0px 5px 1px black;
+    width: 50%;
+    margin: 0 auto;
+}
+#messageCenter {
+    vertical-align: top;
+    position: relative;
+    height: 100%;
+}
+.originalMessage {
+    display: inline-block;
+}
+#messageView {
+    display: inline-block;
+    position: relative;
+    padding: 10px;
+}
+.messageDate {
+    font-size: 12px;
+    float: right;
+    margin-right: 10px;
+}
+#editor {
+    width: 100%;
+    max-width: 1800px;
+    min-height: 300px;
+    max-height: 1200px;
+}
+.senderLink {
+    text-decoration: none;
+    color: black;
+}
+.senderLink:hover, .senderLink:active, senderLink:focus, .senderLink:visited {
+    text-decoration: none;
+}
+.messageInfo {
+    display: block;
+    top: 5px;
+    right: -5px;
+    width: 80%;
+    padding-top: 5px;
+    position: absolute;
+}
+.senderProfile {
+    display: inline;
+}
+.messagePreview {
+    font-size: 12px;
+    text-overflow: ellipsis;
+    display: block;
+    overflow: hidden;
+}
+.messageHeader {
+    border-bottom: 2px solid grey;
+    padding-bottom: 10px;
+}
+.inboxSide {
+    display: inline-block;
+    border-right: 2px solid grey;
+    border-bottom: 2px solid grey;
+    padding-right: 10px;
+    padding-top: 10px;
+    padding-bottom: 10px;
+    width: 25%;
+    height: 100%;
+    vertical-align: top;
+}
+.messageElement {
+    margin-left: 10px;
+    box-shadow: 2px 0 0 0 #888, 
+    0 2px 0 0 #888, 
+    2px 2px 0 0 #888,
+    2px 0 0 0 #888 inset, 
+    0 2px 0 0 #888 inset;
+    display: inline-block;
+    padding: 5px;
+    width: 95%;
+    height: 60px;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    position: relative;
+}
+.messageBody {
+   
+}
+#listInput {
+    width: 100%;
+    max-width: 1600px;
+}
+#listText {
+    font-size: 15px;
+    font-weight: bold;
+}
+
+.mesageItem, .mesageItem:active, .mesageItem:visited, .mesageItem:focus {
+    color: grey;
+    text-decoration: none;
+}
+
+    .mesageItem:hover {
+        text-decoration: none;
+    }
+#previewHolder {
+    background-color: white;
+    border: 2px solid black;
+    padding: 5px;
+    margin-top: 10px;
+    border-radius: 5px;
+    display: none;
+}
+.messageFooter {
+    height: 25px;
+}
+.messageButons {
+    float: right;
+}
+.messageButons > div {
+    display: inline;
+    padding: 5px;
+    margin-right: 15px;
+    background-color: white;
+    border-radius: 5px;
+    border: 2px solid rgba(0,0,0, .7)
+}
+
+.messageButons > div:hover {
+    background-color: rgb(225,225,225);
+    cursor: pointer;
+}
+.messageButons > div:active {
+    position: relative;
+    top: 2px;
+}
+#MessageTitle {
+    width: 100%;
+    max-width: 1800px;
+    padding: 5px;
+    margin-bottom: 5px;
+}
+#messageInner {
+        padding: 10px;
+}
+.optionText:hover {
+    cursor: pointer;
+    color: black;
+}
+.optionText:active {
+    font-weight: bold;
+}
+.messageMain {
+    width: 80%;
+    margin: 0 auto;
+    background-color: white;
+    border-radius: 5px;
+    box-shadow: 0px 0px 5px 1px black;
+background-color: rgba(225,225,225,.7);
+}
+.messageSide {
+    
+    display: inline-block;
+}
+
+.messageTabs {
+    list-style: none;
+    padding: 10px;
+    display: inline;
+}
+.messageOption {
+    padding-top: 10px;
+    padding-left: 10px;
+    font-size: 26px;
+    color: rgb(50,50,50);
+    display: inline-block;
+}
+.messageOption > div {
+    display: inline;
+}
 .adminNav {
     width: 100% !important;
 }
@@ -382,7 +649,7 @@
 
 .activityMain {
     height: 100px;
-    width: 60%;
+    width: 65%;
     display: inline-block;
     background-color: rgba(255, 255, 255, 1);
     border: 2px solid rgba(0, 0, 0, .3);
@@ -549,10 +816,9 @@
     background-image: url("http://assets-cloud.enjin.com/users/8631924/cover/1406251937.png");
     width: 900px;
     height: 175px;
-    border: 1px solid rgba(0, 0, 0, 0.2);
+    border: 1px solid rgba(0, 0, 0, .5);
     background-position: -1px -1px;
-    border-top-right-radius: 5px;
-    border-bottom-right-radius: 5px;
+    border-radius: 10px;
     position: relative;
 }
 
@@ -647,13 +913,16 @@
     float: right;
 }
 
-.option > a {
+.option {
     font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
     text-decoration: none;
     color: #333;
     font-size: 16px;
 }
-
+.option:hover {
+    text-decoration: none;
+    color: #333;
+}
 .banneroption:hover {
     cursor: pointer;
     background-color: #f2f2f2;
@@ -669,9 +938,6 @@
     background-color: #f2f2f2;
 }
 
-.option {
-    padding: 5px;
-}
 
 .namespan {
     font-size: 36px;
@@ -713,20 +979,22 @@
     padding-top: 1%;
     box-shadow: 0px 0px 15px 1px black;
     background-color: rgba(255, 255, 255, .8);
-    margin-top: 1%;
+    margin: 0 auto;
+    max-width: 1150px;
 }
 
 .profile {
     background-image: url("/../Assets/UserProfilePics/defualtuserprofile.png");
     width: 175px;
     height: 175px;
-    border-top-left-radius: 5px;
-    border-bottom-left-radius: 5px;
+    border-radius: 10px;
+        margin-left: 10px;
+    margin-right: 35px;
+    border: 1px solid rgba(0,0,0,.5)
 }
 
 .dashmain {
-    padding-left: 10px;
-    padding-top: 10px;
+    padding: 10px 20px 10px 10px;
 }
 
 .ul-noDisplay {
@@ -941,7 +1209,7 @@ table, th {
     padding-bottom: 3px;
 }
 
-table, tr:last-child, td:first-child {
+tr:last-child, td:first-child {
     border-radius: 10px;
 }
 
@@ -1086,18 +1354,43 @@ li.drop {
     box-shadow: 0px 0px 10px 2px black;
     margin-left: 2%;
 }
+.about {
+    margin-left: 20%;
+    padding: 10px;
+    width: 20%;
+    border-right: 2px solid grey;
+}
+.aboutBody {
+font-size: 14px;
+color: white;
+}
+.aboutTitle {
+    text-align: center;
+    border-bottom: 1px solid rgba(200,200,200,.7);
+    margin-bottom: 10px;
+    color: white;
+}
+.aboutText {
+    font-size: 20px;
+}
+.ftTop {
 
-
+}
 .ft {
-    background-color: white;
-    border-radius: 5px;
-    box-shadow: 0px 0px 10px 2px black;
+    border-top: 2px solid grey;
+}
+.footer {
+    background-color: #04223c;
+    margin: 0px;
+}
+.copy {
+text-align: center;
 }
 
 .copy > p {
-    font-size: 20px;
+    font-size: 18px;
     color: aqua;
-    padding-left: 10%;
+    margin: 0;
 }
 
 .HomePage > img {
@@ -1107,7 +1400,7 @@ li.drop {
 .body-content {
     padding-left: 15px;
     padding-right: 15px;
-    width: 1800px;
+    min-width: 1000px;
 }
 
 .dl-horizontal dt {
@@ -1282,8 +1575,7 @@ aside.Servers {
 }
 
 .showCase {
-    width: 80%;
-    margin: 0 auto;
+    text-align: center;
 }
 
     .showCase > img {
