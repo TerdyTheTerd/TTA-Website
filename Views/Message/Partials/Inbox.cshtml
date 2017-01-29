@@ -1,0 +1,21 @@
+﻿<div class="inboxSide">
+    @foreach (var hurr in ViewBag.Inbox)
+    {
+        <div class="messageElement">
+            <div class="senderProfile">
+                <img src="@hurr.SenderProfile " width="50" height="50" />
+            </div>
+            <div class="messageInfo">
+                <a href="/Dashboard/Index/@hurr.SenderName" class="senderLink"><span>@hurr.SenderName</span></a>
+                <span class="messageDate">@String.Format("{0:dd/MM/yyyy}", hurr.message.CreateDate)</span>
+                <span class="messagePreview">
+                    <a data-ajax="true" data-ajax-method="GET" data-ajax-mode="replace" data-ajax-update="#messageView" href="/Message/ViewMessage/@hurr.message.Id">@hurr.message.MessageTitle</a>
+                </span>
+            </div>
+
+        </div>
+    }
+</div>
+<div id="messageView">
+
+</div>

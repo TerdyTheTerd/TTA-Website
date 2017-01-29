@@ -2,11 +2,22 @@
 @{
     ViewBag.Title = "Home Page";
 }
+<div id="Notify">
+    <div class="notifyMessage">
+        <div class="hurr">
+            <p>This site is still a WIP. Some functions are not implemented or fully supported. The site is live for feedback and deployemnt testing. Please keep this in mind when using the site is its early stages.</p>
+        </div>
+        <div class="BtnHolder">
+        <span class="notifyBtn" id="notifybutton">Got it!</span>
+
+        </div>
+    </div>
+</div>
 <div class="row">
     <div class="col-sm-1 col-md-1  yt">
         <h3>Place Holder</h3>
     </div>
-    <div class="col-sm-6 col-md-6  main">
+    <div class="col-xs-8 col-sm-8 col-md-7  main">
         <h2>Welcome to Affintiy Wars Official Website!</h2>
         <div class="row">
             <div class="col-md-12">
@@ -23,6 +34,9 @@
     </div>
     <div class="col-sm-1 col-md-1  rn">
         @Html.Action("RecentPost", "Forums")
+    </div>
+    <div class="col-sm-1 col-md-1 ru">
+        @Html.Action("RecentUsers", "Home")
     </div>
 </div>
 

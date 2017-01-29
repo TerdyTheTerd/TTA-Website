@@ -1,11 +1,301 @@
-﻿@model WebApplication1.Models.Post
+﻿@model PagedList.IPagedList<ThreadReplyViewModel>
 @using WebApplication1.Models;
+@using Newtonsoft.Json
+@using PagedList.Mvc;
+@using Microsoft.AspNet.Identity;
 @{
     ViewBag.Title = "ViewPost";
 }
+<div class="postMain">
+    <div class="threadContent">
 
-<h2>ViewPost</h2>
-<h3>@Model.Title</h3>
+    <div class="postHeader">
+        <div class="headerLeft">
+            <span>Links</span>
+        </div>
+        <div class="headerRight">
+            <span></span>
+        </div>
+    </div>
+    <div class="postBody">
+        <div class="postTop">
+            <span class="topTitle">@ViewBag.OP.post.Title</span>
+            <span class="topViews">@ViewBag.OP.post.Views</span>
+        </div>
+        <table class="table table-bordered postTable">
+            <tbody class="thread">
+                <tr>
+                    <td class="userInfo">
 
-@Html.Raw(Server.HtmlDecode(CodeParser.getParser().ToHtml(Model.Body)))
+                        <a class="userAF" href="/Dashboard/Index/@ViewBag.OP.user.DisplayName">
+                            <div class="testText">
+                                <span class="usernameTextF">@ViewBag.OP.post.Author</span>
+                            </div>
+
+                            <div class="userProfileF">
+                                <img src="@ViewBag.OP.user.ProfilePicture" width="150" height="150" />
+                            </div>
+                        </a>
+                        <span class="userInfoP">Points: @ViewBag.OP.user.PointsEarned</span>
+                        <span class="userInfoTP">Posts: @ViewBag.OP.user.TotalPost</span>
+                        <span class="userInfoX">Level: @ViewBag.OP.user.ProfileExp</span>
+
+                    </td>
+                    <td class="postInfo">
+                        @Html.Raw(Server.HtmlDecode(CodeParser.getParser().ToHtml(ViewBag.OP.post.Body)))
+                        <div id="postOptions">
+                            <span class="commentPoints">
+                                @if (ViewBag.OP.post.Points >= 0)
+                                {
+                                    <span>Points:</span><span id="@("points"+@ViewBag.OP.post.Id)" class="positive"> +@ViewBag.OP.post.Points</span>
+                                }
+                                else
+                                {
+                                    <span>Points:</span><span id="@("points"+@ViewBag.OP.post.Id)" class="negative"> -@ViewBag.OP.post.Points</span>
+                                }
+
+
+                            </span>
+                            <div class="pointButtons">
+                                @if ( ViewBag.OP.point == null)
+                                {
+                                    
+                                    if (ViewBag.OP.point.VoteType == "Like")
+                                    {
+                                        <span class="fa fa-thumbs-up liked" id="@("like"+@ViewBag.OP.post.Id)"></span>
+                                                        <span class="fa fa-thumbs-down dislike" id="@("dislike"+@ViewBag.OP.post.Id)" onclick="dislike(@ViewBag.OP.post.Id, this, 'post')"></span>
+                                    }
+                                    else
+                                    {
+                                        <span class="fa fa-thumbs-up like" id="@("like"+@ViewBag.OP.post.Id)" onclick="like(@ViewBag.OP.post.Id, this, 'post')"></span>
+
+                                                    <span class="fa fa-thumbs-down disliked" id="@("dislike"+@ViewBag.OP.post.Id)"></span>
+                                    }
+
+                                }
+                                else
+                                {
+                                    <span class="fa fa-thumbs-up like" id="@ViewBag.OP.post.Id" onclick="like(@ViewBag.OP.post.Id, this, 'post')"></span>
+                                                <span class="fa fa-thumbs-down dislike" id="@ViewBag.OP.post.Id" onclick="dislike(@ViewBag.OP.post.Id, this, 'post')"></span>
+                                }
+
+
+                                <span>Favorite</span>
+                                <span>AdminOptions</span>
+                            </div>
+
+                        </div>
+                    </td>
+                </tr>
+                @if(ViewBag.OP.post.HasReplies)
+                {
+
+                foreach (var item in Model)
+                {
+                    <tr>
+                        <td>
+                            <div class="commentInfo">
+                                <a class="userAF" href="/Dashboard/Index/@item.user.DisplayName">
+                                    <div class="testText">
+                                        <span class="usernameTextF">@item.user.DisplayName</span>
+                                    </div>
+
+                                    <div class="userProfileF">
+                                        <img src="@item.user.ProfilePicture" width="150" height="150" />
+                                    </div>
+                                </a>
+                                <span class="userInfoP">Points: @item.user.PointsEarned</span>
+                                <span class="userInfoTP">Posts: @item.user.TotalPost</span>
+                                <span class="userInfoX">Level: @item.user.ProfileExp</span>
+                            </div>
+
+                        </td>
+                        <td class="postTd">
+                            <div class="postContent">
+                                <div class="commentBody">
+                                    @Html.Raw(Server.HtmlDecode(CodeParser.getParser().ToHtml(item.post.Body)))
+                                </div>
+                                <div class="commentFooter">
+                                    <div class="commentInfo">
+                                        <span class="commentDate">
+                                            Posted @item.post.PostedDate.Date.ToString("MMM dd, yyyy")
+                                        </span>
+                                        
+                                    </div>
+                                    <div id="postOptions">
+                                        <span class="commentPoints">
+                                            @if (item.post.Points >= 0)
+                                            {
+                                                <span>Points:</span><span id="@("points"+@item.post.Id)" class="positive"> +@item.post.Points</span>
+                                            }
+                                            else
+                                            {
+                                                <span>Points:</span><span id="@("points"+@item.post.Id)" class="negative"> -@item.post.Points</span>
+                                            }
+
+                                            
+                                        </span>
+                                        <div class="pointButtons">
+                                            @if(item.points != null) { 
+                                            if (item.points.ApplicationUserId == User.Identity.GetUserId() && item.points.commentId == item.post.Id && item.points.hasVoted)
+                                            {
+                                                //Change so that if you voted it removes the link to cast the same vote, but leavesd the oppisite one incase a user changes their mind
+                                                //Move to server side to de-couple view logic from business logic, have server decide which type of vote was cast, then generate the html and
+                                                if (item.points.VoteType == "Like")
+                                                {
+                                                        <span class="fa fa-thumbs-up liked" id="@("like"+@item.post.Id)"></span>
+                                                        <span class="fa fa-thumbs-down dislike" id="@("dislike"+@item.post.Id)" onclick="dislike(@item.post.Id, this, reply)"></span>
+                                                }
+                                                else
+                                                {
+                                                    <span class="fa fa-thumbs-up like" id="@("like"+@item.post.Id)" onclick="like(@item.post.Id, this, reply)"></span>
+
+                                                        <span class="fa fa-thumbs-down disliked" id="@("dislike"+@item.post.Id)"></span>
+                                                }
+
+                                            }
+                                            else
+                                            {
+                                                <span class="fa fa-thumbs-up like" id="@item.post.Id" onclick="like(@item.post.Id, this, reply)"></span>
+                                               <span class="fa fa-thumbs-down dislike" id="@item.post.Id" onclick="dislike(@item.post.Id, this, reply)"></span>
+                                            }
+
+                                            }
+                                            <span>Favorite</span>
+                                            <span>AdminOptions</span>
+                                        </div>
+                                        
+                                    </div>
+                                </div>
+
+                            </div>
+                        </td>
+                    </tr>
+                }
+                }
+                <tr class="commentPlaceholder">
+                    <td></td>
+                    <td id="commentBody"></td>
+                </tr>
+            </tbody>
+        </table>
+        <div class="replyArea">
+            <div class="replyHeader">
+
+            </div>
+            <div class="replyText">
+                <textarea id="editor"></textarea>
+            </div>
+            <div class="replyOptions">
+                <span id="replyButton" class="classBtn">Reply</span>
+                <span id="previewButton" class="classBtn">Preview</span>
+
+            </div>
+            <div id="commentPreview">
+
+            </div>
+
+        </div>
+        @*@foreach (var item in Model)
+            {
+                <span>@item.Author</span>;
+            }*@
+
+        @*<h3>@Model.post.Title</h3>
+
+            @Html.Raw(Server.HtmlDecode(CodeParser.getParser().ToHtml(Model.post.Body)))*@
+        @if(ViewBag.OP.post.HasReplies) { 
+         <div>
+
+        Page @(Model.PageCount < Model.PageNumber ? 0 : Model.PageNumber) of @Model.PageCount
+
+        @Html.PagedListPager(Model, page => Url.Action("ViewPost", new { page }))
+         </div>
+        }
+    </div>
+    </div>
+        <div class="threadSide">
+            <div class="recentMain">
+                @Html.Action("RecentPost", "Forums")
+            </div>
+            <div class="topMain">
+                @Html.Action("TopPosters", "Forums")
+            </div>
+        </div>
+
+</div>
+<script src="~/Scripts/knockout-3.4.0.js"></script>
+<script>
+    $(document).ready(function () {
+        var wbbOpt = {
+            buttons: "bold,italic,underline,,strike,sup,sub,fontcolor,fontsize,|,table,img,link,video,|,code,quote,spoiler,bullist,numlist,|,justifyleft,justifycenter,justifyright,removeFormat"
+        }
+        $("#editor").wysibb(wbbOpt);
+        //Create Ajax call to post comment then load the comment into the placeholder.
+
+        //Create Preview to place comment in the commentPlaceholder div
+        $("#previewButton").on('click', function () {
+            var preview = document.getElementById('hurr').innerHTML;
+            $.ajax({
+                url: "/Forums/PreviewPost",
+                type: 'POST',
+                dataType: 'html',
+                data: { test: $("#hurr").html() },
+                success: function (data) {
+                    $("#commentPreview").html(data);
+                    $("#commentPreview").show();
+                },
+                error: function (xhr, status) {
+                    alert("There was an error processing you request");
+                }
+            });
+        });
+        $("#replyButton").on('click', function () {
+            var preview = document.getElementById('hurr').innerHTML;
+            $.ajax({
+                url: "/Forums/Comment",
+                type: 'POST',
+                dataType: 'html',
+                data: { test: $("#hurr").html(), post: @ViewBag.OP.post.Id },
+                complete: function() {
+                    location.reload(true);
+                },
+                error: function (xhr, status) {
+                    alert("There was an error processing you request");
+                }
+            });
+        });
+    });
+        function like(id, el, type) {
+            $.ajax({
+                url: "/Forums/PostVote",
+                type: "GET",
+                dataType: 'text',
+                data: { id: "1", data: id, type: type},
+                success: function(data) {
+                    $("#points" + id).html(data);
+                },
+                complete: function() {
+                    $(el).replaceWith("<span class=\"fa fa-thumbs-up liked\" id=\"like" + id + "\" onclick=\"like(" + id + ", this)\"></span>");
+                    $("#dislike" + id).replaceWith("<span class=\"fa fa-thumbs-down dislike\" id=\"dislike" + id + "\" onclick=\"dislike(" + id + ", this)\"></span>");
+                }
+            });
+        };
+        function dislike(id, el, type) {
+            $.ajax({
+                url: "/Forums/PostVote",
+                type: "GET",
+                dataType: 'text',
+                data: { id: "0", data: id, type: type},
+                success: function(data) { 
+                    $("#points" + id).html(data);
+                },
+                complete: function() {
+                    $(el).replaceWith("<span class=\"fa fa-thumbs-down disliked\" id=\"dislike" + id + "\" onclick=\"dislike(" + id + ", this)\"></span>");
+                    $("#like" + id).replaceWith("<span class=\"fa fa-thumbs-up like\" id=\"like" + id + "\" onclick=\"like(" + id + ", this)\"></span>");
+                }
+            });
+        };
+</script>
+
 

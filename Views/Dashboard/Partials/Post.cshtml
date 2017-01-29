@@ -1,1 +1,9 @@
-﻿
+﻿@using WebApplication1.Models;
+
+@foreach (var item in ViewBag.Post)
+{
+    <div class="userPost">
+        <span>@item.Title</span>
+        <p>@Html.Raw(Server.HtmlDecode(CodeParser.getParser().ToHtml(item.Body)))</p>
+    </div>
+}

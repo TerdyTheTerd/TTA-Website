@@ -23,7 +23,7 @@
             selectionPosition: [0, 0],
             selectionWidth: 0,
             selectionHeight: 0,
-            Type: null,
+            Type: 'banner',
 
             // Plug-in's event handlers
             onChange: function () { },

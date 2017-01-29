@@ -1,0 +1,45 @@
+﻿@{
+    Layout = null;
+}
+@model WebApplication1.Models.MessageViewModel
+
+<div id="messageInner">
+    <div id="previewHolder">
+    </div>
+    <div class="messageHolder">
+        @using (Html.BeginForm("Compose", "Message", null, FormMethod.Post, new { id = "messageForm"}))
+        {
+            @Html.ValidationSummary()
+            <div class="users">
+                <span id="listText">Recipient(s)</span>
+                <input id="listInput" type="text" placeholder="User1;User2;" />
+            </div>
+                            <div class="messageTitle">
+                                @Html.LabelFor(x => x.MessageTitle)
+                                @Html.TextBoxFor(x => x.MessageTitle, new { placeholder = "Subject" })
+                            </div>
+
+                            <div class="messageText">
+                                @Html.LabelFor(x => x.MessageBody)
+                                @Html.TextAreaFor(x => x.MessageBody, new { @id = "editor" })
+                            </div>
+                            @Html.HiddenFor(x => x.RecipientList, new { @id = "userList" })
+        }
+    </div>
+</div>
+<div class="messageFooter">
+    <div class="messageButons">
+        <div id="messageSubmit" class="classBtn">
+            <span>Send Message</span>
+        </div>
+        <div id="messagePreview" class="classBtn">
+            <span>Preview Message</span>
+        </div>
+        <div class="messageSave classBtn">
+            <span>Save as draft</span>
+        </div>
+    </div>
+
+</div>
+<script src="~/Scripts/MessageCenter.js"></script>
+

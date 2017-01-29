@@ -19,7 +19,7 @@ namespace WebApplication1.Models
 
         public DateTime PostedDate { get; set; }
         public string Author { get; set; }
-        public int PostId { get; set; }
+        public long PostId { get; set; }
         public int Points { get; set; }
 
     }
@@ -36,6 +36,34 @@ namespace WebApplication1.Models
         [DataType(DataType.MultilineText)]
         public string Body { get; set; }
 
-        public int WallPostId { get; set; }
+        public int Points { get; set; }
+        public long WallPostId { get; set; }
+    }
+    public class WallPostComment
+    {
+        [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
+        public long Id { get; set; }
+        public DateTime PostedDate { get; set; }
+        public string Author { get; set; }
+        public string Name { get; set; }
+
+        [Required]
+        [DataType(DataType.MultilineText)]
+        public string Body { get; set; }
+        public long WallPostId { get; set; }
+
+    }
+    public class CommentPoint
+    {
+        [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
+        public int Id { get; set; }
+
+        public long commentId { get; set; }
+
+        public string ApplicationUserId { get; set; }
+
+        public bool hasVoted { get; set; }
+
+        public string VoteType { get; set; }
     }
 }

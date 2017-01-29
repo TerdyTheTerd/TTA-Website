@@ -1,0 +1,25 @@
+﻿@{
+    Layout = null;
+}
+@model WebApplication1.Models.CreateLevelViewModel
+
+<div>
+    <h3>@ViewBag.Message</h3>
+    @using (Html.BeginForm())
+    {
+        <div>
+            @Html.LabelFor(x => x.Name)
+            @Html.EditorFor(x => x.Name)
+        </div>
+        <div>
+            @Html.LabelFor(x => x.Exp)
+            @Html.EditorFor(x => x.Exp)
+        </div>
+        <div>
+            @Html.LabelFor(x => x.Effects)
+            @Html.EditorFor(x => x.Effects)
+        </div>
+        <input type="submit" formaction="@Url.Action("CreateLevel")"/>
+
+    }
+</div>

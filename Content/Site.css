@@ -1,60 +1,723 @@
-﻿body {
+﻿/*Create a set of short named classes to re-use to cut down on file size and make it easier to maintain*/
+body {
     padding-top: 5%;
-    padding-bottom: 2px;
     background: url(http://i.imgur.com/xfBxr25.png) no-repeat center center fixed;
     background-size: cover;
     background-repeat: no-repeat;
     background-attachment: fixed;
 }
+.UserBlock {
+    text-align: center;
+    margin: 0 auto;
+    padding: 5px;
+    border-bottom: 1px solid rgb(200,200,200);
+}
+.UserTitle {
+    background-color: rgb(225,225,225);
+    border-top-left-radius: 5px;
+    border-top-right-radius: 5px;
+    border-bottom: 1px solid black;
+    width: 100%;
+    padding: 5px;
+    text-align: center;
+    font-size: 22px;
+}
+.BtnHolder {
+    text-align: center;
+    margin-top: 50px
+}
+.notifyBtn {
+    padding: 10px;
+    border-radius: 5px;
+    background-color: #e7e7e7;
+    color: black;
+}.notifyBtn:hover {
+    cursor: pointer;
+        background-color: #c7c7c7
+}
+.notifyBtn:active {
+    position: relative;
+    top: 2px;
+}
+.notifyMessage {
+    width: 20%;
+    height: 350px;
+    background-color: #777;
+    padding: 25px;
+    border: 1px solid black;
+    border-radius: 5px;
+        margin: 0 auto;
+    margin-top: 200px;
+    color: white;
+    font-size: 22px
+}
+#Notify {
+    top: 0px;
+    left: 0px;
+    width: 100%;
+    height: 100%;
+    position: fixed;
+    background-color: rgba(25,25,25,.6);
+    display: none;
+    z-index: 5;
+}
+#userDetails {
+    width: 250px;
+    border-left: 1px solid grey;
+    display: inline-block;
+    height: 100%;
+    position: absolute
+}
+.levelHeader {
+     text-align: center;
+ }
+ .effectPreview {
+     padding: 3px;
+ }
+ .levelEffect {
+     padding: 3px;
+ }
+ .xpInput {
+     width: 50px
+ }
+.nameInput {
+    text-align: center;
+}
+.levelContainer {
+    border: 1px solid grey;
+    margin-bottom: 10px;
+    padding: 5px;
+    width: 250px;
+    display: inline-block;
+}
+.levelInfo > span {
+    display: block;
+}
+.linkItemLevel {
+    text-decoration: none;
+    color: black;
+    font-size: 14px;
+    display: block;
+}
+.linkItemLevel:hover {
+    text-decoration: none;
+}
+.level {
+    width: 90%;
+    border: 1px solid;
+    margin: 0 auto;
+    position: relative;
+}
+.levelInfo {
+    margin-bottom: 10px;
+}
+.levelEffect {
+    display: block;
+}
+.levelItemExtra > span {
+    display: block;
+    font-size: 14px;
+    text-decoration: none;
+    
+}
+.levelItemExtra {
+    overflow: hidden;
+}
+.levelItem:active .levelItemExtra {
+    max-height: 75px;
+} 
+.levelItem {
+    text-align: center;
+    padding: 5px;
+    border: 1px solid;
+    border-collapse: collapse;
+   
+}
+.levelItem > span {
+font-size: 18px;
+    text-decoration: underline;
+}
+.levelItem:hover {
+    background-color: #f7f7f7;
+}
+.levelSide {
+    min-width: 200px;
+    min-height: 100%;
+    display: inline-block;
+    border-right: 1px solid gray;
+}
+#levelMain {
+    display: inline-block;
+    vertical-align: top;
+    padding: 10px;
+}
+.usernameTextAdmin {
+    max-width: 75px;
+}
+.userBlockAdmin {
+    display: inline-block;
+    width: 75px;
+    text-overflow: ellipsis;
+    overflow: hidden;
+    white-space: nowrap;
+    margin-right: 10px;
+}
+#indexBody {
+        padding-top: 25px;
+}
+.adminUsers {
+        width: 90%;
+    border: 1px solid;
+    margin: 0 auto;
+    max-height: 500px;
+    position: relative;
+}
+.userSide {
+    min-width: 250px;
+    min-height: 100%;
+    display: inline-block;
+    border-right: 1px solid gray;
+    position: absolute;
+}
+.userMain {
+    display: inline-block;
+    vertical-align: top;
+    margin-left: 250px;
+    padding: 20px 10px 10px 10px;
+    max-width: 60%;
+    width: 60%;
+}
+.nav > li > a {
+    border: none;
+}
+.nav > li > a:hover {
+        text-decoration: none;
+    background-color: #f7f7f7;
+}
+.linkItem {
+    color: #337ab7;
+}
+.wallPostBody {
+    padding: 10px 5px;
+}
+.wallPostImage {
+    border-radius: 5px;
+        vertical-align: super;
+}
+.wallPostPost {
+        display: inline-block;
+    margin-left: 10px;
+    margin-top: 20px;
+}
+.wallPostPost > span {
+    font-size: 12px;
+    color: gray;
+}
+.wallPostInfo {
+    position: relative;
+}
+.wallPostAuthor {
+    display: inline-block;
+        position: absolute;
+    margin-left: 10px;
+}
+
+.wallpostAuthor {
+    font-size: 18px;
+    display: inline-block;
+    text-decoration: none;
+    color: #333;
+}
+#wallBtn {
+    float: right;
+    margin-right: 35px;
+}
+.wallPost {
+    width: 90%;
+        min-height: 100px;
+    max-width: 90%;
+    margin: 0 auto;
+    display: block;
+    padding: 5px;
+}
+.userPost {
+    text-overflow: ellipsis;
+    overflow: hidden;
+    width: 90%;
+    margin: 0 auto;
+    border: 1px solid gray;
+    padding: 5px;
+}
+.registerMain {
+    background-color: white;
+    padding: 15px;
+    width: 50%;
+    margin: 0 auto;
+    border: 2px solid #333;
+    border-radius: 5px;
+    box-shadow: 0px 0px 10px 3px;
+}
+#Twitter {
+    background-color: deepskyblue;
+    padding: 5px 10px;
+    border-radius: 5px;
+    border: 2px solid lightskyblue;
+    color: white;
+    font-size: 16px;
+}
+.positive {
+    color: green;
+}
+.negative {
+    color: red;
+}
+#commentPreview {
+    padding: 5px;
+    border: 1px solid gray;
+    margin-top: 15px;
+    box-shadow: 0px 0px 5px 3px #dddddd;
+}
+
+.forumsLink {
+    color: #333;
+    text-decoration: none;
+}
+
+    .forumsLink:hover {
+        color: black;
+        font-weight: 600;
+    }
+
+.tabLink {
+    padding: 5px;
+    border-top-right-radius: 5px;
+    border-top-left-radius: 5px;
+
+}
+
+    .tabLink:hover {
+        cursor: pointer;
+        background-color: #f7f7f7;
+    }
+
+.nav-tabs {
+    padding: 0px 25px 0px 25px;
+}
+
+.adminPanelMain {
+}
+
+#adminBody {
+    background: none;
+    background-color: white !important;
+}
+
+.commentPlaceholder > td {
+    border: none !important;
+    padding: 0px !important;
+}
+
+.replyOptions {
+    margin-top: 10px;
+}
+
+#replyButton {
+    background-image: linear-gradient(to bottom, #FFFFFF, #CFCFCF);
+    padding: 5px;
+    border-radius: 5px;
+    border: 1px solid rgba(200,200,200,1);
+}
+
+#previewButton {
+    background-image: linear-gradient(to bottom, #FFFFFF, #CFCFCF);
+    padding: 5px;
+    border-radius: 5px;
+    border: 1px solid rgba(200,200,200,1);
+}
+
+.replyButton:hover, .previewButton:hover {
+    cursor: pointer;
+}
+
+.classBtn:active {
+    position: relative;
+    top: 2px;
+}
+
+.posterLink {
+    text-decoration: none;
+    color: black;
+}
+
+    .posterLink:hover {
+        text-decoration: none;
+    }
+
+.table {
+    margin-bottom: 0px;
+}
+
+.topHeader {
+    text-align: center;
+    font-size: 22px;
+    border-bottom: 2px solid;
+    border-top-left-radius: 5px;
+    border-top-right-radius: 5px;
+    background-color: rgb(225,225,225);
+}
+
+.tableUser {
+    padding: 5px;
+}
+
+.topMain {
+    background-color: white;
+    border-top-left-radius: 5px;
+    border-top-right-radius: 5px;
+}
+
+.threadSide > div:last-child {
+    margin-top: 50px;
+}
+
+.titleDiv {
+    max-width: 100%;
+    text-overflow: ellipsis;
+    overflow: hidden;
+    text-wrap: none;
+    text-align: center;
+    white-space: nowrap;
+}
+
+.authorDiv {
+    text-align: center;
+    margin: 0 auto;
+}
+
+.recentPost {
+    border-bottom: 1px solid rgba(0,0,0,.3);
+}
+
+    .recentPost:last-child {
+        border: none;
+    }
+
+.recentMain {
+    background-color: white;
+    border-radius: 5px;
+}
+
+.recent {
+    margin: 0 auto;
+    text-align: center;
+    background-image: linear-gradient(to bottom, #FFFFFF, #CFCFCF);
+    padding: 10px 25px;
+    margin-top: 5px;
+    display: block;
+    border: 2px solid rgb(200,200,200);
+    border-top-right-radius: 5px;
+    border-top-left-radius: 5px;
+}
+
+.threadSide {
+    background: rgba(200,200,200,.3);
+    border: 2px solid rgba(200,200,200,.3);
+    display: inline-block;
+    width: 20%;
+    height: 100%;
+    padding: 5px;
+    text-align: center;
+}
+
+.threadContent {
+    background: white;
+    padding: 10px;
+    border-radius: 5px;
+    width: 75%;
+    display: inline-block;
+    margin-right: 4%;
+    vertical-align: top;
+}
+
+.commentPoints {
+    float: left;
+}
+
+.pointButtons {
+        float: right;
+    margin-bottom: 5px;
+    right: 5px;
+    display: inline;
+    margin-right: 10px;
+}
+
+.postTd {
+    padding: 10px 10px 0px 10px !important;
+    position: relative;
+}
+.liked {
+    opacity: 1;
+    color: green;
+    border: 1px solid #777;
+    border-radius: 3px;
+    margin-left: 5px;
+    padding: 5px;
+}
+.disliked {
+    opacity: 1;
+    color: red;
+    border: 1px solid #777;
+    border-radius: 3px;
+    margin-left: 5px;
+    padding: 5px;
+}
+.like {
+    color: green;
+    border: 1px solid #777;
+    border-radius: 3px;
+    margin-left: 5px;
+    padding: 5px;
+    opacity: .3;
+}
+.like:hover {
+    opacity: 1;
+    cursor: pointer;
+}
+.like:active {
+    position: relative;
+    top: 2px;
+}
+.dislike {
+    color: red;
+    border: 1px solid #777;
+    border-radius: 3px;
+    margin-left: 5px;
+    padding: 5px;
+    opacity: .3;
+}
+.dislike:hover {
+    opacity: 1;
+    cursor: pointer;
+}
+.dislike:active {
+    position: relative;
+    top: 2px;
+}
+
+#postOptions {
+    padding: 10px;
+}
+
+#postOptions > div> span > a > span {
+    border: 1px solid #777;
+    border-radius: 3px;
+    margin-left: 5px;
+    padding: 5px;
+    opacity: .3;
+}
+
+#postOptions > div > span > a > span:hover {
+    cursor: pointer;
+    opacity: 1;
+}
+
+#postOptions > div > a > span:active {
+    position: relative;
+    top: 2px;
+}
+.commentFooter {
+        position: absolute;
+    bottom: 5px;
+    width: 100%;
+}
+.commentInfo {
+}
+
+.commentBody {
+    min-height: 100px;
+}
+
+.replyArea {
+    width: 99.9%;
+    padding: 15px;
+    border: 1px solid lightgray;
+}
+
+.userInfoP {
+    font-size: 12px;
+    color: green;
+    display: block;
+}
+
+.userInfoTP {
+    font-size: 12px;
+    color: red;
+    display: block;
+}
+
+.userInfoX {
+    font-size: 12px;
+    color: blue;
+    display: block;
+}
+
+.postTable {
+    margin-bottom: 0px;
+    border-bottom: none;
+}
+
+.userInfo {
+    width: 15%;
+}
+
+.postInfo {
+}
+
+.postTop {
+    background-color: grey;
+    border-top-right-radius: 5px;
+    border-top-left-radius: 5px;
+    height: 25px;
+    padding: 5px;
+}
+
+.topTitle {
+    float: left;
+    display: inline;
+}
+
+.topViews {
+    float: right;
+    display: inline;
+}
+
+.postMain {
+    width: 100%;
+    margin: 0 auto;
+    padding: 15px;
+    background-color: rgba(200,200,200,.1);
+    border: 2px solid #333;
+    box-shadow: 0px 0px 5px 1px;
+}
+
+.postBody {
+}
+
+.mainPost {
+}
+
+.forumsButons {
+    padding: 10px;
+}
+
+.butonsLeft {
+}
+
+.ForumCreate {
+    display: inline;
+    border: 1px solid #333;
+    padding: 5px 5px 5px 8px;
+    border-radius: 5px;
+    margin-right: 15px;
+    background-image: linear-gradient(to bottom, #FFFFFF, #CFCFCF);
+}
+
+    .ForumCreate:hover {
+        cursor: pointer;
+    }
+
+.butonSubscribe {
+    display: inline;
+    border: 1px solid #333;
+    padding: 5px 5px 5px 8px;
+    border-radius: 5px;
+    background-image: linear-gradient(to bottom, #FFFFFF, #CFCFCF);
+}
+
+    .butonSubscribe:hover {
+        cursor: pointer;
+    }
+
+.createLink {
+    color: black;
+}
+
+    .createLink:hover, .createLink:focus, .createLink:visited, .createLink:active {
+        text-decoration: none;
+        color: black;
+    }
+
+.subscribeLink {
+    color: black;
+}
+
+    .subscribeLink:hover, .subscribeLink:focus, .subscribeLink:visited, .subscribeLink:active {
+        text-decoration: none;
+        color: black;
+    }
+
 .tableCenter {
     text-align: center;
 }
-.tableTitle {
 
-} 
+.tableTitle {
+}
+
 .tableAuthor {
     width: 10%;
 }
-.tableViews  {
+
+.tableViews {
     width: 5%;
 }
+
 .tablePoint {
     width: 2%;
 }
+
 .tableReplies {
     width: 5%;
 }
+
 .tableDate {
     width: 10%;
 }
+
 .feedbackContact {
     width: 25%;
     display: inline-block;
-    vertical-align:top;
+    vertical-align: top;
 }
+
 .supportContact {
     width: 50%;
     display: inline-block;
     margin-right: 20%;
     vertical-align: top;
 }
+
 .supportForm {
 }
+
 .supportSend {
     margin-top: 10px;
 }
+
 .supportMessage {
     width: 100%;
     max-width: 1200px;
     display: block;
     min-height: 100px;
 }
+
 .supportList {
     list-style: none;
 }
-.supportList > li > a {
-    color: darkblue;
-}
+
+    .supportList > li > a {
+        color: darkblue;
+    }
+
 .supportMain {
     background-color: white;
     border: 2px solid black;
@@ -63,34 +726,40 @@
     width: 70%;
     margin: 0 auto;
 }
+
 .confirmButton {
     padding: 15px 45px;
     background-color: #fdfdfd;
     border: 2px solid #999;
     border-radius: 3px;
-        text-decoration: none;
-        font-size: 18px;
-        color: #333;
-}
-.confirmButton:hover, .confirmButton:focus, .confirmButton:active, .confirmButton:visited {
     text-decoration: none;
-    background-color: #f0f0f0;
-    color: black;
-    position: relative;
-    top: 2px;
+    font-size: 18px;
+    color: #333;
 }
+
+    .confirmButton:hover, .confirmButton:focus, .confirmButton:active, .confirmButton:visited {
+        text-decoration: none;
+        background-color: #f0f0f0;
+        color: black;
+        position: relative;
+        top: 2px;
+    }
+
 .confirmSpan {
     display: block;
     text-align: center;
-margin-bottom: 25px;
+    margin-bottom: 25px;
 }
+
 .confirmBody {
     width: 70%;
     margin: 0 auto;
 }
+
 .confirmTitle {
     text-align: center;
 }
+
 .bodyContent {
     background-color: white;
     border: 2px solid black;
@@ -99,37 +768,45 @@ margin-bottom: 25px;
     width: 50%;
     margin: 0 auto;
 }
+
 #messageCenter {
     vertical-align: top;
     position: relative;
     height: 100%;
 }
+
 .originalMessage {
     display: inline-block;
 }
+
 #messageView {
     display: inline-block;
     position: relative;
     padding: 10px;
 }
+
 .messageDate {
     font-size: 12px;
     float: right;
     margin-right: 10px;
 }
+
 #editor {
     width: 100%;
     max-width: 1800px;
     min-height: 300px;
     max-height: 1200px;
 }
+
 .senderLink {
     text-decoration: none;
     color: black;
 }
-.senderLink:hover, .senderLink:active, senderLink:focus, .senderLink:visited {
-    text-decoration: none;
-}
+
+    .senderLink:hover, .senderLink:active, senderLink:focus, .senderLink:visited {
+        text-decoration: none;
+    }
+
 .messageInfo {
     display: block;
     top: 5px;
@@ -138,19 +815,23 @@ margin-bottom: 25px;
     padding-top: 5px;
     position: absolute;
 }
+
 .senderProfile {
     display: inline;
 }
+
 .messagePreview {
     font-size: 12px;
     text-overflow: ellipsis;
     display: block;
     overflow: hidden;
 }
+
 .messageHeader {
     border-bottom: 2px solid grey;
     padding-bottom: 10px;
 }
+
 .inboxSide {
     display: inline-block;
     border-right: 2px solid grey;
@@ -162,13 +843,10 @@ margin-bottom: 25px;
     height: 100%;
     vertical-align: top;
 }
+
 .messageElement {
     margin-left: 10px;
-    box-shadow: 2px 0 0 0 #888, 
-    0 2px 0 0 #888, 
-    2px 2px 0 0 #888,
-    2px 0 0 0 #888 inset, 
-    0 2px 0 0 #888 inset;
+    box-shadow: 2px 0 0 0 #888, 0 2px 0 0 #888, 2px 2px 0 0 #888, 2px 0 0 0 #888 inset, 0 2px 0 0 #888 inset;
     display: inline-block;
     padding: 5px;
     width: 95%;
@@ -178,13 +856,15 @@ margin-bottom: 25px;
     text-overflow: ellipsis;
     position: relative;
 }
+
 .messageBody {
-   
 }
+
 #listInput {
     width: 100%;
     max-width: 1600px;
 }
+
 #listText {
     font-size: 15px;
     font-weight: bold;
@@ -198,6 +878,7 @@ margin-bottom: 25px;
     .mesageItem:hover {
         text-decoration: none;
     }
+
 #previewHolder {
     background-color: white;
     border: 2px solid black;
@@ -206,55 +887,60 @@ margin-bottom: 25px;
     border-radius: 5px;
     display: none;
 }
+
 .messageFooter {
     height: 25px;
+    margin-bottom: 10px;
 }
+
 .messageButons {
     float: right;
 }
-.messageButons > div {
-    display: inline;
-    padding: 5px;
-    margin-right: 15px;
-    background-color: white;
-    border-radius: 5px;
-    border: 2px solid rgba(0,0,0, .7)
-}
 
-.messageButons > div:hover {
-    background-color: rgb(225,225,225);
-    cursor: pointer;
-}
-.messageButons > div:active {
-    position: relative;
-    top: 2px;
-}
+    .messageButons > div {
+        display: inline;
+        padding: 5px;
+        margin-right: 15px;
+        background-color: white;
+        border-radius: 5px;
+        border: 2px solid rgba(0,0,0, .7);
+    }
+
+        .messageButons > div:hover {
+            background-color: rgb(225,225,225);
+            cursor: pointer;
+        }
+
 #MessageTitle {
     width: 100%;
     max-width: 1800px;
     padding: 5px;
     margin-bottom: 5px;
 }
+
 #messageInner {
-        padding: 10px;
+    padding: 10px;
 }
+
 .optionText:hover {
     cursor: pointer;
     color: black;
 }
+
 .optionText:active {
     font-weight: bold;
 }
+
 .messageMain {
     width: 80%;
     margin: 0 auto;
     background-color: white;
     border-radius: 5px;
     box-shadow: 0px 0px 5px 1px black;
-background-color: rgba(225,225,225,.7);
+    background-color: rgba(225,225,225,.7);
 }
+
 .messageSide {
-    
     display: inline-block;
 }
 
@@ -263,6 +949,7 @@ background-color: rgba(225,225,225,.7);
     padding: 10px;
     display: inline;
 }
+
 .messageOption {
     padding-top: 10px;
     padding-left: 10px;
@@ -270,62 +957,71 @@ background-color: rgba(225,225,225,.7);
     color: rgb(50,50,50);
     display: inline-block;
 }
-.messageOption > div {
-    display: inline;
-}
+
+    .messageOption > div {
+        display: inline;
+    }
+
 .adminNav {
-    width: 100% !important;
 }
+
 .recentBody {
     padding-left: 10px;
     padding-right: 10px;
 }
+
 .recentTitle {
     text-align: center;
     font-size: 22px;
     border-bottom: 2px solid;
     border-top-left-radius: 5px;
     border-top-right-radius: 5px;
-    background-color: rgb(225,225,225)
+    background-color: rgb(225,225,225);
 }
+
 .adminLink {
     border-left: 2px solid rgba(225,225,225,.3);
 }
+
 .btn {
     margin: 5px;
     border: solid 2px;
     border-radius: 5px;
     padding: 5px;
 }
+
 #postPreview {
     border: solid 2px;
     border-radius: 5px;
     padding: 6px;
     width: 70px;
     display: inline;
-        font-size: 15px;
+    font-size: 15px;
     font-weight: normal;
     line-height: 1.42857143;
     text-align: center;
     white-space: nowrap;
     vertical-align: middle;
 }
-#postPreview:hover {
-    background-color: rgb(230,230,230);
-    border: solid 2px rgb(150,150,150);
-    cursor: pointer;
-}
+
+    #postPreview:hover {
+        background-color: rgb(230,230,230);
+        border: solid 2px rgb(150,150,150);
+        cursor: pointer;
+    }
+
 .link {
     display: inline;
     margin-right: 10px;
     font-size: 18px;
-
 }
+
 .pathHeader {
     margin-top: 5px;
     margin-bottom: 10px;
     margin-left: 5px;
 }
+
 .postHolder {
     background-color: rgba(240, 240, 240, 1);
     width: 65%;
@@ -333,58 +1029,87 @@ background-color: rgba(225,225,225,.7);
     padding: 10px;
     border-radius: 5px;
 }
+
 .post-group {
     padding-bottom: 10px;
 }
+
 #titleLabel {
     display: block;
     left: 0px;
-
 }
+
 #Title {
     max-width: 100%;
     width: 100%;
 }
+
 .createTitle {
     background-color: rgba(225,225,225,1);
     border-top-left-radius: 5px;
     border-top-right-radius: 5px;
 }
+
 .createBody {
 }
+
 .wysibb {
     width: 100%;
 }
+
 .createTitle {
     text-align: center;
 }
+
 #postTitle {
     font-size: 18px;
 }
+
 .createMain {
     background-color: white;
     border: solid 2px;
     border-radius: 5px;
     margin: 0 auto;
 }
-.createPost {
 
+.createPost {
 }
+
 .userBlock {
     width: 85px;
     margin-right: 10px;
     margin-bottom: 10px;
 }
+
 .userA {
     text-decoration: none;
     color: white;
 }
+
+.userAF {
+    text-decoration: none;
+    color: black;
+    text-align: center;
+}
+
 .usernameText {
     width: 75px;
     overflow: hidden;
     text-overflow: ellipsis;
     display: inline-block;
 }
+
+.testText {
+    text-align: center;
+}
+
+.usernameTextF {
+    overflow: hidden;
+    text-overflow: ellipsis;
+    display: inline-block;
+    background-image: url(http://enjin.host/201612051645/themes/core/images/tag_fx/sparkle_pink.gif);
+}
+
 .nicknameHint {
     display: none;
     border: solid 1px;
@@ -399,16 +1124,15 @@ background-color: rgba(225,225,225,.7);
     cursor: pointer;
 }
 
-#nickHint:hover + .nicknameHint {
-    display: block;
-}
+    #nickHint:hover + .nicknameHint {
+        display: block;
+    }
 
 .text-box {
     text-align: center;
 }
 
 .form-group {
-    text-align: center;
 }
 
 #bioLabel {
@@ -536,6 +1260,11 @@ background-color: rgba(225,225,225,.7);
         background-color: rgba(225,225,225,1);
     }
 
+    #upload:active {
+        position: relative;
+        top: 2px;
+    }
+
 .imageupload {
     text-align: center;
 }
@@ -631,6 +1360,12 @@ background-color: rgba(225,225,225,.7);
     overflow: hidden;
 }
 
+.userProfileF {
+    border: 1px solid rgba(0,0,0,.3);
+    border-radius: 5px;
+    overflow: hidden;
+}
+
 .friend:hover .friendName, .friendName {
     display: block;
 }
@@ -648,13 +1383,14 @@ background-color: rgba(225,225,225,.7);
 }
 
 .activityMain {
-    height: 100px;
+
     width: 65%;
     display: inline-block;
     background-color: rgba(255, 255, 255, 1);
     border: 2px solid rgba(0, 0, 0, .3);
     border-radius: 2px;
     margin-right: 3%;
+        padding: 10px 0px;
 }
 
 .sideMain {
@@ -775,9 +1511,9 @@ background-color: rgba(225,225,225,.7);
 
 .content-body {
     width: 100%;
-    height: 500px;
     padding-top: 10px;
     padding-bottom: 10px;
+    min-height: 500px;
 }
 
 .mainContent {
@@ -842,7 +1578,7 @@ background-color: rgba(225,225,225,.7);
 
 .profilefooter {
     padding-right: 10px;
-    padding-top: 75%;
+    padding-top: 80%;
     float: right;
 }
 
@@ -852,10 +1588,15 @@ background-color: rgba(225,225,225,.7);
     border: 1px solid;
     border-radius: 5px;
     font-size: 16px;
-    padding: 2px 0px 2px 0px;
+    padding: 2px 5px 0px 5px;
     text-decoration: none;
     color: black;
 }
+
+    .profileoption:active {
+        position: relative;
+        top: 2px;
+    }
 
     .profileoption:hover {
         cursor: pointer;
@@ -886,10 +1627,15 @@ background-color: rgba(225,225,225,.7);
     border: 1px solid;
     border-radius: 5px;
     font-size: 16px;
-    padding: 2px 0px 2px 0px;
+    padding: 2px 5px 2px 5px;
     text-decoration: none;
     color: black;
 }
+
+    .banneroption:active {
+        position: relative;
+        top: 2px;
+    }
 
 .bannerMessage {
     display: none;
@@ -913,16 +1659,18 @@ background-color: rgba(225,225,225,.7);
     float: right;
 }
 
-.option {
+.option > a {
     font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
     text-decoration: none;
     color: #333;
     font-size: 16px;
 }
-.option:hover {
+
+.option:hover > a {
     text-decoration: none;
     color: #333;
 }
+
 .banneroption:hover {
     cursor: pointer;
     background-color: #f2f2f2;
@@ -988,9 +1736,9 @@ background-color: rgba(225,225,225,.7);
     width: 175px;
     height: 175px;
     border-radius: 10px;
-        margin-left: 10px;
+    margin-left: 10px;
     margin-right: 35px;
-    border: 1px solid rgba(0,0,0,.5)
+    border: 1px solid rgba(0,0,0,.5);
 }
 
 .dashmain {
@@ -1004,31 +1752,36 @@ background-color: rgba(225,225,225,.7);
 .nodeDropwDown {
     list-style-type: none;
 }
+
 .forumAuthor {
     text-decoration: none;
     color: black;
+    font-size: 12px;
 }
-.forumAuthor:hover, .forumAuthor:active, .forumAuthor:focus {
-    color: black;
-}
+
+    .forumAuthor:hover, .forumAuthor:active, .forumAuthor:focus {
+        color: black;
+    }
+
 .forumAuthor-member {
-
 }
+
 .forumAuthor-Admin {
-
 }
+
 .forumAuthor-Owner {
-
 }
+
 .forumTitle {
     text-decoration: none;
     color: black;
-    font-size: 20px;
+    font-size: 18px;
 }
-.forumTitle:hover, .forumTitle:active, .forumTitle:focus {
 
-    text-decoration: none;
-}
+    .forumTitle:hover, .forumTitle:active, .forumTitle:focus {
+        text-decoration: none;
+    }
+
 .ForumThread {
     border-top: 1px solid rgb(225,225,225);
     border-collapse: collapse;
@@ -1185,6 +1938,7 @@ background-color: rgba(225,225,225,.7);
 
 .container {
     width: 82%;
+    padding: 0px;
 }
 
 .forum {
@@ -1199,7 +1953,6 @@ background-color: rgba(225,225,225,.7);
 
 table {
     width: 100%;
-    margin-top: 10px;
 }
 
 table, th {
@@ -1258,9 +2011,6 @@ li > a, .dropbtn {
         font-size: 14px;
     }
 
-    .dropdown-users a:hover {
-        background-color: #f1f1f1;
-    }
 
 .user:hover .dropdown-users {
     max-height: 200px;
@@ -1310,9 +2060,6 @@ li.drop {
         font-size: 14px;
     }
 
-    .dropdown-content a:hover {
-        background-color: #f1f1f1;
-    }
 
 .drop:hover .dropdown-content {
     max-height: 200px;
@@ -1326,72 +2073,87 @@ li.drop {
     background-color: white;
     border-radius: 5px;
     box-shadow: 0px 0px 10px 2px black;
-    margin-left: 8%;
     width: 15%;
 }
 
+.ru {
+    background-color: white;
+    border-radius: 5px;
+    box-shadow: 0px 0px 10px 2px black;
+    width: 15%;
+    padding: 0;
+    float: right;
+}
 .rn {
     background-color: white;
     border-radius: 5px;
     box-shadow: 0px 0px 10px 2px black;
-    margin-left: 2%;
     width: 15%;
-    margin-bottom: 1%;
     padding: 0;
+    float: right;
+    margin-bottom: 50px;
 }
 
 .tp {
     background-color: white;
     border-radius: 5px;
     box-shadow: 0px 0px 10px 2px black;
-    margin-left: 2%;
     width: 15%;
+    padding: 0;
+    margin-top: 5%;
 }
 
 .main {
     background-color: white;
     border-radius: 5px;
     box-shadow: 0px 0px 10px 2px black;
-    margin-left: 2%;
+    margin: 0px 5%;
 }
+
 .about {
     margin-left: 20%;
     padding: 10px;
     width: 20%;
     border-right: 2px solid grey;
 }
+
 .aboutBody {
-font-size: 14px;
-color: white;
+    font-size: 14px;
+    color: white;
 }
+
 .aboutTitle {
     text-align: center;
     border-bottom: 1px solid rgba(200,200,200,.7);
     margin-bottom: 10px;
     color: white;
 }
+
 .aboutText {
     font-size: 20px;
 }
-.ftTop {
 
+.ftTop {
 }
+
 .ft {
     border-top: 2px solid grey;
 }
+
 .footer {
     background-color: #04223c;
     margin: 0px;
 }
+
 .copy {
-text-align: center;
+    text-align: center;
 }
 
-.copy > p {
-    font-size: 18px;
-    color: aqua;
-    margin: 0;
-}
+    .copy > p {
+        font-size: 18px;
+        color: aqua;
+        margin: 0;
+    }
 
 .HomePage > img {
     padding: 25px;

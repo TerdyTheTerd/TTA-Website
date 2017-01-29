@@ -1,0 +1,32 @@
+﻿@model WebApplication1.Models.ConversationViewModel
+
+<div class="originalMessage">
+    <span>@Model.message.MessageTitle</span>
+    <p>@Model.message.MessageBody</p>
+</div>
+@if (Model.message.hasReplies)
+{
+    foreach (var x in Model.replies)
+    {
+        <div class="messageReply">
+            <div class="replyHeader">
+                <span>x.OwnerId</span>
+            </div>
+            <div class="replyBody">
+                <p>x.ReplyBody</p>
+            </div>
+        </div>
+    }
+}
+<div class="messageReplyArea">
+    <input id="editor" />
+</div>
+<script>
+    $(document).ready(function () {
+        var wbbOpt = {
+            buttons: "bold,italic,underline,,strike,sup,sub,fontcolor,fontsize,|,table,img,link,video,|,code,quote,spoiler,bullist,numlist,|,justifyleft,justifycenter,justifyright,removeFormat"
+        }
+        $("#editor").wysibb(wbbOpt);
+        initMessage('inboxText');
+    });
+</script>

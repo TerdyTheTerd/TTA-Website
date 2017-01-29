@@ -1,4 +1,4 @@
-﻿@model WebApplication1.Models.Post
+﻿@model WebApplication1.Models.PostViewModel
 <head>
     <link href="~/Content/wbbtheme.css" rel="stylesheet" />
 </head>
@@ -31,7 +31,7 @@
             {
                         @Html.ValidationSummary()
                         <div class="post-group">
-                            @Html.LabelFor(x => x.Title, new { @id = "titleLabel" })
+                            @Html.LabelFor(x => x.Title , new { @id = "titleLabel" })
                             @Html.EditorFor(x => x.Title)
                         </div>
 
@@ -62,7 +62,7 @@
 
         $(document).ready(function () {
             var wbbOpt = {
-                buttons: "bold,italic,underline,,strike,sup,sub,fontcolor,fontsize,|,table,img,link,video,|,code,quote,spoiler,bullist,numlist,|,justifyleft,justifycenter,justifyright,removeFormat"
+                buttons: "bold,italic,underline,,strike,sup,sub,fontcolor,fontsize,|,table,img,link,video,|,code,quote,spoiler,bullist,numlist,|,justifyleft,justifycenter,justifyright,pbreak,removeFormat"
             }
             $("#editor").wysibb(wbbOpt);
 
@@ -75,6 +75,7 @@
                     data: { test: $('#hurr').html() },
                     success: function (data) {
                         $("#previewHolder").html(data);
+                        $("#previewHolder").show();
                     },
                     error: function (xhr, status) {
                         alert("Sorry, there was a problem!");

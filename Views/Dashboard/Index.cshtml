@@ -1,8 +1,70 @@
 ﻿@{
     Layout = "~/Views/Dashboard/_Dashboard.cshtml";
 }
-
 <div class="activityMain">
+    <div class="wallPostCreate">
+        <form>
+            <textarea class="wallPost" name="hurr" placeholder="Write a new Wall Post..."></textarea>
+            <input name="user" type="text" style="display: none" value="@Model.ApplicationUserId" />
+            <button class="btn btn-default" id="wallBtn" type="submit" formaction="@Url.Action("WallPost")">Submit Post</button>
+        </form>
+    </div>
+    <div class="userPost" id="newWallPost" style="display: none">
+
+    </div>
+    @if (ViewBag.Post != null)
+    {
+
+        foreach (var item in ViewBag.Post)
+        {
+            <div class="userPost">
+                <div class="wallPostInfo">
+                    <img src="@item.user.ProfileUrl" width="50" height="50" class="wallPostImage"/>
+                    <div class="wallPostAuthor">
+                        <a href="/Dashboard/Index/@item.user.Name" class="wallpostAuthor">@item.user.Name</a>
+                    </div>
+                    <div class="wallPostPost">
+                        <span>@item.post.TimePosted.Date.ToString("MMM dd, yyyy")</span>
+                    </div>
+                    
+                </div>
+                <div class="wallPostBody">
+                    <span>@item.post.postBody</span>
+                </div>
+                @if(item.replies != null)
+                {
+                    <div class="wallPostReplies">
+                        @foreach(var reply in item.replies)
+                        {
+                            //Create a new reply object for each reply
+                            <div class="wallreply">
+                                <div class="wallPostInfo">
+                                    <img src="@reply.Profile" width="25" height="25" class="wallPostImage" />
+                                    <div class="wallPostAuthor">
+                                        <a href="/Dashboard/Index/@reply.Author" class="wallpostAuthor">@reply.Author</a>
+                                    </div>
+                                    <div class="wallPostPost">
+                                        <span>@reply.TimePosted.Date.ToString("MMM dd, yyyy")</span>
+                                    </div>
+
+                                </div>
+                                <div class="wallPostBody">
+                                    <span>@reply.Body</span>
+                                </div>
+                            </div>
+                        }
+                    </div>
+                }
+                <div class="wallPostReplyArea">
+                    <form>
+                        <textarea class="wallPost" name="hurr" placeholder="Write a new Wall Post..."></textarea>
+                        <input name="wallPostId" type="text" style="display: none" value="@item.post.Id" />
+                        <button class="btn btn-default" id="wallBtn" type="submit" formaction="@Url.Action("WallReply")">Submit Post</button>
+                    </form>
+                </div>
+            </div>
+        }
+    }
 </div>
 <div class="sideMain">
     <div class="friendSide">
@@ -37,7 +99,7 @@
 
     </div>
 </div>
-<script >
+<script>
     $(document).ready(function () {
         initDash('activity');
         //testing();

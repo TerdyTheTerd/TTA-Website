@@ -14,6 +14,7 @@ namespace WebApplication1.Models
         public string NickName { get; set; }
         public string Prefix { get; set; }
         public string ForumsGroup { get; set; }
+        public string TagGroup { get; set; }
         public string FactionsName { get; set; }
         public int PointsEarned { get; set; }
         public int TotalPost { get; set; }
@@ -33,7 +34,7 @@ namespace WebApplication1.Models
         public string NameEffect { get; set; }
         public int StorageAvailable { get; set; }
         public int StorageUsed { get; set; }
-       
+        public DateTime JoinDate { get; set; }
 
         public virtual ApplicationUser User { get; set; }
         [ForeignKey("User")]

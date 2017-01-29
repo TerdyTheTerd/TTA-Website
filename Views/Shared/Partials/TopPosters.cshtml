@@ -1,0 +1,31 @@
+﻿@{
+    Layout = null;
+}
+<div class="topPosters">
+    <div class="topHeader">
+        <span>Top Posters</span>
+    </div>
+    <div class="topMain">
+        <table class="table table-bordered table-striped">
+            <tbody>
+                
+        @foreach(var item in ViewBag.Top)
+        {
+            <tr class="tableUser">
+                <td>
+                    <span class="poster">
+                        <img src="@item.ProfilePicture" width="25" height="25" style="float: left"/>
+                        <a href="/Dashboard/Index/@item.DisplayName" class="posterLink">@item.DisplayName</a>
+                    </span>
+                </td>
+                <td>
+                    <span>@item.TotalPost</span>
+                </td>
+            
+            </tr>
+            
+        }
+            </tbody>
+        </table>
+    </div>
+</div>

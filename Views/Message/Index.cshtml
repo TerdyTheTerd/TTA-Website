@@ -1,0 +1,108 @@
+﻿@model WebApplication1.Models.InboxViewModel
+
+<!DOCTYPE html>
+
+<html>
+<body>
+    <div class="messageMain">
+        <div class="messageBody">
+            <div class="messageHeader">
+                <div class="messageSide">
+                    @*Create div to keep adding more users, setting each to a class, then upon submit to post the data into the ToUserId as a combined string, the controller will split upon delimiter*@
+                    <ul class="messageTabs">
+                        <li class="messageOption">
+                            <div id="messageCompose">
+                                <a id="composeText" class="mesageItem" data-ajax="true" data-ajax-method="GET" data-ajax-mode="replace" data-ajax-update="#messageCenter" href="/Message/Compose/"><span class="optionText">Compose</span></a>
+
+                            </div>
+                        </li>
+                        <li class="messageOption">
+                            <div id="messageInbox">
+                                <a id="inboxText" class="mesageItem" data-ajax="true" data-ajax-method="GET" data-ajax-mode="replace" data-ajax-update="#messageCenter" href="/Message/Index/"><span class="optionText">Inbox</span></a>
+
+                            </div>
+                        </li>
+                        <li class="messageOption">
+                            <div id="messageSend">
+                                <a id="sendText" class="mesageItem" data-ajax="true" data-ajax-method="GET" data-ajax-mode="replace" data-ajax-update="#messageCenter" href="/Message/Sent/"><span class="optionText">Sent</span></a>
+
+                            </div>
+                        </li>
+                        <li class="messageOption">
+                            <div id="messageDrafts">
+                                <a id="draftsText" class="mesageItem" data-ajax="true" data-ajax-method="GET" data-ajax-mode="replace" data-ajax-update="#messageCenter" href="/Message/Drafts"><span class="optionText">Drafts</span></a>
+
+                            </div>
+                        </li>
+
+                    </ul>
+                </div>
+            </div>
+            <div id="messageCenter">
+                @*Create view to render recent items in inbox and display the most recent or clicked on message in the main view*@
+                <div class="inboxSide">
+                    @foreach (var hurr in ViewBag.Inbox)
+                    {
+                        <div class="messageElement">
+                            <div class="senderProfile">
+                                <img src="@hurr.SenderProfile " width="50" height="50" />
+                            </div>
+                            <div class="messageInfo">
+                                <a href="/Dashboard/Index/@hurr.SenderName" class="senderLink"><span>@hurr.SenderName</span></a>
+                                <span class="messageDate">@String.Format("{0:dd/MM/yyyy}", hurr.message.CreateDate)</span>
+                                <span class="messagePreview">
+                                    <a data-ajax="true" data-ajax-method="GET" data-ajax-mode="replace" data-ajax-update="#messageView" href="/Message/ViewMessage/@hurr.message.Id">@hurr.message.MessageTitle</a>
+                                </span>
+                            </div>
+
+                        </div>
+                    }
+                </div>
+                <div id="messageView">
+
+                </div>
+                @*<div id="messageInner">
+                        <div id="previewHolder">
+                        </div>
+                        <div class="messageHolder">
+                            @using (Html.BeginForm())
+                            {
+                                @Html.ValidationSummary()
+                                <div class="users">
+                                    <span id="listText">Recipient(s)</span>
+                                    <input id="listInput" type="text" placeholder="User1;User2;"/>
+                                </div>
+                                <div class="messageTitle">
+                                    @Html.LabelFor(x => x.MessageTitle)
+                                    @Html.TextBoxFor(x => x.MessageTitle, new { placeholder = "Subject" })
+                                </div>
+
+                                <div class="messageText">
+                                    @Html.LabelFor(x => x.MessageBody)
+                                    @Html.TextAreaFor(x => x.MessageBody, new { @id = "editor" })
+                                </div>
+                                @Html.HiddenFor(x => x.RecipientList, new { @id = "userList"} )
+                            }
+                        </div>
+                    </div>*@
+            </div>
+            @*<div class="messageFooter">
+                    <div class="messageButons">
+                        <div id="messageSubmit">
+                            <span>Send Message</span>
+                        </div>
+                        <div id="messagePreview">
+                            <span>Preview Message</span>
+                        </div>
+                        <div class="messageSave">
+                            <span>Save as draft</span>
+                        </div>
+                    </div>
+
+                </div>*@
+        </div>
+
+    </div>
+    <script src="~/Scripts/MessageCenter.js"></script>
+</body>
+</html>

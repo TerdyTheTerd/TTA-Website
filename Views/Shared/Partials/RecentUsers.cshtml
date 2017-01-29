@@ -1,0 +1,21 @@
+﻿@{
+    Layout = null;
+}
+<div class="RecentUsers">
+    <div class="UserTitle">
+        <span>Recent Users</span>
+    </div>
+@foreach(var item in ViewBag.Users){
+
+    <div class="UserBlock">
+        
+    <div class="RecentTitle">
+        <span>@item.DisplayName </span>
+        <span>@item.JoinDate.Date.ToString("dd MMM yyyy")</span>
+    </div>
+        <img src="@item.ProfilePicture" width="25" height="25"/>
+    </div>
+
+}
+</div>
+

@@ -10,15 +10,15 @@
     @Scripts.Render("~/bundles/bootstrap")
     <link href="~/Content/animate.css" rel="stylesheet" />
     <link href="~/Content/countrySelect.css" rel="stylesheet" />
+    <script src="https://code.jquery.com/jquery-2.2.4.js"
+            integrity="sha256-iT6Q9iMJYuQiMWNd9lDyBUStIq/8PuOW33aOqmvFpqI="
+            crossorigin="anonymous"></script>
 </head>
-<body>
+<body id="adminBody">
     <div class="navbar navbar-inverse navbar-fixed-top">
         <div class="container adminNav">
             <ul class="nav navbar-nav">
                 <li>@Html.ActionLink("Affinity Wars", "Index", "Home")</li>
-                <li>@Html.ActionLink("Users", "Index", "Home")</li>
-                <li>@Html.ActionLink("Pages", "Index", "Home")</li>
-                <li>@Html.ActionLink("Server", "Index", "Home")</li>
             </ul>
         </div>
     </div>
@@ -26,10 +26,15 @@
             @RenderBody()
         </div>
 
-        @Scripts.Render("~/bundles/bootstrap")
-        <script src="~/Scripts/jquery.unobtrusive-ajax.js"></script>
-        @RenderSection("scripts", required: false)
-        <script src="~/Scripts/countrySelect.js"></script>
-        <script src="https://use.fontawesome.com/8d28f25c9f.js"></script>
+    @Scripts.Render("~/bundles/bootstrap")
+    <script src="~/Scripts/jquery.unobtrusive-ajax.js"></script>
+    @RenderSection("scripts", required: false)
+    <script src="~/Scripts/tabs.js"></script>
+    <script src="~/Scripts/jquery.magnific-popup.js"></script>
+    <script src="~/Scripts/countrySelect.js"></script>
+    <script src="https://use.fontawesome.com/8d28f25c9f.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.12.1/jquery-ui.min.js"></script>
+    <script src="~/Scripts/jquery.imagecrop.js"></script>
+    <script src="~/Scripts/knockout-3.4.0.js"></script>
 </body>
 </html>

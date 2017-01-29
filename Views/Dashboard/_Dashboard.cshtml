@@ -28,9 +28,8 @@
 
                                     @if (Model.ApplicationUserId == User.Identity.GetUserId())
                                     {
-                                        <div class="profileoption">
-
-                                            <span class="option">@Ajax.ActionLink("Edit", "ImageEdit", "Dashboard", new { id = name, type = "profile" }, new AjaxOptions { HttpMethod = "GET", InsertionMode = InsertionMode.Replace, UpdateTargetId = "imageuploader" }) </span>
+                                        <div class="profileoption">                  
+                                            <span class="option">@Ajax.ActionLink("Edit", "ImageEdit", "Dashboard", new { id = name, data = "profile" }, new AjaxOptions { HttpMethod = "GET", InsertionMode = InsertionMode.Replace, UpdateTargetId = "imageuploader" }) </span>
                                         </div>
                                     }
 
@@ -67,7 +66,7 @@
                                     @if (Model.ApplicationUserId == User.Identity.GetUserId())
                                     {
                                         <div class="banneroption">
-                                            <span class="option">@Ajax.ActionLink("Change Cover", "ImageEdit", "Dashboard", new { id = name, type = "banner" }, new AjaxOptions { HttpMethod = "GET", InsertionMode = InsertionMode.Replace, UpdateTargetId = "imageuploader", OnComplete = "Testing" }) </span>
+                                            <span class="option">@Ajax.ActionLink("Change Cover", "ImageEdit", "Dashboard", new { id = name, data = "banner" }, new AjaxOptions { HttpMethod = "GET", InsertionMode = InsertionMode.Replace, UpdateTargetId = "imageuploader", OnComplete = "Testing" }) </span>
                                         </div>
                                     }
                                     else

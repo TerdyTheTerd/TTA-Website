@@ -1,7 +1,8 @@
 ﻿@{
     Layout = "~/Views/Shared/_Admin.cshtml";
 }
-
+<link href="~/Content/animations.css" rel="stylesheet" />
+<script src="~/Scripts/css3-animate-it.js"></script>
 <!DOCTYPE html>
 
 <html>
@@ -9,10 +10,25 @@
     <div class="adminPanelMain">
     <div class="adminIndexMain">
         <div class="adminIndexHeader">
-
+            <ul class="nav nav-tabs">
+                <li class="tabLink">
+                    <a href="/Admin/UserManager" data-ajax="true" data-ajax-method="GET" data-ajax-mode="replace" data-ajax-update="#indexBody" class="linkItem"><span>Users</span></a>
+                </li>
+                <li class="tabLink">
+                    <a href="/Admin/LevelManager" data-ajax="true" data-ajax-method="GET" data-ajax-mode="replace" data-ajax-update="#indexBody" class="linkItem"><span>Levels</span></a>
+                </li>
+                <li class="tabLink">
+                    <a href="/Admin/Forum/" data-ajax="true" data-ajax-method="GET" data-ajax-mode="replace" data-ajax-update="#indexBody" class="linkItem"><span>Forums</span></a>
+                </li>
+                <li class="tabLink">
+                    <a href="/Admin/Automations" data-ajax="true" data-ajax-method="GET" data-ajax-mode="replace" data-ajax-update="#indexBody" class="linkItem"><span>Automations</span></a>
+                </li>
+            </ul>
         </div>
-        <div class="adminIndexBody">
+        <div id="indexBody" class='animatedParent' data-sequence='500'>
+            <div id="test">
 
+            </div>
         </div>
     </div>
     </div>

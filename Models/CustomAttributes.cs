@@ -23,6 +23,47 @@ namespace WebApplication1.Models
             base.OnActionExecuted(filterContext);
         }
     }
+
+    public class ProfileViewCountAttribute : ActionFilterAttribute
+    {
+        public override void OnActionExecuted(ActionExecutedContext filterContext)
+        {
+            //To Do- Check is user has viewed profile previously, for now count every Index request as a view if user is authenticated
+            if (filterContext.HttpContext.User.Identity.IsAuthenticated)
+            {
+                //Increase profile views
+                var name = filterContext.HttpContext.Request.Url.Segments[3];
+                using (var db = new ApplicationDbContext())
+                {
+                    var user = db.UserStat.Where(x => x.DisplayName == name).SingleOrDefault();
+                    user.ProfileViews += 1;
+                    db.SaveChanges();
+                }
+            }
+
+            base.OnActionExecuted(filterContext);
+        }
+    }
+
+    public class PostPointAttribute : ActionFilterAttribute
+    {
+        public override void OnActionExecuted(ActionExecutedContext filterContext)
+        {
+            //Logic to give user points for posting, check for filters such as x post/day, or type of post made
+            base.OnActionExecuted(filterContext);
+        }
+    }
+
+    public class PostCountAttribute : ActionFilterAttribute
+    {
+        public override void OnActionExecuted(ActionExecutedContext filterContext)
+        {
+            //Check and make sure the post category isnt blacklisted, if no go ahead and increment users post count, other wise return to action
+            base.OnActionExecuted(filterContext);
+        }
+    }
+
+    //Create various action filters for user leveling, mainly for posting and recieving likes on their post
     public class ValidateFileAttribute : RequiredAttribute
     {
         public override bool IsValid(object value)

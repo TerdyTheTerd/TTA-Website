@@ -1,0 +1,108 @@
+﻿@{
+    Layout = null;
+}
+<link href="~/Content/spectrum.css" rel="stylesheet" />
+<script src="~/Scripts/spectrum.js"></script>
+
+<script src="~/Scripts/scrollreveal.min.js"></script>
+@*<link href="~/Content/colorpicker.css" rel="stylesheet" />
+<script src="~/Scripts/colorpicker.js"></script>*@
+@*<script src="~/Scripts/jqColorPicker.min.js"></script>*@
+<div>
+    @foreach (var item in ViewBag.Levels)
+    {
+        <div class="levelContainer">
+
+
+
+            @using (Html.BeginForm("UpdateLevel", "Admin", FormMethod.Post))
+            {
+                <div class="levelHeader">
+                <span class="levelName">Level Name</span>
+                @Html.TextBox("Name", null, new { id = "Name", @Value = (@item.LevelName) })
+            </div>
+                <div class="levelInfo">
+                    <span class="levelXp">Required Exp</span>
+                    @Html.TextBox("Exp", null, new { id = "Exp", @Value = (@item.ExpNeeded)})
+
+                    <div class="efects">
+                        <span class="levelEffect">Text Effects</span>
+                        @*@Html.DropDownList("Effects", (IEnumerable<SelectListItem>)ViewBag.Effects , new { @class = "select-field" } )*@
+                        <select class="Effects" name="Effects">
+                            @foreach (var effect in ViewBag.Effects)
+                            {
+                                <option value="@effect.EffectUrl">@effect.Name</option>
+                            }
+                            <option value="@item.LevelEffects" selected="@item.LevelEffects">@item.EffectName</option>
+                        </select>
+                        <span class="effectPreview" style="background-image: url(@item.LevelEffects); color: @item.LevelColor">TextEffectDemo</span>
+                    </div>
+                    <div class="color">
+                        <span class="levelEffects">Text Color</span>
+                        <input type="text" class="Color" name="Color" value="@item.LevelColor" />
+                        @*<select class="Color" name="Color">
+                            <option value=""></option>
+                        </select>*@
+                    </div>
+
+                </div>
+                <input type="submit" formaction="@Url.Action("UpdateLevel")" value="Save Changes" />
+
+            }
+            @*<form>
+
+                <div class="levelHeader">
+                    <span class="levelName">Level Name</span>
+                    <input class="nameInput" id="LevelName" type="text" value="@item.LevelName" />
+                </div>
+                <div class="levelInfo">
+                    <span class="levelXp">Required Exp</span>
+                    <input class="xpInput" id="ExpNeeded" type="number" value="@item.ExpNeeded" />
+
+                    <div class="efects">
+                        <span class="levelEffect">Text Effects</span>
+                        <select>
+                            @foreach (var effect in ViewBag.Effects)
+                            {
+                                <option value="@effect.EffectUrl">@effect.Name</option>
+                            }
+                            <option id="LevelEffects" selected="@item.LevelEffects">@item.EffectName</option>
+                        </select>
+                        <span class="effectPreview" style="background-image: url(@item.LevelEffects)">TextEffectDemo</span>
+                    </div>
+
+                </div>
+                <input type="submit" formaction="@Url.Action("UpdateLevel")" value="Save Changes"/>
+
+            </form>*@
+        </div>
+    }
+</div>
+<script>
+
+        $(".Effects").change(function () {
+            $(this).siblings(".effectPreview").css("background-image", "url(" + this.value + ")");
+        });
+
+    $(document).ready(function () {
+
+        $(".Color").spectrum({
+            showPaletteOnly: true,
+            showPalette: true,
+            palette: [
+                ["black", "white", "grey", "brown"],
+                ["yellow", "red", "blue", "teal"],
+                ["green", "orange", "purple", "orangered"],
+                ["lime", "pink", "aqua", "slateblue"],
+                ["hotpink", "magenta", "gold", "SpringGreen"]
+            ]
+            
+        });
+        $(".Color").on("unload", function () {
+            $(".Color").destroy();
+        });
+        window.sr = ScrollReveal({ duration: 2000 });
+        sr.reveal('.levelContainer', 250);
+    });
+    
+</script>

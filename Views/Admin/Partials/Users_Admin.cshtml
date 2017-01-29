@@ -1,0 +1,25 @@
+﻿<div class="adminUsers">
+    <div class="userSide">
+
+    </div>
+    <div class="userMain">
+            @foreach (var item in ViewBag.Users)
+            {
+                <div class="userBlockAdmin">
+                    <a class="userAAdmin" href="/Admin/UserManager/@item.ApplicationUserId" data-ajax="true" data-ajax-mode="replace" data-ajax-update="#userDetails" data-ajax-method="GET">
+                        <div class="userProfile">
+                            <img src="@item.ProfilePicture" width="75" height="75" />
+                        </div>
+                        <span class="usernameTextAdmin">@item.DisplayName</span>
+                    </a>
+                </div>
+
+
+            }
+
+    </div>
+    <div id="userDetails">
+
+    </div>
+</div>
+

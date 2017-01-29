@@ -300,9 +300,13 @@
         </div>
     </div>
     <div class="col-md-1 col-sm-1  rn">
-        <h3>Recent News</h3>
+        <div class="topMain">
+            @Html.Action("RecentPost", "Forums")
+        </div>
     </div>
     <div class="col-md-1 col-sm-1  tp">
-        <h3>Top Posters</h3>
+        <div class="topMain">
+            @Html.Action("TopPosters", "Forums")
+        </div>
     </div>
 </div>

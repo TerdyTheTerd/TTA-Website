@@ -32,6 +32,18 @@ function displayPanel(tabToActivate) {
     }
 }
 $(document).ready(function () {
+    NotifyNew();
+    function NotifyNew() {
+        if (localStorage.getItem('notifyState') != 'show') {
+            $('#Notify').show();
+            localStorage.setItem('notifyState', 'show')
+        }
+        $('#notifybutton').on('click', function () {
+            $('#Notify').hide();
+        })
+
+    };
+    
     $('.pics').magnificPopup({
         type: 'image',
         closeOnContentClick: true,
@@ -79,6 +91,11 @@ $(document).ready(function () {
     $("#country").countrySelect({
         preferredCountries: ["us", "gb", "au"],
         responsiveDropdown: false
+    });
+
+    $("#Effects").change(function () {
+        alert("It worked");
+        $("#effectPreview").css("background-image", this.value);
     });
 
 
@@ -188,5 +205,7 @@ $("#option").on("click", function () {
 })
     
 }
+
+
 
 

@@ -8,7 +8,7 @@ using WebApplication1.Models;
 namespace WebApplication1.Controllers
 {
     [RequireHttps]
-    public class HomeController : Controller
+    public class HomeController : BaseController
     {
         public ActionResult Index()
         {
@@ -30,12 +30,7 @@ namespace WebApplication1.Controllers
 
             return View();
         }
-        [HttpPost]
-        public ActionResult Contact(string message)
-        {
-            ViewBag.TheMessage = "Got your message";
-            return View();
-        }
+
         public ActionResult Minecraft()
         {
             return View();
@@ -43,7 +38,6 @@ namespace WebApplication1.Controllers
 
         public ActionResult Users()
         {
-            var db = new ApplicationDbContext();
             List<UserStats> allUsers =
                 (from hurr in db.UserStat
                  orderby hurr.DisplayName
@@ -51,21 +45,44 @@ namespace WebApplication1.Controllers
             ViewBag.Users = allUsers;
             return View();
         }
-
+        [HttpGet]
+        public ActionResult Support()
+        {
+            return View();
+        }
+        [HttpPost]
         public ActionResult Support(string message)
         {
-            if(!(message == null))
+            if (!(message == null))
             {
                 ViewBag.TheMessage = "Got your message";
                 return View();
+            } else
+            {
+
+                ViewBag.TheMessage = "There was an error, please try again";
+                return View();
             }
-            ViewBag.TheMessage = "There was an error, please try again";
-            return View();
         }
         [ChildActionOnly]
         public ActionResult RecentPost()
         {
             return PartialView();
+        }
+        [ChildActionOnly]
+        public ActionResult Login()
+        {
+            return PartialView("~/Views/Shared/_LoginDropDown.cshtml", new LoginViewModel());
+        }
+
+        public ActionResult RecentUsers()
+        {
+            List<UserStats> model =
+                (from x in db.UserStat
+                 orderby x.JoinDate descending
+                 select x).ToList();
+            ViewBag.Users = model;
+            return PartialView("~/Views/Shared/Partials/RecentUsers.cshtml");
         }
     }
 }

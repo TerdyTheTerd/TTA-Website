@@ -1,0 +1,23 @@
+﻿@{
+    Layout = null;
+}
+<span class="commentPoints">
+    @if (item.post.Points >= 0)
+    {
+        <span>Points:</span><span id="like"> +@item.post.Points</span>
+    }
+    else
+    {
+        <span>Points:</span><span id="dislike"> -@item.post.Points</span>
+    }
+
+
+</span>
+<div class="pointButtons">
+        <span class="fa fa-thumbs-up like"></span>
+        <a data-ajax="true" data-ajax-method="GET" data-ajax-mode="replace" data-ajax-update="#like" href="/Forums/PostVote/0/@item.post.Id"><span class="fa fa-thumbs-down dislike"></span></a>
+
+
+    <span>Favorite</span>
+    <span>AdminOptions</span>
+</div>

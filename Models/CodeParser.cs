@@ -10,6 +10,7 @@ namespace WebApplication1.Models
     {
         public static BBCodeParser getParser()
         {
+            //Create a new parser to remove all formatting for use on post activity
             var parser = new BBCodeParser(new[]
 {
                 new BBTag("b", "<b>", "</b>"),
@@ -28,6 +29,8 @@ namespace WebApplication1.Models
                 new BBTag("indent", "<span style=\"padding-left: ${tagattr}em\">", "</span>", true, true, new BBAttribute("tagattr", ""), new BBAttribute("tagattr", "tagattr")),
                 new BBTag("sub", "<sub>", "</sub>"),
                 new BBTag("sup", "<sup>", "</sup>"),
+                new BBTag("center", "<p style=\"text-align: center\">", "</p>"),
+                new BBTag("br", "<br>", "</br>")
 
 
             });

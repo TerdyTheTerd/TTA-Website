@@ -17,11 +17,13 @@ namespace WebApplication1.Controllers
     {
 
         [HttpGet]
+        [ProfileViewCount]
         public ActionResult Index(string id)
         {
             ViewBag.name = id;
             //var db = new ApplicationDbContext();
             {
+                //Retrive user wall post and display on index
                 UserStats model = db.UserStat.SingleOrDefault(x => x.DisplayName == id);
                 ApplicationUser user = System.Web.HttpContext.Current.GetOwinContext().GetUserManager<ApplicationUserManager>().FindById(System.Web.HttpContext.Current.User.Identity.GetUserId());
                 //string profileURL = "/../Assets/UserProfilePics/" + id + "-Profile.png";
@@ -55,6 +57,39 @@ namespace WebApplication1.Controllers
                     }
 
                 }
+                
+                //Fetch the most recent wall post made and pass them as a list
+                //To Do- Pagination cant be done with PagedList as one model is already passed, but we can use ajax to fetch more replies if the bottom is reached and areMore == true
+                List<WallPostViewModel> post = new List<WallPostViewModel>();
+                List<WallPost> wallpost =
+                    (from x in db.WallPost
+                     where x.ownerId.Equals(model.ApplicationUserId)
+                     orderby x.TimePosted descending
+                     select x).Take(5).ToList();
+                foreach (var item in wallpost)
+                {
+                    WallPostViewModel wallpostItem = new WallPostViewModel();
+                    var userstat = db.UserStat.Where(x => x.ApplicationUserId == item.posterId).SingleOrDefault();
+                    BasicUserViewModel poster = new BasicUserViewModel { Name = userstat.DisplayName, ProfileUrl = userstat.ProfilePicture, Effects = userstat.NameEffect, Tags = userstat.ForumsGroup };
+                    wallpostItem.post = item;
+                    wallpostItem.user = poster;
+                    List<BasicReplyViewModel> allReplies = new List<BasicReplyViewModel>();
+                    List<WallPostComment> reply =
+                        (from z in db.WallPostComment
+                         where z.WallPostId.Equals(item.Id)
+                         orderby z.PostedDate ascending
+                         select z).ToList();
+                    foreach(var r in reply)
+                    {
+                        UserStats temp = db.UserStat.Where(x => x.ApplicationUserId == r.Author).SingleOrDefault();
+                        BasicReplyViewModel hurr = new BasicReplyViewModel { Body = r.Body, Owner = r.Author, TimePosted = r.PostedDate, Author= temp.DisplayName, Profile =  temp.ProfilePicture};
+                        allReplies.Add(hurr);
+                    }
+                    wallpostItem.replies = allReplies;
+                    post.Add(wallpostItem);
+                }
+                ViewBag.Post = post;
+
                 ViewBag.Friends = userFriends;
                 if (Request.IsAjaxRequest())
                 {
@@ -81,6 +116,25 @@ namespace WebApplication1.Controllers
             }
         }
 
+        public void WallPost(string hurr, string user)
+        {
+            //Create a wallpost object and save it, prepare html for ajax to dynamically load into top of list
+            UserStats opie = db.UserStat.Where(x => x.ApplicationUserId == user).SingleOrDefault();
+            var name = User.Identity.GetUserId();
+            UserStats poster = db.UserStat.Where(x => x.ApplicationUserId == name).SingleOrDefault();
+            WallPost post = new WallPost {  ownerId = opie.ApplicationUserId, postBody = hurr, TimePosted = DateTime.Now, posterId = poster.ApplicationUserId, posterName = poster.DisplayName };
+            db.WallPost.Add(post);
+            db.SaveChanges();
+        }
+        public void WallReply(string hurr, long wallPostId)
+        {
+            var name = User.Identity.GetUserId();
+            UserStats user = db.UserStat.Where(x => x.ApplicationUserId == name).SingleOrDefault();
+            WallPostComment reply = new WallPostComment { Body = hurr, Author = name, WallPostId = wallPostId, PostedDate = DateTime.Now, Name = user.DisplayName};
+            db.WallPostComment.Add(reply);
+            db.SaveChanges();
+        }
+        [Authorize]
         [HttpPost]
         public ActionResult Index(ImageViewModel model, string id)
         {
@@ -152,8 +206,10 @@ namespace WebApplication1.Controllers
         [HttpGet]
         public ActionResult Activity(string id)
         {
+            //Retrive t most recent post or comments made
             if (Request.IsAjaxRequest())
             {
+                //Gather and return ActivityViewModel for recent activity
                 return PartialView("~/Views/Dashboard/Partials/Activity.cshtml");
             }
             else
@@ -169,8 +225,11 @@ namespace WebApplication1.Controllers
         [HttpGet]
         public ActionResult Info(string id)
         {
+            //Send basic user details
+            UserStats user = db.UserStat.Where(x => x.DisplayName == id).SingleOrDefault();
             if (Request.IsAjaxRequest())
             {
+                //Gather and return ViewModel containing users information, add filter to remove info that the user sets to private or friends only-TODO
                 return PartialView("~/Views/Dashboard/Partials/Info.cshtml");
             }
             else
@@ -182,6 +241,7 @@ namespace WebApplication1.Controllers
         [HttpGet]
         public ActionResult Pictures(string id)
         {
+            //Retrive user pictures, check if the user is the owner, if so display options for editing
             if (Request.IsAjaxRequest())
             {
                 return PartialView("~/Views/Dashboard/Partials/Pictures.cshtml");
@@ -195,6 +255,7 @@ namespace WebApplication1.Controllers
         [HttpGet]
         public ActionResult Post(string id)
         {
+            //Return pagination of all post started, not comments made
             if (Request.IsAjaxRequest())
             {
                 return PartialView("~/Views/Dashboard/Partials/Post.cshtml");
@@ -263,13 +324,14 @@ namespace WebApplication1.Controllers
         }
 
         [HttpGet]
-        public ActionResult ImageEdit(string id, string type)
+        public ActionResult ImageEdit(string id, string data)
         {
             if (Request.IsAjaxRequest())
             {
-                ViewBag.Type = type;
+                ImageViewModel model = new ImageViewModel { Type = data, user = id };
+                ViewBag.Type = data;
                 ViewBag.userName = id;
-                return PartialView("~/Views/Dashboard/Partials/ImageUploader.cshtml");
+                return PartialView("~/Views/Dashboard/Partials/ImageUploader.cshtml", model);
             }
             else
             {

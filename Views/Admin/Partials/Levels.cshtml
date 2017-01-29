@@ -1,0 +1,18 @@
+﻿@{
+    Layout = null;
+}
+
+<div>
+    @foreach(var item in ViewBag.Levels)
+    {
+        <div class="levelContainer">
+            <div class="levelHeader">
+                <span>@item.LevelName</span>
+            </div>
+            <div class="levelInfo">
+                <span>@item.ExpNeeded</span>
+                <span>@item.LevelEffects</span>
+            </div>
+        </div>
+    }
+</div>

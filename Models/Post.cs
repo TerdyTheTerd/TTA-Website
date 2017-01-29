@@ -39,6 +39,7 @@ namespace WebApplication1.Models
         public long Id { get; set; }
 
         public string ownerId { get; set; }
+        public string posterName { get; set; }
 
         public string posterId { get; set; }
 
@@ -49,5 +50,18 @@ namespace WebApplication1.Models
         [DataType(DataType.Date)]
         public DateTime TimePosted { get; set; }
         public bool HasReplies { get; set; }
+    }
+
+    public class PostPoint
+    {
+        [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
+        public int Id { get; set; }
+
+        public long postId { get; set; }
+
+        public string ApplicationUserId { get; set; }
+
+        public bool hasVoted { get; set; }
+        public string VoteType { get; set; }
     }
 }
