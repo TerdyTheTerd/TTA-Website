@@ -1,10 +1,40 @@
-﻿
+﻿@model WebApplication1.Models.AccountBasicViewModel
 <div class="userInfo">
-    <span>Test Text</span>
+    <div class="UserInfo">
+        <div class="row">
+            <div class="infoBlock col-md-2 col-md-offset-1">
+                <div class="infoTitle">
+                    <p>Quote</p>
+                </div>
+                <div class="infoContent">
+                    <p>@Model.Quote</p>
+                </div>
+            </div>
+            <div class="infoBlock col-md-2">
+                <div class="infoTitle">
+                    <p>Bio</p>
+                </div>
+                <div class="infoContent">
+                    <p>@Model.Bio</p>
+                </div>
+            </div>
+            <div class="infoBlock col-md-2">
+                <div class="infoTitle">
+                    <p>Location</p>
+                </div>
+                <div class="infoContent">
+                    <p>@Model.Location</p>
+                </div>
+            </div>
+            <div class="infoBlock col-md-2">
+                <div class="infoTitle">
+                    <p>Nick Name</p>
+                </div>
+                <div class="infoContent">
+                    <p>@Model.NickName</p>
+                </div>
+            </div>
+        </div>
+    </div>
 </div>
-<div class="recentPost">
 
-</div>
-<div class="pictures">
-
-</div>

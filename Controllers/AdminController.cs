@@ -70,6 +70,80 @@ namespace WebApplication1.Controllers
             }
 
         }
+        [HttpGet]
+        public ActionResult WebsiteTagManager(string id)
+        {
+            switch (id)
+            {
+                case "Create":
+                    {
+                        CreateWebsiteTag model = new CreateWebsiteTag();
+                        ViewBag.Effects =
+                            (from e in db.Effect
+                             orderby e.Name
+                             select e).ToList();
+                        return PartialView("~/Views/Admin/Partials/WTags/Create.cshtml", model); ;
+                    }
+                case "Edit":
+                    {
+                        ViewBag.Levels =
+                            (from x in db.Tags
+                             orderby x.TagName ascending
+                             select x).ToList();
+                        ViewBag.Effects =
+                            (from e in db.Effect
+                             orderby e.Name
+                             select e).ToList();
+                        return PartialView("~/Views/Admin/Partials/Levels/Edit.cshtml"); ;
+                    }
+                case "Settings":
+                    {
+
+                        return PartialView("~/Views/Admin/Partials/Levels.cshtml");
+                    }
+                default:
+                    {
+
+                        return PartialView("~/Views/Admin/Partials/LevelManager.cshtml");
+                    }
+            }
+
+        }
+        [HttpGet]
+        public ActionResult FTagManager(string id)
+        {
+            switch (id)
+            {
+                case "Create":
+                    {
+                        CreateLevelViewModel model = new CreateLevelViewModel();
+                        return PartialView("~/Views/Admin/Partials/Levels/Create.cshtml", model); ;
+                    }
+                case "Edit":
+                    {
+                        ViewBag.Levels =
+                            (from x in db.UserLevel
+                             orderby x.ExpNeeded ascending
+                             select x).ToList();
+                        ViewBag.Effects =
+                            (from e in db.Effect
+                             orderby e.Name
+                             select e).ToList();
+                        return PartialView("~/Views/Admin/Partials/Levels/Edit.cshtml"); ;
+                    }
+                case "Settings":
+                    {
+
+                        return PartialView("~/Views/Admin/Partials/Levels.cshtml");
+                    }
+                default:
+                    {
+
+                        return PartialView("~/Views/Admin/Partials/LevelManager.cshtml");
+                    }
+            }
+
+        }
 
         public ActionResult UpdateLevel(UpdateLevelViewModel model)
         {
@@ -85,6 +159,16 @@ namespace WebApplication1.Controllers
             db.SaveChanges();
             return RedirectToAction("Index");
         }
+        [HttpPost]
+        public ActionResult CreateTag(CreateWebsiteTag model)
+        {
+            UserTags Tag = new UserTags { TagName = model.Name };
+            db.Tags.Add(Tag);
+            db.SaveChanges();
+            ViewBag.Message = "Level added succesfully.";
+            return RedirectToAction("Index");
+        }
+
         [HttpPost]
         public ActionResult CreateLevel(CreateLevelViewModel model)
         {
@@ -102,7 +186,11 @@ namespace WebApplication1.Controllers
         [HttpPost]
         public ActionResult CreateWTag(CreateLevelViewModel model)
         {
-            return null;
+            UserTags tag = new UserTags { TagName = model.Name, TagEffect = model.Effects };
+            db.Tags.Add(tag);
+            db.SaveChanges();
+            ViewBag.Message = "Level Added Succesfully.";
+            return RedirectToAction("Index");
         }
         [HttpGet]
         public ActionResult ForumsManager()

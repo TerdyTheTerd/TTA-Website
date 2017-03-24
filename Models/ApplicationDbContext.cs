@@ -25,6 +25,7 @@ namespace WebApplication1.Models
         IDbSet<UserTags> Tags { get; set; }
         IDbSet<Tick> Tick { get; set; }
         IDbSet<LevelEffects> Effect { get; set; }
+        IDbSet<FriendRefer> Referal { get; set; }
         void Dispose();
         int SaveChanges();
     }
@@ -55,6 +56,7 @@ namespace WebApplication1.Models
         public IDbSet<UserTags> Tags { get; set; }
         public IDbSet<Tick> Tick { get; set; }
         public IDbSet<LevelEffects> Effect { get; set; }
+        public IDbSet<FriendRefer> Referal { get; set; }
     }
 
     public class TestApplicationDbContext : IApplicationDbContext
@@ -74,6 +76,7 @@ namespace WebApplication1.Models
         public IDbSet<UserTags> Tags { get; set; }
         public IDbSet<Tick> Tick { get; set; }
         public IDbSet<LevelEffects> Effect { get; set; }
+        public IDbSet<FriendRefer> Referal { get; set; }
         public int SaveChanges()
         {
             return 0;

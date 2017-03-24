@@ -9,7 +9,7 @@ using WebApplication1.Models;
 
 namespace WebApplication1.Controllers
 {
-    public class UserController : Controller
+    public class UserController : BaseController
     {
         // GET: User
         public ActionResult Index()
@@ -44,6 +44,31 @@ namespace WebApplication1.Controllers
                 return null;
             }
 
+        }
+
+        public ActionResult RecentUsers()
+        {
+            List<UserStats> model =
+                (from x in db.UserStat
+                 orderby x.JoinDate descending
+                 select x).ToList();
+            ViewBag.Users = model;
+            return PartialView("~/Views/Shared/Partials/RecentUsers.cshtml");
+        }
+        public ActionResult Refer()
+        {
+
+            return PartialView("~/Views/Shared/Partials/ReferView.cshtml");
+        }
+
+        public string GetIdFromName(string name)
+        {
+            var Id = db.UserStat.Where(x => x.DisplayName == name).SingleOrDefault();
+            return Id.ApplicationUserId;
+        }
+        public void AwardUser(FriendRefer refer)
+        {
+            
         }
     }
 }

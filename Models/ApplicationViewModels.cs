@@ -6,6 +6,13 @@ using System.Web;
 
 namespace WebApplication1.Models
 {
+    public class UserInfoViewModel //Slightly more Complex model for user dashboards, pass in extra information to avoid extra calls to server for information that is needed anyways
+    {
+        public UserStats User { get; set; }
+        public UserTags UserTag { get; set; }
+        public Levels UserLevel { get; set; }
+        public Int32 NumFriends { get; set; }
+    }
     public class PostPreviewViewModel
     {
         [DataType(DataType.MultilineText)]
@@ -143,6 +150,11 @@ namespace WebApplication1.Models
         public BasicUserViewModel user { get; set; }
         public List<BasicReplyViewModel> replies { get; set; }
     }
+    public class CreateWebsiteTag
+    {
+        public string Name { get; set; }
+        public string Effect { get; set; }
+    }
     public class CreateLevelViewModel
     {
         public string Name { get; set; }
@@ -156,5 +168,27 @@ namespace WebApplication1.Models
         public int Exp { get; set; }
         public string Effects { get; set; }
         public string Color { get; set; }
+    }
+    public class ReferVIewModel
+    {
+        public string CurrentUser { get; set; }
+        public string FriendName { get; set; }
+    }
+    public class OrderedUsers
+    {
+        public string UserTag { get; set; }
+        public List<UserStats> user { get; set; }
+    }
+    public class ImageBlob
+    {
+        public string ImageUrl { get; set; }
+        public int dimX { get; set; }
+        public int dimY { get; set; }
+        public DateTime UploadedDate { get; set; }
+    }
+    public class UserImage
+    {
+        public string Id { get; set; }
+        public List<ImageBlob> ImageList {get;set;}
     }
 }

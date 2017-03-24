@@ -16,15 +16,16 @@ namespace WebApplication1.Controllers
     public class DashboardController : BaseController
     {
 
+        //Change to default as sending the partialView with model, so we dont need to call two methods when returning back to activity tab
         [HttpGet]
         [ProfileViewCount]
         public ActionResult Index(string id)
         {
             ViewBag.name = id;
-            //var db = new ApplicationDbContext();
             {
                 //Retrive user wall post and display on index
-                UserStats model = db.UserStat.SingleOrDefault(x => x.DisplayName == id);
+                UserInfoViewModel model = new UserInfoViewModel();
+                model.User = db.UserStat.SingleOrDefault(x => x.DisplayName == id);
                 ApplicationUser user = System.Web.HttpContext.Current.GetOwinContext().GetUserManager<ApplicationUserManager>().FindById(System.Web.HttpContext.Current.User.Identity.GetUserId());
                 //string profileURL = "/../Assets/UserProfilePics/" + id + "-Profile.png";
                 string profileURL = (from hurr in db.UserStat
@@ -57,13 +58,18 @@ namespace WebApplication1.Controllers
                     }
 
                 }
-                
+                //Fetch Users level and Website tags information
+                UserTags tag = db.Tags.SingleOrDefault(x => x.TagName == model.User.TagGroup);
+                Levels level = db.UserLevel.SingleOrDefault(x => x.LevelName == model.User.ProfileLevel);
+                model.UserTag = tag;
+                model.UserLevel = level;
+                model.NumFriends = friendList.Count;
                 //Fetch the most recent wall post made and pass them as a list
                 //To Do- Pagination cant be done with PagedList as one model is already passed, but we can use ajax to fetch more replies if the bottom is reached and areMore == true
                 List<WallPostViewModel> post = new List<WallPostViewModel>();
                 List<WallPost> wallpost =
                     (from x in db.WallPost
-                     where x.ownerId.Equals(model.ApplicationUserId)
+                     where x.ownerId.Equals(model.User.ApplicationUserId)
                      orderby x.TimePosted descending
                      select x).Take(5).ToList();
                 foreach (var item in wallpost)
@@ -95,7 +101,7 @@ namespace WebApplication1.Controllers
                 {
                     return PartialView("~/Views/Dashboard/Partials/Index.cshtml");
                 }
-                if (!model.DisplayName.Equals(user.DisplayName))
+                if (!model.User.DisplayName.Equals(user.DisplayName))
                 {
                     if (friendList.Contains(user.Id))
                     {
@@ -143,7 +149,6 @@ namespace WebApplication1.Controllers
             {
                 return View();
             }
-            //ApplicationDbContext db = new ApplicationDbContext();
             UserStats user =
                 (from hurr in db.UserStat
                  where hurr.DisplayName.Equals(id)
@@ -209,7 +214,7 @@ namespace WebApplication1.Controllers
             //Retrive t most recent post or comments made
             if (Request.IsAjaxRequest())
             {
-                //Gather and return ActivityViewModel for recent activity
+                //Gather and return ActivityViewModel for recent activity            
                 return PartialView("~/Views/Dashboard/Partials/Activity.cshtml");
             }
             else
@@ -226,11 +231,13 @@ namespace WebApplication1.Controllers
         public ActionResult Info(string id)
         {
             //Send basic user details
-            UserStats user = db.UserStat.Where(x => x.DisplayName == id).SingleOrDefault();
+            
             if (Request.IsAjaxRequest())
             {
                 //Gather and return ViewModel containing users information, add filter to remove info that the user sets to private or friends only-TODO
-                return PartialView("~/Views/Dashboard/Partials/Info.cshtml");
+                UserStats user = db.UserStat.Where(x => x.DisplayName == id).SingleOrDefault();
+                AccountBasicViewModel model = new AccountBasicViewModel { NickName = user.NickName, Quote = user.Quote, Bio = user.Bio, Location = user.Location};
+                return PartialView("~/Views/Dashboard/Partials/Info.cshtml", model);
             }
             else
             {
@@ -370,6 +377,15 @@ namespace WebApplication1.Controllers
         {
             //To Do- Handle picture uplaods from users, validate them, check user storage, store image in root with a path stored in db table
             return null;
+        }
+        public void GetUserLevel(int exp)
+        {
+            Levels level =
+                (from hurr in db.UserLevel
+                 where hurr.ExpNeeded > exp
+                 orderby hurr.ExpNeeded ascending
+                 select hurr).SingleOrDefault();
+            ViewBag.Level = level;
         }
     }
 }

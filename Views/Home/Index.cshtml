@@ -13,18 +13,19 @@
         </div>
     </div>
 </div>
+<div class="container">
 <div class="row">
-    <div class="col-sm-1 col-md-1  yt">
-        <h3>Place Holder</h3>
-    </div>
-    <div class="col-xs-8 col-sm-8 col-md-7  main">
-        <h2>Welcome to Affintiy Wars Official Website!</h2>
-        <div class="row">
+    <div class="col-sm-12 col-md-9   main">
+        <div id="HomeHead">
+        <span>Welcome to Affintiy Wars Official Website!</span>
+
+        </div>
+        <div class="row homeMain">
             <div class="col-md-12">
                 @foreach (var item in ViewBag.News)
                 {
                     <div class="ForumThread">
-                        <span style="display: block;">@item.Title</span>
+                        <a href="Forums/ViewPost/@item.Id" class="newsLink"><span style="display: block;">@item.Title</span></a>
                         <span>@Html.Raw(Server.HtmlDecode(CodeParser.getParser().ToHtml(item.Body)))</span>
                     </div>
                 }
@@ -32,12 +33,27 @@
         </div>
         
     </div>
-    <div class="col-sm-1 col-md-1  rn">
+    <div class="col-sm-1 col-md-2 col-md-offset-1 rf">
+        <div class="recentTitle">
+            <span>Promotions</span>
+        </div>
+        <span>Refer a friend now and get rewarded!</span>
+        <div id="referLink">
+            
+            <span id="referBtn">@Ajax.ActionLink("Learn More", "Refer", "User", new AjaxOptions { HttpMethod = "GET", InsertionMode = InsertionMode.Replace, UpdateTargetId = "Popup" })</span>
+        </div>
+        
+    </div>
+    <div class="col-md-2 col-md-offset-1 rn">
         @Html.Action("RecentPost", "Forums")
     </div>
-    <div class="col-sm-1 col-md-1 ru">
-        @Html.Action("RecentUsers", "Home")
+    <div class="col-md-2 col-md-offset-1 ru">
+        @Html.Action("RecentUsers", "User")
     </div>
+    <div class="col-md-2  col-md-offset-1 yt">
+        <iframe src="https://discordapp.com/widget?id=275154699664228363&theme=dark" style="position: absolute; height: 100%; width: 100%" allowtransparency="true" frameborder="0"></iframe>
+    </div>
+</div>
 </div>
 
 <!--<div class="jumbotron">
@@ -45,4 +61,9 @@
     <p class="lead">ASP.NET is a free web framework for building great Web sites and Web applications using HTML, CSS and JavaScript.</p>
     <p><a href="http://asp.net" class="btn btn-primary btn-lg">Learn more &raquo;</a></p>
 </div>-->
+<script>
+    $("#referBtn").on("click", function () {
+        $("#Popup").show();
+    })
+</script>
 

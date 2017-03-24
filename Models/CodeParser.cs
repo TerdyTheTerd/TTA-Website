@@ -17,7 +17,7 @@ namespace WebApplication1.Models
                 new BBTag("i", "<span style=\"font-style:italic;\">", "</span>"),
                 new BBTag("u", "<span style=\"text-decoration:underline;\">", "</span>"),
                 new BBTag("code", "<pre class=\"prettyprint\">", "</pre>"),
-                new BBTag("img", "<img src=\"${content}\" />", "", false, true),
+                new BBTag("img", "<img src=\"${content}\" class=\"img-responsive imgg\"/>", "", false, true), //Use Bootstraps img-responsive class as a defualt for cases where the image would need to be resized for mobile viewing
                 new BBTag("quote", "<blockquote>", "</blockquote>"),
                 new BBTag("list", "<ul>", "</ul>"),
                 new BBTag("numList", "<ol>", "</ol>"),

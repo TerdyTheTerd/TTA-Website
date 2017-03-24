@@ -16,8 +16,7 @@ namespace WebApplication1.Models
         public string TagName { get; set; }
         [Required]
         public string TagEffect { get; set; }
-
-        public string ApplicationUserId { get; set; }
-
+        [Required]
+        public int TagPriority { get; set; }
     }
 }

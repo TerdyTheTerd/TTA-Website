@@ -28,6 +28,7 @@ namespace WebApplication1.Controllers
             ViewBag.Cat = category;
             return View(post);
         }
+        [PostPoint]
         [Authorize]
         [HttpPost]
         public ActionResult Create(PostViewModel model)

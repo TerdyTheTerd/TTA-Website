@@ -10,6 +10,30 @@
 </head>
 <body>
     <div class="accountMain">
+        <div class="row">
+            <div class="settingsNav col-md-6 col-md-offset-3">
+                <div>
+                    <ul id="optionList">
+                        <li class="optionTab" id="basicTab">
+                            <div>
+                                <p>Basic Settings</p>
+                            </div>
+                        </li>
+                        <li class="optionTab" id="accountSettings">
+                            <div>
+                                <p>Account Settings</p>
+                            </div>
+                        </li>
+
+                        <li class="optionTab" id="privacySettings">
+                            <div>
+                                <p>Privacy Settings</p>
+                            </div>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
         <div class="basic">
             <div class="AccountDetails">
                 @using (Html.BeginForm(FormMethod.Post))
@@ -44,6 +68,7 @@
 
             </div>
         </div>
+
         <div class="accountInfo">
 
         </div>
@@ -51,3 +76,9 @@
     
 </body>
 </html>
+<script>
+    $(document).ready(function () {
+        //Set the initial window, listener to change tabs and render new partial views.
+
+    });
+</script>

@@ -1,1 +1,15 @@
-﻿
+﻿@model WebApplication1.Models.UserImage
+@using Microsoft.AspNet.Identity;
+<div class="pictureMain">
+    @if (Model.Id == User.Identity.GetUserId())
+    {
+        <div class="row">
+            <div class="imageuploadHeader col-md-12">
+                <h2>Upload an Image</h2>
+            </div>
+        </div>
+    }
+    <div class="imageHolder col-md-12">
+        <input type="file" />
+    </div>
+</div>

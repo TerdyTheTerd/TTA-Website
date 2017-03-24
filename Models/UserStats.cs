@@ -28,6 +28,7 @@ namespace WebApplication1.Models
         public string ProfileBanner { get; set; }
         public bool IsOnline { get; set; }
         public string Location { get; set; }
+        public string ProfileLevel { get; set; } //Deprecated, rather than try and keep this is sync with the levels table, create a method that will return current level and xp since xp will need to be calculated anyways
         public int ProfileExp { get; set; }
         public int Gender { get; set; }
         public int Age { get; set; }

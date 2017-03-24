@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Microsoft.AspNet.Identity;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Drawing;
@@ -9,6 +10,7 @@ using System.Web.Mvc;
 
 namespace WebApplication1.Models
 {
+
     public class ViewCountAttribute : ActionFilterAttribute
     {
         public override void OnActionExecuted(ActionExecutedContext filterContext)
@@ -50,7 +52,15 @@ namespace WebApplication1.Models
         public override void OnActionExecuted(ActionExecutedContext filterContext)
         {
             //Logic to give user points for posting, check for filters such as x post/day, or type of post made
-            base.OnActionExecuted(filterContext);
+            string name = filterContext.HttpContext.User.Identity.GetUserId();
+            
+            using (var db = new ApplicationDbContext())
+            {
+                UserStats user = db.UserStat.SingleOrDefault(x => x.ApplicationUserId == name);
+                user.ProfileExp += 5;
+                db.SaveChanges();
+            }
+                base.OnActionExecuted(filterContext);
         }
     }
 

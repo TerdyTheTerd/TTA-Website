@@ -8,20 +8,28 @@
     <title></title>
 </head>
 <body>
-    <div>
-    @foreach(var item in ViewBag.Users)
-    {
-        <div class="userBlock">
-            <a  class="userA" href="/Dashboard/Index/@item.DisplayName">
-                <div class="userProfile">
-                    <img src="@item.ProfilePicture" width="75" height="75" />
-                </div>
-                <span class="usernameText">@item.DisplayName</span>
-            </a>
-        </div>
-        
+    <div id="userMain">
+        @foreach (var item in ViewBag.Users)
+        {
+            <div class="row">
+                <h2 class="usersTag">@item.UserTag</h2>
+                @foreach (var user in item.user)
+                {
+                    <div class="userBlock col-md-2">
+                        <a class="userA" href="/Dashboard/Index/@user.DisplayName">
+                            <div class="userProfile">
+                                <img src="@user.ProfilePicture" width="75" height="75" />
+                            </div>
+                            <span class="usernameText">@user.DisplayName</span>
+                        </a>
+                    </div>
 
-    }
+
+                }
+            </div>
+
+        }
+
     </div>
 </body>
 </html>

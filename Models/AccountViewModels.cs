@@ -87,6 +87,9 @@ namespace WebApplication1.Models
         [Display(Name = "Confirm password")]
         [Compare("Password", ErrorMessage = "The password and confirmation password do not match.")]
         public string ConfirmPassword { get; set; }
+
+        public bool IsReffered { get; set; }
+        public string ReferName { get; set; }
     }
 
     public class ResetPasswordViewModel

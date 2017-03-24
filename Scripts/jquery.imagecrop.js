@@ -24,6 +24,9 @@
             selectionWidth: 0,
             selectionHeight: 0,
             Type: 'banner',
+            scaleRatio: 1,
+            scaledWidth: 0,
+            scaledHeight: 0,
 
             // Plug-in's event handlers
             onChange: function () { },
@@ -35,18 +38,38 @@
 
         // And merge them with the custom options
         setOptions(customOptions);
+        //Check for image size being larger than monitor size so large images don't look weird
+        //Change options for scaling before anything is init to avoid duplicate checks
+        //Change all instances of .widht/.height to be multiplied by scaleRatio, default of 1
 
         // Initialize the image layer
         var $image = $(object);
-options.widePreviewBoundary = $image.width() / 4;
+        
+        
+
+        var a = $image.width();
+        var b = $(window).width();
+        //if ($image.width() > ($(window).width() - 50)) {
+            //Compute required scale ratio to get image to fit with a slight margin
+            var y = $image.width() * 1.05;
+            var x = $(window).width() / y;
+            //options.scaleRatio = x;
+            //options.scaledWidth = Math.round($image.width() * options.scaleRatio);
+            //options.scaledHeight = Math.round($image.height() * options.scaleRatio);
+            options.scaledWidth = $image.width();
+            options.scaledHeight = $image.height();
+            //$image.width *= options.scaleRatio;
+            //$image.height *= options.scaleRatio;
+        
+        options.widePreviewBoundary = $image.width() / 4;
         // Initialize an image holder
         var $holder = $('<div id="testing"/>')
                 .css({
                     position: 'relative',
                     margin: "0 auto"
                 })
-                .width($image.width())
-                .height($image.height());
+                .width(options.scaledWidth)
+                .height(options.scaledHeight);
 
         // Wrap the holder around the image
         $image.wrap($holder)
@@ -60,8 +83,8 @@ options.widePreviewBoundary = $image.width() / 4;
                     opacity: options.overlayOpacity,
                     position: 'absolute'
                 })
-                .width($image.width())
-                .height($image.height())
+                .width(options.scaledWidth)
+                .height(options.scaledHeight)
                 .insertAfter($image);
 
         // Initialize a trigger layer and place it above the overlay layer
@@ -71,8 +94,8 @@ options.widePreviewBoundary = $image.width() / 4;
                     opacity: 0,
                     position: 'absolute'
                 })
-                .width($image.width())
-                .height($image.height())
+                .width(options.scaledWidth)
+                .height(options.scaledHeight)
                 .insertAfter($overlay);
 
         // Initialize an outline layer and place it above the trigger layer
@@ -87,7 +110,8 @@ options.widePreviewBoundary = $image.width() / 4;
         var $selection = $('<div />')
                 .css({
                     background: 'url(' + $image.attr('src') + ') no-repeat',
-                    position: 'absolute'
+                    position: 'absolute',
+                    backgroundSize: options.scaledWidth + "px " + options.scaledHeight + "px" 
                 })
                 .insertAfter($outline);
 
@@ -218,7 +242,7 @@ options.widePreviewBoundary = $image.width() / 4;
 
         //Set the offset for the image editing container, if the image width is less than
         //the min-width of the div, use the div width instead
-        if ($("#imagebody").width() > $image.width()) {
+        if ($("#imagebody").width() > options.scaledWidth) {
             var width = ($("#imagebody").outerWidth());
             var leftOffset = Math.round((($(window).width() - width) / 2));
             $("#imagebody").css("left", leftOffset + "px");
@@ -262,8 +286,8 @@ options.widePreviewBoundary = $image.width() / 4;
             var x = event.pageX - imageOffset[0],
                 y = event.pageY - imageOffset[1];
 
-            x = (x < 0) ? 0 : (x > $image.width()) ? $image.width() : x;
-            y = (y < 0) ? 0 : (y > $image.height()) ? $image.height() : y;
+            x = (x < 0) ? 0 : (x > options.scaledWidth) ? options.scaledWidth : x;
+            y = (y < 0) ? 0 : (y > options.scaledHeight) ? options.scaledHeight : y;
 
             return [x, y];
         };
@@ -271,11 +295,12 @@ options.widePreviewBoundary = $image.width() / 4;
         // Return an object containing information about the plug-in state
         function getCropData() {
             return {
-                selectionX: Math.round(options.selectionPosition[0]),
-                selectionY: Math.round(options.selectionPosition[1]),
-                    selectionWidth: Math.round(options.selectionWidth),
-                selectionHeight: Math.round(options.selectionHeight),
+                selectionX: Math.round(options.selectionPosition[0] / options.scaleRatio),
+                selectionY: Math.round(options.selectionPosition[1] / options.scaleRatio),
+                selectionWidth: Math.round(options.selectionWidth / options.scaleRatio),
+                selectionHeight: Math.round(options.selectionHeight / options.scaleRatio),
                 imageType: options.Type,
+               // scaleRatio: options.scaleRatio,
 
                 selectionExists: function () {
                     return selectionExists;
@@ -466,29 +491,29 @@ options.widePreviewBoundary = $image.width() / 4;
                     if (options.selectionWidth > options.selectionHeight) {
                         if (options.selectionWidth && options.selectionHeight) {
                             // Update the preview image size
-                            $preview.width(Math.round($image.width() * options.widePreviewBoundary / options.selectionWidth));
-                            $preview.height(Math.round($image.height() * $preview.width() / $image.width()));
+                            $preview.width(Math.round(options.scaledWidth * options.widePreviewBoundary / options.selectionWidth));
+                            $preview.height(Math.round(options.scaledHeight * $preview.width() / options.scaledWidth));
 
                             // Update the preview holder layer size
                             $previewHolder.width(options.widePreviewBoundary)
-                                .height(Math.round(options.selectionHeight * $preview.height() / $image.height()));
+                                .height(Math.round(options.selectionHeight * $preview.height() / options.scaledHeight));
                         }
                     } else {
                         if (options.selectionWidth == options.selectionHeight) {
                             // Update the preview image size
-                            $preview.height(Math.round($image.height() * options.previewBoundary / options.selectionHeight));
-                            $preview.width(Math.round($image.width() * $preview.height() / $image.height()));
+                            $preview.height(Math.round(options.scaledHeight * options.previewBoundary / options.selectionHeight));
+                            $preview.width(Math.round(options.scaledWidth * $preview.height() / options.scaledHeight));
 
                             // Update the preview holder layer size
-                            $previewHolder.width(Math.round(options.selectionWidth * $preview.width() / $image.width()))
+                            $previewHolder.width(Math.round(options.selectionWidth * $preview.width() / options.scaledWidth))
                                 .height(options.previewBoundary);
                         }
                     }
 
                     // Update the preview image position
                     $preview.css({
-                        left: -Math.round(options.selectionPosition[0] * $preview.width() / $image.width()),
-                        top: -Math.round(options.selectionPosition[1] * $preview.height() / $image.height())
+                        left: -Math.round(options.selectionPosition[0] * $preview.width() / options.scaledWidth),
+                        top: -Math.round(options.selectionPosition[1] * $preview.height() / options.scaledHeight)
                     });
             }
         };
@@ -725,10 +750,10 @@ options.widePreviewBoundary = $image.width() / 4;
                 height = (height >= 0) ? options.minSize[1] : -options.minSize[1];
 
             // Test if the selection size exceeds the image bounds
-            if (selectionOrigin[0] + width < 0 || selectionOrigin[0] + width > $image.width())
+            if (selectionOrigin[0] + width < 0 || selectionOrigin[0] + width > options.scaledWidth)
                 width = -width;
 
-            if (selectionOrigin[1] + height < 0 || selectionOrigin[1] + height > $image.height())
+            if (selectionOrigin[1] + height < 0 || selectionOrigin[1] + height > options.scaledHeight)
                 height = -height;
 
             if (options.maxSize[0] > options.minSize[0] &&
@@ -763,8 +788,8 @@ options.widePreviewBoundary = $image.width() / 4;
                         width = -Math.round(height * options.aspectRatio);
 
                 // Test if the new size exceeds the image bounds
-                if (selectionOrigin[0] + width > $image.width()) {
-                    width = $image.width() - selectionOrigin[0];
+                if (selectionOrigin[0] + width > options.scaledWidth) {
+                    width = options.scaledWidth - selectionOrigin[0];
                     height = (height > 0) ? Math.round(width / options.aspectRatio) : -Math.round(width / options.aspectRatio);
                 }
 
@@ -773,8 +798,8 @@ options.widePreviewBoundary = $image.width() / 4;
                     width = (width > 0) ? -Math.round(height * options.aspectRatio) : Math.round(height * options.aspectRatio);
                 }
 
-                if (selectionOrigin[1] + height > $image.height()) {
-                    height = $image.height() - selectionOrigin[1];
+                if (selectionOrigin[1] + height > options.scaledHeight) {
+                    height = options.scaledHeight - selectionOrigin[1];
                     width = (width > 0) ? Math.round(height * options.aspectRatio) : -Math.round(height * options.aspectRatio);
                 }
 
@@ -816,20 +841,20 @@ options.widePreviewBoundary = $image.width() / 4;
             // Set the selection position on the x-axis relative to the bounds
             // of the image
             if (mousePosition[0] - selectionOffset[0] > 0)
-                if (mousePosition[0] - selectionOffset[0] + options.selectionWidth < $image.width())
+                if (mousePosition[0] - selectionOffset[0] + options.selectionWidth < options.scaledWidth)
                     options.selectionPosition[0] = mousePosition[0] - selectionOffset[0];
                 else
-                    options.selectionPosition[0] = $image.width() - options.selectionWidth;
+                    options.selectionPosition[0] = options.scaledWidth - options.selectionWidth;
             else
                 options.selectionPosition[0] = 0;
 
             // Set the selection position on the y-axis relative to the bounds
             // of the image
             if (mousePosition[1] - selectionOffset[1] > 0)
-                if (mousePosition[1] - selectionOffset[1] + options.selectionHeight < $image.height())
+                if (mousePosition[1] - selectionOffset[1] + options.selectionHeight < options.scaledHeight)
                     options.selectionPosition[1] = mousePosition[1] - selectionOffset[1];
                 else
-                    options.selectionPosition[1] = $image.height() - options.selectionHeight;
+                    options.selectionPosition[1] = options.scaledHeight - options.selectionHeight;
             else
                 options.selectionPosition[1] = 0;
 

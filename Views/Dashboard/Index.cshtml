@@ -5,7 +5,7 @@
     <div class="wallPostCreate">
         <form>
             <textarea class="wallPost" name="hurr" placeholder="Write a new Wall Post..."></textarea>
-            <input name="user" type="text" style="display: none" value="@Model.ApplicationUserId" />
+            <input name="user" type="text" style="display: none" value="@Model.User.ApplicationUserId" />
             <button class="btn btn-default" id="wallBtn" type="submit" formaction="@Url.Action("WallPost")">Submit Post</button>
         </form>
     </div>
@@ -67,6 +67,52 @@
     }
 </div>
 <div class="sideMain">
+    <div class="userInfoBlock">
+        <div id="userInfoName">
+            <span style="background-image: url(@Model.UserTag.TagEffect)">@Model.User.DisplayName</span>
+        </div>
+        <div class="userInfoInner row">
+            <div class="userInfoL">
+                <div class="col-md-6 col-np">
+                    <div class="col-md-12 col-np">
+                        <span>Joined</span>
+                        <span>@Model.User.JoinDate.Date.ToString("dd/MM/yy")</span>
+                    </div>
+                    <div class="col-md-12 col-np">
+                        <span>Total Post</span>
+                        <span>@Model.User.TotalPost</span>
+                    </div>
+                    <div class="col-md-12 col-np">
+                        <span>Profile Views</span>
+                        <span>@Model.User.ProfileViews</span>
+                    </div>
+                </div>
+            </div>
+            <div class="userInfoR ">
+                <div class="col-md-6 col-np">
+                    <div class="col-md-12 col-np">
+                        <span>Friends</span>
+                        <span>@Model.NumFriends</span>
+                    </div>
+                    <div class="col-md-12 col-np">
+                        <span>Points</span>
+                        <span>@Model.User.PointsEarned</span>
+                    </div>
+                    <div class="col-md-12 col-np">
+                        <span>Total Exp</span>
+                        <span>@Model.User.ProfileExp</span>
+                    </div>
+                </div>
+                
+            </div>
+        </div>
+    </div>
+    <div class="LevelBlob">
+        <div id="userInfoName">
+            <span>User Level</span>
+        </div>
+
+    </div>
     <div class="friendSide">
         @if (ViewBag.Friends.Count == 0)
         {
@@ -89,9 +135,7 @@
         }
 
     </div>
-    <div class="stats">
-
-    </div>
+    
     <div class="tags">
 
     </div>

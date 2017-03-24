@@ -13,11 +13,12 @@ using RazorEngine.Templating;
 using System.IO;
 using RazorEngine;
 using System.Text;
+using WebApplication1.Controllers;
 
 namespace WebApplication1.Controllers
 {
     [Authorize]
-    public class AccountController : Controller
+    public class AccountController : BaseController
     {
         private ApplicationSignInManager _signInManager;
         private ApplicationUserManager _userManager;
@@ -170,8 +171,11 @@ namespace WebApplication1.Controllers
                 if (result.Succeeded)
                 {
                     UserManager.AddClaim(user.Id, new Claim(ClaimTypes.GivenName, model.Name));
-                   var db = new ApplicationDbContext();
-                    var userStat = new UserStats { PointsEarned = 0, PointsGiven = 0, TotalPost = 0, IsPremium = false, ApplicationUserId = user.Id, ProfilePicture = "/../Assets/UserProfilePics/defualtuserprofile.png", ProfileBanner = "/../Assets/UserBannerPics/defualtuserbanner.png", DisplayName = user.DisplayName, Quote = "A is for AffinityWars!", Bio = "This is my bio, please update me!", JoinDate = DateTime.Now };
+                    var userStat = new UserStats { PointsEarned = 0, PointsGiven = 0, TotalPost = 0, IsPremium = false, ApplicationUserId = user.Id, ProfilePicture = "/../Assets/UserProfilePics/defualtuserprofile.png", ProfileBanner = "/../Assets/UserBannerPics/defualtuserbanner.png", DisplayName = user.DisplayName, Quote = "A is for AffinityWars!", Bio = "This is my bio, please update me!", JoinDate = DateTime.Now, TagGroup = "Rookie" };
+                    var name = new UserController().GetIdFromName(model.ReferName);
+                    var controller = new UserController();
+                    var refer = new FriendRefer { ApplicationId = user.Id, ReferApplicationId = controller.GetIdFromName(model.ReferName)};
+                    controller.AwardUser(refer);
                     db.UserStat.Add(userStat);
                     db.SaveChanges();
                     //await SignInManager.SignInAsync(user, isPersistent:false, rememberBrowser:false);

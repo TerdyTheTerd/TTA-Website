@@ -7,7 +7,7 @@ using WebApplication1.Models;
 
 namespace WebApplication1.Controllers
 {
-    [RequireHttps]
+    //[RequireHttps]
     public class HomeController : BaseController
     {
         public ActionResult Index()
@@ -38,10 +38,24 @@ namespace WebApplication1.Controllers
 
         public ActionResult Users()
         {
-            List<UserStats> allUsers =
-                (from hurr in db.UserStat
-                 orderby hurr.DisplayName
+            //Retrive a list of User tags, select all users that belong to each tag, then create a list of view model OrderedUsers
+            List<OrderedUsers> allUsers = new List<OrderedUsers>();
+            List<UserTags> tags =
+                (from hurr in db.Tags
+                 orderby hurr.TagPriority descending
                  select hurr).ToList();
+            foreach (var item in tags)
+            {
+                List<UserStats> users =
+                                (from hurr in db.UserStat
+                                 where hurr.TagGroup.Equals(item.TagName)
+                                 orderby hurr.DisplayName
+                                 select hurr).ToList();
+                OrderedUsers group = new OrderedUsers();
+                group.UserTag = item.TagName;
+                group.user = users;
+                allUsers.Add(group);
+            }
             ViewBag.Users = allUsers;
             return View();
         }
@@ -57,7 +71,8 @@ namespace WebApplication1.Controllers
             {
                 ViewBag.TheMessage = "Got your message";
                 return View();
-            } else
+            }
+            else
             {
 
                 ViewBag.TheMessage = "There was an error, please try again";
@@ -75,14 +90,6 @@ namespace WebApplication1.Controllers
             return PartialView("~/Views/Shared/_LoginDropDown.cshtml", new LoginViewModel());
         }
 
-        public ActionResult RecentUsers()
-        {
-            List<UserStats> model =
-                (from x in db.UserStat
-                 orderby x.JoinDate descending
-                 select x).ToList();
-            ViewBag.Users = model;
-            return PartialView("~/Views/Shared/Partials/RecentUsers.cshtml");
-        }
+
     }
 }

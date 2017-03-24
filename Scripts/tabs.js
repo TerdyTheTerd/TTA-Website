@@ -5,7 +5,6 @@ window.onload = function () {
     tabLinks = document.getElementById("tabs").getElementsByTagName("li"); //Get "li" elements from "tabs" element
     tabPanels = document.getElementById("containers").getElementsByClassName("tab");
     displayPanel(tabLinks[0]); //Set initial tab display as first element
-
     //Add an onClick event listener to each element in tabLinks
     for (var i = 0; i < tabLinks.length; i++) {
         tabLinks[i].onclick = function () {
@@ -18,7 +17,6 @@ window.onload = function () {
             return false;
         }
     }
-
 }
 function displayPanel(tabToActivate) {
     for (var i = 0; i < tabLinks.length; i++) {
@@ -41,9 +39,7 @@ $(document).ready(function () {
         $('#notifybutton').on('click', function () {
             $('#Notify').hide();
         })
-
     };
-    
     $('.pics').magnificPopup({
         type: 'image',
         closeOnContentClick: true,
@@ -58,15 +54,12 @@ $(document).ready(function () {
         },
         gallery: { enabled: true },
         callbacks: {
-
             buildControls: function () {
                 // re-appends controls inside the main container
                 this.contentContainer.append(this.arrowLeft.add(this.arrowRight));
             }
-
         }
     });
-
     $('.toggle').show();
     $('a.togglelink').on('click', function (e) {
         $("div.toggle").toggle(1000);
@@ -97,8 +90,6 @@ $(document).ready(function () {
         alert("It worked");
         $("#effectPreview").css("background-image", this.value);
     });
-
-
 });
 
 function imagewrapper(Type) {
@@ -117,39 +108,56 @@ function imagewrapper(Type) {
         $("#imagemain").empty();
         $("#imagestart").show();
     });
-    $("#upload").change(function (event) {
+    var _URL = window.URL || window.webkitURL;
+    $("#img").change(function (e) {
         $("#imagestart").hide();
         $("#imagedelete").show();
-        //Create the image
-        var img = document.createElement("img");
-        img.src = URL.createObjectURL(event.target.files[0]);
-        img.setAttribute("id", "image");
-        img.setAttribute("position", "relative");
-        document.getElementById("imagemain").appendChild(img);
-        isImageLoaded = true;
-        if (isImageLoaded) {
-            if (Type === 'banner') {
-                $("#image").imageCrop({
-                    overlayOpacity: 0.25,
-                    displayPreview: true,
-                    displaySizeHint: true,
-                    imageType: Type,
-                    onSelect: updateForm,
-                    aspectRatio: 5.1428
-                });
-            } else if (Type === 'profile') {
-                $("#image").imageCrop({
-                    overlayOpacity: 0.25,
-                    displayPreview: true,
-                    displaySizeHint: true,
-                    imageType: Type,
-                    onSelect: updateForm,
-                    aspectRatio: 1
-                });
-            }
-
-
-        };
+        //Create the image, Check if image is too large, ask user if they would like to manually resize or let the server automatically resize
+        var file, pic, sr;
+        if ((file = this.files[0])) {
+            pic = new Image();
+            pic.onload = function () {
+                alert(this.width + " " + this.height);
+                var img = document.createElement("img");
+                img.src = URL.createObjectURL(e.target.files[0]);
+                img.setAttribute("id", "image");
+                img.setAttribute("position", "relative");
+                if (pic.width > $(window).width()) {
+                    var y = Math.round($(window).width() * .95); //Rough Value to account for padding needed, should be changed to an exact value
+                    var x = y / pic.width;
+                    sr = x;
+                    img.setAttribute("width", Math.round(pic.width * x));
+                } else {
+                    sr = y = 1;
+                }
+                document.getElementById("imagemain").appendChild(img);
+                isImageLoaded = true;
+                if (isImageLoaded) {
+                    if (Type === 'banner') {
+                        $("#image").imageCrop({
+                            overlayOpacity: 0.25,
+                            displayPreview: true,
+                            displaySizeHint: true,
+                            imageType: Type,
+                            onSelect: updateForm,
+                            aspectRatio: 5.1428,
+                            scaleRatio: sr
+                        });
+                    } else if (Type === 'profile') {
+                        $("#image").imageCrop({
+                            overlayOpacity: 0.25,
+                            displayPreview: true,
+                            displaySizeHint: true,
+                            imageType: Type,
+                            onSelect: updateForm,
+                            aspectRatio: 1,
+                            scaleRatio: sr
+                        });
+                    }
+                };
+            };
+            pic.src = _URL.createObjectURL(file);
+        }
     });
     //Create binding event when mousepressdown and mousemove on #image it sets the absolute position of imageselection from current mouse location
     //$("#imagemain").on("click", function () {
@@ -171,6 +179,7 @@ function updateForm(cropData) {
     $('#width').val(cropData.selectionWidth);
     $('#height').val(cropData.selectionHeight);
     $('#type').val(cropData.imageType);
+    $('#scaleRatio').val(cropData.scaleRatio);
 }
 function initDash(view) {
     var currentView = view;
@@ -195,17 +204,12 @@ function initDash(view) {
         $("#post").css("color", "grey");
         currentView = 'post';
     });
-if (view === currentView) {
-    $("#" + currentView).css("color", "grey");
+    if (view === currentView) {
+        $("#" + currentView).css("color", "grey");
+    }
+    $("#option").on("click", function () {
+        var hurr = document.getElementById('addFriend');
+        $("#id").val('@model.Id')
+        hurr.submit();
+    })
 }
-$("#option").on("click", function () {
-    var hurr = document.getElementById('addFriend');
-    $("#id").val('@model.Id')
-    hurr.submit();
-})
-    
-}
-
-
-
-

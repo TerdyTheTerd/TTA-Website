@@ -21,18 +21,30 @@
     <script src="https://use.fontawesome.com/8d28f25c9f.js"></script>
 </head>
 <body>
-    <div class="navbar navbar-inverse navbar-fixed-top">
-        <div class="container">
+    <div id="Popup" class="animated fadeIn">
 
-            <ul class="nav navbar-nav">
-                <li class="drop">@Html.ActionLink("Affinity Wars", "Index", "Home")
+    </div>
+    <div class="navbar navbar-inverse navbar-fixed-top">
+        <div class="container-fluid">
+            <div class="navbar-header">
+                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#myNavbar">
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                </button>
+                
+            </div>
+            <div class="collapse navbar-collapse" id="myNavbar">
+                <ul class="nav navbar-nav">
+                    <li class="drop">
+                        @Html.ActionLink("Affinity Wars", "Index", "Home")
                     <div class="dropdown-content">
                         @Html.ActionLink("Home", "Index", "Home")
                         @Html.ActionLink("Users", "Users", "Home")
                     </div>
                 </li>
                 <li class="drop">
-                     @Html.ActionLink("Forums", "Index", "Forums")
+                    @Html.ActionLink("Forums", "Index", "Forums")
                     <div class="dropdown-content">
                         @Html.ActionLink("Official Post", "Official-Post", "Forums")
                         @Html.ActionLink("Community Post", "Community-Post", "Forums")
@@ -50,7 +62,7 @@
                 @*<li>@Html.ActionLink("Community", "Users", "Home")</li>*@
             </ul>
             @Html.Partial("~/Views/Shared/Partials/_LoginPartial.cshtml")
-            
+        </div>
 
         </div>
 
@@ -58,8 +70,8 @@
 
     <div class="container body-content">
         @RenderBody()
-        <div class="row">
-            <div class="col-md-12">
+        <div class="row notbar">
+            <div class="col-md-12 col-xs-12">
                 @if(User.Identity.IsAuthenticated)
                 {
                     @Html.Partial("~/Views/Shared/Partials/_NotificationBarPartial.cshtml")
@@ -71,23 +83,26 @@
     </div>
         <div class="row footer">
             <div class="ftTop">
-                <div class="about">
+                <div class="about col-xs-12 col-md-2 col-md-offset-2">
                     <div class="aboutTitle">
-
-                    <span class="aboutText">
-                        
-                        Info
-                        <i class="fa fa-info-circle"></i>
-                    </span>
+                        <span class="aboutText">Info<i class="fa fa-info-circle"></i></span>
                     </div>
                     <div class="aboutBody">
                         <p>Through The Ages is a community driven web application that offers extensive integration with TTA game servers. TTA was created by and is run by the community.</p>
                     </div>
                 </div>
-                <div class="links">
-
+                <div class="links col-xs-12 col-md-2">
+                    <div class="aboutTitle">
+                        <span class="aboutText">Info<i class="fa fa-link"></i></span>
+                    </div>
+                    <div class="aboutBody">
+                        <span><a href="http://www.technicpack.net/modpack/affinity-wars.314400">Technic</a></span>
+                        <span><a href="https://github.com/TerdyTheTerd/AffinityWars">Github</a></span>
+                        <span><a href="https://www.youtube.com/channel/UC-LBSBoNV_0ZxeMS3o43IIQ">Youtube</a></span>
+                        <span><a href="https://twitter.com/GeorgeStump1">Twitter</a></span>
+                    </div>
                 </div>
-                <div class="mediaLinks">
+                <div class="mediaLinks col-xs-12 col-md-2">
 
                 </div>
 
@@ -101,7 +116,6 @@
             </div>
         </div>
 
-   <!-- @Scripts.Render("~/bundles/jquery")-->
     @Scripts.Render("~/bundles/bootstrap")
     <script src="~/Scripts/jquery.unobtrusive-ajax.js"></script>
     @RenderSection("scripts", required: false)
