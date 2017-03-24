@@ -1,0 +1,21 @@
+﻿@{
+    Layout = null;
+}
+@model WebApplication1.Models.AccountBasicViewModel
+
+<div class="referMain animated bounceInDown col-md-8 col-md-offset-2">
+    <div class="ReferHead">
+        <span>Refer a friend, get rewarded</span>
+    </div>
+    <p>Having a larger community is always better, theres simply more fun to be had with more people. One incentive we offer it to refer new users to sign up.
+    Simply tell your friend to check the "I was reffered" button</p>
+    <br />
+    <p>For each friend you refer, you will recieve 500 website points, 50xp and a drawing into the weekly contest.</p>
+    <span id="homeBtn">Home</span>
+    <span id="cancelBtn">Return</span>
+</div>
+<script>
+    $("#cancelBtn").on("click", function () {
+        $("#Popup").hide();
+    })
+</script>
