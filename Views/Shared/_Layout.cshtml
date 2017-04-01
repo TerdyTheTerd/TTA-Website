@@ -46,12 +46,12 @@
                 <li class="drop">
                     @Html.ActionLink("Forums", "Index", "Forums")
                     <div class="dropdown-content">
-                        @Html.ActionLink("Official Post", "Official-Post", "Forums")
-                        @Html.ActionLink("Community Post", "Community-Post", "Forums")
-                        @Html.ActionLink("My Post", "My-Post", "Forums")
+                        <a href="/Forums/ViewForums?category=Affinity-Wars-Server">Official Post</a>
+                        <a href="/Forums/ViewForums?category=News-and-Announcements">News</a>
+                        <a href="/Forums/ViewForums?category=General-Discussions">Community</a>
                     </div>
                 </li>
-                <li>@Html.ActionLink("Shop", "Contact", "Home")</li>
+                <li>@Html.ActionLink("Shop", "Index", "Shop")</li>
                 <li>@Html.ActionLink("Server", "Minecraft", "Home")</li>
                 <li>@Html.ActionLink("Support", "Support", "Home")</li>
                 @if (User.IsInRole("Admin"))

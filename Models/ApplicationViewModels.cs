@@ -109,7 +109,7 @@ namespace WebApplication1.Models
     {
         public Post post { get; set; }
         public UserStats user { get; set; }
-        public List<PostPoint> point { get; set; }
+        public PostPoint point { get; set; }
     }
     public class LevelViewModel
     {
@@ -168,6 +168,8 @@ namespace WebApplication1.Models
         public int Exp { get; set; }
         public string Effects { get; set; }
         public string Color { get; set; }
+        public int LevelExp { get; set; }
+        public int PrevExp { get; set; }
     }
     public class ReferVIewModel
     {

@@ -5,6 +5,56 @@ body {
     background-size: cover;
     background-repeat: no-repeat;
     background-attachment: fixed;
+    min-height: 100%;
+    position: relative;
+        padding-bottom: 50px;
+}
+.fListOption {
+    padding: 2px;
+    border: 1px solid;
+}
+.fListOption > a {
+    text-decoration: none;
+    color: black;
+}
+.fListOption:hover {
+    cursor: pointer;
+}
+.fListOption:active {
+    position: relative;
+    top: 2px;
+}
+#forumAMain {
+    min-height: 500px;
+    border: 1px solid;
+}
+#forum {
+    width: 90%;
+    margin: 0 auto;
+    position: relative;
+}
+
+#forumOptions {
+    list-style: none;
+    padding: 0px;
+    margin-bottom: 0px;
+}
+#userLevelBarL {
+    background-color: green;
+    height: 100%;
+    position: absolute;
+    border-top-left-radius: 5px;
+    border-bottom-left-radius: 5px;
+}
+#userLevelBarR {
+
+}
+#userLevelBar {
+    min-height: 25px;
+    width: 100%;
+    border: 1px solid #e7e7e7;
+    border-radius: 5px;
+    position: relative;
 }
 .LevelBlob {
     width: 100%;
@@ -63,7 +113,6 @@ body {
 .infoBlock {
     display: inline-block;
     border-radius: 5px;
-    border: 1px solid #f7f7f7;
     margin-left: 5%;
 }
 #optionList {
@@ -215,13 +264,10 @@ body {
     top: 2px;
 }
 .notifyMessage {
-    width: 20%;
-    height: 350px;
     background-color: #777;
     padding: 25px;
     border: 1px solid black;
     border-radius: 5px;
-        margin: 0 auto;
     margin-top: 200px;
     color: white;
     font-size: 22px
@@ -984,7 +1030,7 @@ font-size: 18px;
     display: block;
     top: 5px;
     right: -5px;
-    width: 80%;
+
     padding-top: 5px;
     position: absolute;
 }
@@ -2368,6 +2414,9 @@ li.drop {
 .footer {
     background-color: #04223c;
     margin: 0px;
+    position: absolute;
+    width: 100%;
+    bottom: 0px;
 }
 
 .copy {
@@ -2388,6 +2437,7 @@ li.drop {
     /*padding-left: 15px;
     padding-right: 15px;
     min-width: 1000px;*/
+    margin-bottom: 50px;
 }
 
 .dl-horizontal dt {
@@ -2466,6 +2516,7 @@ aside.Servers {
     width: 85%;
     border-radius: 10px;
     border: 3px solid black;
+        margin-bottom: 50px;
 }
 
 .Servers h3 {

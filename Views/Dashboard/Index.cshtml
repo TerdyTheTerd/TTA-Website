@@ -80,7 +80,7 @@
                     </div>
                     <div class="col-md-12 col-np">
                         <span>Total Post</span>
-                        <span>@Model.User.TotalPost</span>
+                        <span>@Model.User.TotalPost </span>
                     </div>
                     <div class="col-md-12 col-np">
                         <span>Profile Views</span>
@@ -108,9 +108,7 @@
         </div>
     </div>
     <div class="LevelBlob">
-        <div id="userInfoName">
-            <span>User Level</span>
-        </div>
+        @Html.Action("UserLevel", "Dashboard", new { name = Model.User.DisplayName})
 
     </div>
     <div class="friendSide">
@@ -146,6 +144,7 @@
 <script>
     $(document).ready(function () {
         initDash('activity');
+        getUserLevel();
         //testing();
     })
 </script>

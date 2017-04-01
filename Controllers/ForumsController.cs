@@ -93,10 +93,10 @@ namespace WebApplication1.Controllers
             var thread = new ThreadViewModel();
             var user = db.UserStat.SingleOrDefault(x => x.DisplayName == post.Author);
             var current = User.Identity.GetUserId();
-            List<PostPoint> points =
+            PostPoint points =
                 (from p in db.PostPoint
                  where p.ApplicationUserId.Equals(current)
-                 select p).ToList();
+                 select p).SingleOrDefault();
             thread.user = user;
             thread.post = post;
             thread.point = points;
@@ -266,6 +266,7 @@ namespace WebApplication1.Controllers
         public ActionResult TopPosters()
         {
             //Select Users based on number of post made
+
             List<UserStats> users =
                 (from x in db.UserStat
                  orderby x.TotalPost descending

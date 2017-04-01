@@ -3,10 +3,10 @@
         buttons: "bold,italic,underline,,strike,sup,sub,fontcolor,fontsize,|,table,img,link,video,|,code,quote,spoiler,bullist,numlist,|,justifyleft,justifycenter,justifyright,removeFormat"
     }
     $("#editor").wysibb(wbbOpt);
-    initMessage();
+    initMessage("inboxText");
 
-    function initMessage() {
-        var currentView = 'inboxText';
+    function initMessage(currentView) {
+       // var currentView = 'inboxText';
         $("#" + currentView).css("color", "black");
         $('#messageCompose').on('click', function () {
             $("#" + currentView).css("color", "grey");
@@ -28,9 +28,7 @@
             $("#draftsText").css("color", "black");
             currentView = 'draftsText';
         });
-        if (view === currentView) {
-            $("#" + currentView).css("color", "grey");
-        }
+        
     };
 
     $("#messagePreview").on("click", function () {

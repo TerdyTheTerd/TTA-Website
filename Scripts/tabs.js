@@ -181,6 +181,7 @@ function updateForm(cropData) {
     $('#type').val(cropData.imageType);
     $('#scaleRatio').val(cropData.scaleRatio);
 }
+//Change into a more simplified logic loop to reduce code used, collect elements, then when one is clicked take this, apply active status, and set all others to inactive
 function initDash(view) {
     var currentView = view;
     $("#" + currentView).css("color", "grey");
@@ -212,4 +213,26 @@ function initDash(view) {
         $("#id").val('@model.Id')
         hurr.submit();
     })
+}
+function getUserLevel() {
+    $.ajax({
+        url: "/Dashboard/UserLevel",
+        type: 'POST',
+        dataType: 'html',
+        data: { name: Model.User.ApplicationUserId },
+        success: function (data) {
+            alert("It Worked");
+        },
+        error: function (xhr, status) {
+            alert("There was an error");
+        }
+    });
+}
+
+function calcLevel(userExp, levelExp, prevExp) {
+    var currentExp = levelExp - userExp; //Get difference so we can show progress from the current level to the next
+    $("#userLevelBarL").css({ backgroundColor: "green", display: "inline" });
+    
+    var percBar = ((userExp - prevExp)* 100 ) / (levelExp - prevExp);
+    $("#userLevelBarL").width(percBar + "%");
 }

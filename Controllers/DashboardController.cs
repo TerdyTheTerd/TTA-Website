@@ -2,6 +2,7 @@
 using Microsoft.AspNet.Identity.Owin;
 using System;
 using System.Collections.Generic;
+using System.Data;
 using System.Drawing;
 using System.Drawing.Imaging;
 using System.IO;
@@ -386,6 +387,38 @@ namespace WebApplication1.Controllers
                  orderby hurr.ExpNeeded ascending
                  select hurr).SingleOrDefault();
             ViewBag.Level = level;
+        }
+        public ActionResult UserLevel(string name)
+        {
+            //Gather relavent info and generate html to return
+            int exp =
+                (from hurr in db.UserStat
+                 where hurr.DisplayName.Equals(name)
+                 select hurr.ProfileExp).SingleOrDefault();
+            List<Levels> levels = (from hurr in db.UserLevel
+                                   orderby hurr.ExpNeeded ascending
+                                   select hurr).ToList();
+            //Loop to figure out which level the user sits in by comparing current level to required xp
+            Levels temp = new Levels();
+            var prevExp = 0;
+            foreach (Levels level in levels)
+            {
+                if(exp > level.ExpNeeded)
+                {
+                    temp = level;
+                    prevExp = level.ExpNeeded;
+                }
+                if(exp < level.ExpNeeded)
+                {
+                    if (temp.Id != 0)
+                    {
+                        temp = level;
+                        break;
+                    } 
+                }
+            }
+            UpdateLevelViewModel model = new UpdateLevelViewModel { Name = temp.LevelName, Color = temp.LevelColor, Exp = exp, Effects = temp.LevelEffects, LevelExp = temp.ExpNeeded, PrevExp = prevExp};
+            return PartialView("~/Views/Dashboard/Partials/UserLevelPartial.cshtml", model);
         }
     }
 }

@@ -148,7 +148,7 @@ namespace WebApplication1.Controllers
                     return View(model);
             }
         }
-
+        #region Account Register methods
         //
         // GET: /Account/Register
         [AllowAnonymous]
@@ -171,7 +171,10 @@ namespace WebApplication1.Controllers
                 if (result.Succeeded)
                 {
                     UserManager.AddClaim(user.Id, new Claim(ClaimTypes.GivenName, model.Name));
-                    var userStat = new UserStats { PointsEarned = 0, PointsGiven = 0, TotalPost = 0, IsPremium = false, ApplicationUserId = user.Id, ProfilePicture = "/../Assets/UserProfilePics/defualtuserprofile.png", ProfileBanner = "/../Assets/UserBannerPics/defualtuserbanner.png", DisplayName = user.DisplayName, Quote = "A is for AffinityWars!", Bio = "This is my bio, please update me!", JoinDate = DateTime.Now, TagGroup = "Rookie" };
+                    var userStat = new UserStats { PointsEarned = 0, PointsGiven = 0, TotalPost = 0, IsPremium = false, ApplicationUserId = user.Id,
+                        ProfilePicture = "/../Assets/UserProfilePics/defualtuserprofile.png", ProfileBanner = "/../Assets/UserBannerPics/defualtuserbanner.png",
+                        DisplayName = user.DisplayName, Quote = "A is for AffinityWars!", Bio = "This is my bio, please update me!", JoinDate = DateTime.Now,
+                        TagGroup = "Rookie", ProfileExp = 50};
                     var name = new UserController().GetIdFromName(model.ReferName);
                     var controller = new UserController();
                     var refer = new FriendRefer { ApplicationId = user.Id, ReferApplicationId = controller.GetIdFromName(model.ReferName)};
@@ -206,7 +209,7 @@ namespace WebApplication1.Controllers
             // If we got this far, something failed, redisplay form
             return View(model);
         }
-
+        #endregion
         //
         // GET: /Account/ConfirmEmail
         [AllowAnonymous]

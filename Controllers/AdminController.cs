@@ -4,6 +4,7 @@ using System.Linq;
 using System.Web;
 using System.Web.Mvc;
 using WebApplication1.Models;
+using PagedList;
 
 namespace WebApplication1.Controllers
 {
@@ -19,6 +20,7 @@ namespace WebApplication1.Controllers
         [HttpGet]
         public ActionResult UserManager(string id)
         {
+            //Check if the user is requesting info on a user, or requesting a list of users
             if (id != null)
             {
                 UserStats model =
@@ -55,13 +57,14 @@ namespace WebApplication1.Controllers
                             (from e in db.Effect
                              orderby e.Name
                              select e).ToList();
-                        return PartialView("~/Views/Admin/Partials/Levels/Edit.cshtml"); ;
+                        return PartialView("~/Views/Admin/Partials/Levels/Edit.cshtml");
                     }
                 case "Settings":
                     {
                         
                         return PartialView("~/Views/Admin/Partials/Levels.cshtml");
                     }
+                    //If we got this far something didn't work, return to main page
                 default:
                     {
                         
@@ -69,6 +72,16 @@ namespace WebApplication1.Controllers
                     }
             }
 
+        }
+        [HttpGet]
+        public ActionResult ForumManager (string id)
+        {
+            List<Post> post =
+                (from x in db.Post
+                 orderby x.PostedDate descending
+                 select x).ToList();
+
+            return PartialView("~/Views/Admin/Partials/Forum.cshtml", post);
         }
         [HttpGet]
         public ActionResult WebsiteTagManager(string id)
@@ -110,7 +123,7 @@ namespace WebApplication1.Controllers
 
         }
         [HttpGet]
-        public ActionResult FTagManager(string id)
+        public ActionResult FTagManager(string id, int? page)
         {
             switch (id)
             {
@@ -121,6 +134,8 @@ namespace WebApplication1.Controllers
                     }
                 case "Edit":
                     {
+                        //Get info on levels and effects
+                        //To Do- Cahnge to a view model and pass that for typed view
                         ViewBag.Levels =
                             (from x in db.UserLevel
                              orderby x.ExpNeeded ascending
@@ -136,6 +151,19 @@ namespace WebApplication1.Controllers
 
                         return PartialView("~/Views/Admin/Partials/Levels.cshtml");
                     }
+                case "Delete":
+                    {
+                        //Create a paged list to view post made in descending chronological order
+                        int itemsPerpage = 10;
+                        int pageNumber = page ?? 1;
+
+
+                        List<Post> model =
+                            (from x in db.Post
+                             orderby x.PostedDate descending
+                             select x).Take(10).ToList();
+                        return PartialView("~/Views/Admin/Partials/Forum/FList.cshtml", model.ToPagedList(pageNumber, itemsPerpage));
+                    }
                 default:
                     {
 
@@ -145,8 +173,23 @@ namespace WebApplication1.Controllers
 
         }
 
+        public ActionResult Delete(long id)
+        {
+            //Need to trigger a backup of the record to be deleted before deleting it
+            //To Do- Need to verify that a post will be deleted before its comitted
+            Post post = (
+                from x in db.Post
+                where x.Id == id
+                select x).SingleOrDefault();
+            db.Post.Remove(post);
+            db.SaveChanges();
+                
+            return RedirectToAction("Index");
+        }
         public ActionResult UpdateLevel(UpdateLevelViewModel model)
         {
+            //Get and update values for the level being edited
+            //To DO- Change to work with ajax request, and to handle several changes at once
             Levels updateModel = db.UserLevel.Where(x => x.LevelName == model.Name).SingleOrDefault();
             updateModel.ExpNeeded = model.Exp;
             updateModel.LevelName = model.Name;

@@ -24,10 +24,8 @@ namespace WebApplication1.Controllers
             User.IsInRole("Admin");
             return View();
         }
-        public ActionResult Contact()
+        public ActionResult Shop()
         {
-            ViewBag.TheMessage = "Send us a Message";
-
             return View();
         }
 

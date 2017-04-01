@@ -57,7 +57,7 @@
 
                             </span>
                             <div class="pointButtons">
-                                @if ( ViewBag.OP.point == null)
+                                @if ( ViewBag.OP.point != null)
                                 {
                                     
                                     if (ViewBag.OP.point.VoteType == "Like")
@@ -144,11 +144,11 @@
                                                 if (item.points.VoteType == "Like")
                                                 {
                                                         <span class="fa fa-thumbs-up liked" id="@("like"+@item.post.Id)"></span>
-                                                        <span class="fa fa-thumbs-down dislike" id="@("dislike"+@item.post.Id)" onclick="dislike(@item.post.Id, this, reply)"></span>
+                                                        <span class="fa fa-thumbs-down dislike" id="@("dislike"+@item.post.Id)" onclick="dislike(@item.post.Id, this, 'reply')"></span>
                                                 }
                                                 else
                                                 {
-                                                    <span class="fa fa-thumbs-up like" id="@("like"+@item.post.Id)" onclick="like(@item.post.Id, this, reply)"></span>
+                                                    <span class="fa fa-thumbs-up like" id="@("like"+@item.post.Id)" onclick="like(@item.post.Id, this, 'reply')"></span>
 
                                                         <span class="fa fa-thumbs-down disliked" id="@("dislike"+@item.post.Id)"></span>
                                                 }
@@ -156,8 +156,8 @@
                                             }
                                             else
                                             {
-                                                <span class="fa fa-thumbs-up like" id="@item.post.Id" onclick="like(@item.post.Id, this, reply)"></span>
-                                               <span class="fa fa-thumbs-down dislike" id="@item.post.Id" onclick="dislike(@item.post.Id, this, reply)"></span>
+                                                <span class="fa fa-thumbs-up like" id="@item.post.Id" onclick="like(@item.post.Id, this, 'reply')"></span>
+                                               <span class="fa fa-thumbs-down dislike" id="@item.post.Id" onclick="dislike(@item.post.Id, this, 'reply')"></span>
                                             }
 
                                             }
@@ -266,33 +266,40 @@
             });
         });
     });
-        function like(id, el, type) {
-            $.ajax({
-                url: "/Forums/PostVote",
-                type: "GET",
-                dataType: 'text',
-                data: { id: "1", data: id, type: type},
-                success: function(data) {
-                    $("#points" + id).html(data);
-                },
-                complete: function() {
-                    $(el).replaceWith("<span class=\"fa fa-thumbs-up liked\" id=\"like" + id + "\" onclick=\"like(" + id + ", this)\"></span>");
-                    $("#dislike" + id).replaceWith("<span class=\"fa fa-thumbs-down dislike\" id=\"dislike" + id + "\" onclick=\"dislike(" + id + ", this)\"></span>");
-                }
-            });
-        };
         function dislike(id, el, type) {
             $.ajax({
                 url: "/Forums/PostVote",
                 type: "GET",
                 dataType: 'text',
                 data: { id: "0", data: id, type: type},
+                success: function(data) {
+                    $("#points" + id).html(data);
+                },
+                complete: function() {
+                    
+                    $(el).replaceWith("<span class=\"fa fa-thumbs-down disliked\" id=\"dislike" + id + "\"></span>");
+                    $("#like" + id).replaceWith("<span class=\"fa fa-thumbs-up like\" id=\"like" + id + "\" onclick=\"like(" + id + ", this, 'reply')\"></span>");
+                },
+                error: function (xhr, status) {
+                    alert("There was an error processing you request");
+                }
+            });
+        };
+        function like(id, el, type) {
+            $.ajax({
+                url: "/Forums/PostVote",
+                type: "GET",
+                dataType: 'text',
+                data: { id: "1", data: id, type: type},
                 success: function(data) { 
                     $("#points" + id).html(data);
                 },
                 complete: function() {
-                    $(el).replaceWith("<span class=\"fa fa-thumbs-down disliked\" id=\"dislike" + id + "\" onclick=\"dislike(" + id + ", this)\"></span>");
-                    $("#like" + id).replaceWith("<span class=\"fa fa-thumbs-up like\" id=\"like" + id + "\" onclick=\"like(" + id + ", this)\"></span>");
+                    $(el).replaceWith("<span class=\"fa fa-thumbs-up liked\" id=\"like" + id + "\"></span>");
+                    $("#dislike" + id).replaceWith("<span class=\"fa fa-thumbs-down dislike\" id=\"dislike" + id + "\" onclick=\"dislike(" + id + ", this, 'reply')\"></span>");
+                },
+                error: function (xhr, status) {
+                    alert("There was an error processing you request");
                 }
             });
         };

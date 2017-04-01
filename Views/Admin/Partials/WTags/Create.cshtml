@@ -1,17 +1,35 @@
 ﻿@{
     Layout = null;
 }
+@model WebApplication1.Models.CreateWebsiteTag
 
-<!DOCTYPE html>
+<div>
+    <h3>@ViewBag.Message</h3>
+    @using (Html.BeginForm())
+    {
+        <div>
+            @Html.LabelFor(x => x.Name)
+            @Html.EditorFor(x => x.Name )
+        </div>
+        <div class="efects">
+            <span class="levelEffect">Text Effects</span>
+            <select class="Effects" name="Effects">
+                @foreach (var effect in ViewBag.Effects)
+                {
+                    <option value="@effect.EffectUrl">@effect.Name</option>
+                }
+                <option value="null" selected>None</option>
+            </select>
+            <span class="effectPreview" style="background-image: url(); color: black">TextEffectDemo</span>
+            @*<span class="effectPreview" style="background-image: url(@item.LevelEffects); color: @item.LevelColor">TextEffectDemo</span>*@
+        </div>
+        <input type="submit" formaction="@Url.Action("CreateWTag")" />
+        
 
-<html>
-<head>
-    <meta name="viewport" content="width=device-width" />
-    <title></title>
-</head>
-<body>
-    <div>
-    
-    </div>
-</body>
-</html>
+    }
+</div>
+<script>
+    $(".Effects").change(function () {
+        $(this).siblings(".effectPreview").css("background-image", "url(" + this.value + ")");
+    });
+</script>
