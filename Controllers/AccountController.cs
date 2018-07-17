@@ -175,10 +175,10 @@ namespace WebApplication1.Controllers
                         ProfilePicture = "/../Assets/UserProfilePics/defualtuserprofile.png", ProfileBanner = "/../Assets/UserBannerPics/defualtuserbanner.png",
                         DisplayName = user.DisplayName, Quote = "A is for AffinityWars!", Bio = "This is my bio, please update me!", JoinDate = DateTime.Now,
                         TagGroup = "Rookie", ProfileExp = 50};
-                    var name = new UserController().GetIdFromName(model.ReferName);
-                    var controller = new UserController();
-                    var refer = new FriendRefer { ApplicationId = user.Id, ReferApplicationId = controller.GetIdFromName(model.ReferName)};
-                    controller.AwardUser(refer);
+                    //var name = new UserController().GetIdFromName(model.ReferName);
+                    //var controller = new UserController();
+                    //var refer = new FriendRefer { ApplicationId = user.Id, ReferApplicationId = controller.GetIdFromName(model.ReferName)};
+                    //controller.AwardUser(refer);
                     db.UserStat.Add(userStat);
                     db.SaveChanges();
                     //await SignInManager.SignInAsync(user, isPersistent:false, rememberBrowser:false);
@@ -405,7 +405,7 @@ namespace WebApplication1.Controllers
                 {
                     return View("ExternalLoginFailure");
                 }
-                var user = new ApplicationUser { UserName = model.UserName, Email = model.Email };
+                var user = new ApplicationUser { UserName = model.UserName, Email = model.Email, DisplayName = model.UserName };
                 var result = await UserManager.CreateAsync(user);
                 if (result.Succeeded)
                 {

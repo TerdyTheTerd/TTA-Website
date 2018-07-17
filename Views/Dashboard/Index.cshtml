@@ -3,11 +3,15 @@
 }
 <div class="activityMain">
     <div class="wallPostCreate">
-        <form>
-            <textarea class="wallPost" name="hurr" placeholder="Write a new Wall Post..."></textarea>
-            <input name="user" type="text" style="display: none" value="@Model.User.ApplicationUserId" />
-            <button class="btn btn-default" id="wallBtn" type="submit" formaction="@Url.Action("WallPost")">Submit Post</button>
-        </form>
+
+            @using (Html.BeginForm())
+            {
+                <textarea class="wallPost" name="hurr" placeholder="Write a new Wall Post..."></textarea>
+                <input name="user" type="text" style="display: none" value="@Model.User.ApplicationUserId" />
+                <button class="btn btn-default" id="wallBtn" type="submit" formaction="@Url.Action("WallPost")">Submit Post</button>
+            }
+            
+
     </div>
     <div class="userPost" id="newWallPost" style="display: none">
 
@@ -144,7 +148,7 @@
 <script>
     $(document).ready(function () {
         initDash('activity');
-        getUserLevel();
+        //getUserLevel();
         //testing();
     })
 </script>

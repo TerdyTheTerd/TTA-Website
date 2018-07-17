@@ -10,7 +10,18 @@ using System.Web.Mvc;
 
 namespace WebApplication1.Models
 {
-
+    public class NotificationSender : ActionFilterAttribute
+    {
+        public void SendNotification(long id, string message, string url)
+        {
+            //Handle notifications, most likely just pass in a message, then add that to the DB table
+            Notification notification = new Notification { UserId = id, IsActive = true, Message = message, Return_Url = url };
+            using (var db = new ApplicationDbContext())
+            {
+                db.Notification.Add(notification);
+            }
+        }
+    }
     public class ViewCountAttribute : ActionFilterAttribute
     {
         public override void OnActionExecuted(ActionExecutedContext filterContext)

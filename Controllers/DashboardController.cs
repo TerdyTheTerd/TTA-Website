@@ -123,7 +123,7 @@ namespace WebApplication1.Controllers
             }
         }
 
-        public void WallPost(string hurr, string user)
+        public ActionResult WallPost(string hurr, string user)
         {
             //Create a wallpost object and save it, prepare html for ajax to dynamically load into top of list
             UserStats opie = db.UserStat.Where(x => x.ApplicationUserId == user).SingleOrDefault();
@@ -132,14 +132,18 @@ namespace WebApplication1.Controllers
             WallPost post = new WallPost {  ownerId = opie.ApplicationUserId, postBody = hurr, TimePosted = DateTime.Now, posterId = poster.ApplicationUserId, posterName = poster.DisplayName };
             db.WallPost.Add(post);
             db.SaveChanges();
+            return RedirectToAction("Index", new { id = opie.DisplayName });
+            //var html = "<div class=\"userPost\"><div class=\"wallPostInfo\"><img src = \"" + opie.ProfilePicture + "\" width=\"50\" height=\"50\" class=\"wallPostImage\"/><div class=\"wallPostAuthor\"><a href = \"/Dashboard/Index/" + opie.DisplayName + "\" class=\"wallpostAuthor\">" + opie.DisplayName + "</a></div><div class=\"wallPostPost\"><span>" + post.TimePosted.ToString("MMM dd, yyyy") + "</span></div></div><div class=\"wallPostBody\"><span>" + hurr + "</span></div><div class=\"wallPostReplyArea\"><form><textarea class=\"wallPost\" name=\"hurr\" placeholder=\"Write a new Wall Post...\"></textarea><input name = \"wallPostId\" type=\"text\" style=\"display: none\" value=\"" + post.Id + "\" /><button class=\"btn btn-default\" id=\"wallBtn\" type=\"submit\" formaction=\"Dashboard/WallReply\">Submit Post</button></form></div></div>";
+            //return html;
         }
-        public void WallReply(string hurr, long wallPostId)
+        public ActionResult WallReply(string hurr, long wallPostId)
         {
             var name = User.Identity.GetUserId();
             UserStats user = db.UserStat.Where(x => x.ApplicationUserId == name).SingleOrDefault();
             WallPostComment reply = new WallPostComment { Body = hurr, Author = name, WallPostId = wallPostId, PostedDate = DateTime.Now, Name = user.DisplayName};
             db.WallPostComment.Add(reply);
             db.SaveChanges();
+            return RedirectToAction("Index", new { id = user.DisplayName });
         }
         [Authorize]
         [HttpPost]
@@ -346,7 +350,6 @@ namespace WebApplication1.Controllers
                 return null;
             }
         }
-        [HttpPost]
         public ActionResult AddFriend(string id)
         {
             //if (Request.IsAjaxRequest())

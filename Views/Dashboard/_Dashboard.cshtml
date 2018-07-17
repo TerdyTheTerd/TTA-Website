@@ -76,10 +76,10 @@
                                             using (Html.BeginForm("AddFriend", "Dashboard", new { @id = ViewBag.userName }, FormMethod.Post, new { @id = "addFriend", enctype = "multipart/form-data" }))
                                             {
                                                @Html.HiddenFor(x => x.User.Id)
-                                                <input type="submit" style="display: none" />
+                                                <input type="submit" style="display: none" value="@Model.User.Id "/>
                                             }
                                             <div class="addFriend">
-                                                <span id="option">Add Friend</span>
+                                                @Html.ActionLink("Add Friend", "AddFriend", "Dashboard", new { @id = Model.User.DisplayName}, null)
                                             </div>
                                         }
 

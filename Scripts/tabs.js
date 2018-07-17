@@ -1,23 +1,23 @@
 var tabLinks;
 var tabPanels;
-window.onload = function () {
-    //Initial state
-    tabLinks = document.getElementById("tabs").getElementsByTagName("li"); //Get "li" elements from "tabs" element
-    tabPanels = document.getElementById("containers").getElementsByClassName("tab");
-    displayPanel(tabLinks[0]); //Set initial tab display as first element
-    //Add an onClick event listener to each element in tabLinks
-    for (var i = 0; i < tabLinks.length; i++) {
-        tabLinks[i].onclick = function () {
-            displayPanel(this);
-            return false;
-        }
-        //For keyboards or other devices
-        tabLinks[i].onfocus = function () {
-            displayPanel(this);
-            return false;
-        }
-    }
-}
+//window.onload = function () {
+//    //Initial state
+//    tabLinks = document.getElementById("tabs").getElementsByTagName("li"); //Get "li" elements from "tabs" element
+//    tabPanels = document.getElementById("containers").getElementsByClassName("tab");
+//    displayPanel(tabLinks[0]); //Set initial tab display as first element
+//    //Add an onClick event listener to each element in tabLinks
+//    for (var i = 0; i < tabLinks.length; i++) {
+//        tabLinks[i].onclick = function () {
+//            displayPanel(this);
+//            return false;
+//        }
+//        //For keyboards or other devices
+//        tabLinks[i].onfocus = function () {
+//            displayPanel(this);
+//            return false;
+//        }
+//    }
+//}
 function displayPanel(tabToActivate) {
     for (var i = 0; i < tabLinks.length; i++) {
         if (tabLinks[i] == tabToActivate) {
@@ -90,6 +90,8 @@ $(document).ready(function () {
         alert("It worked");
         $("#effectPreview").css("background-image", this.value);
     });
+
+
 });
 
 function imagewrapper(Type) {
@@ -210,24 +212,24 @@ function initDash(view) {
     }
     $("#option").on("click", function () {
         var hurr = document.getElementById('addFriend');
-        $("#id").val('@model.Id')
+        $("#User_Id").val('@model.Id')
         hurr.submit();
     })
 }
-function getUserLevel() {
-    $.ajax({
-        url: "/Dashboard/UserLevel",
-        type: 'POST',
-        dataType: 'html',
-        data: { name: Model.User.ApplicationUserId },
-        success: function (data) {
-            alert("It Worked");
-        },
-        error: function (xhr, status) {
-            alert("There was an error");
-        }
-    });
-}
+//function getUserLevel() {
+//    $.ajax({
+//        url: "/Dashboard/UserLevel",
+//        type: 'POST',
+//        dataType: 'html',
+//        data: { name: Model.User.ApplicationUserId },
+//        success: function (data) {
+//            alert("It Worked");
+//        },
+//        error: function (xhr, status) {
+//            alert("There was an error");
+//        }
+//    });
+//}
 
 function calcLevel(userExp, levelExp, prevExp) {
     var currentExp = levelExp - userExp; //Get difference so we can show progress from the current level to the next
